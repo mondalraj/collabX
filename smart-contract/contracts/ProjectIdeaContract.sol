@@ -16,6 +16,7 @@ contract ProjectIdeaContract {
 
     struct Proposal {
         address proposer;
+        string name;
         string description;
         uint256 dateSubmitted;
         bool isAccepted;
@@ -23,6 +24,7 @@ contract ProjectIdeaContract {
 
     struct Comment {
         address commenter;
+        string name;
         string commentText;
         uint256 dateCommented;
     }
@@ -67,11 +69,15 @@ contract ProjectIdeaContract {
         return allIdeas;
     }
 
-    function getIdeasByCreatorAddress(address _creatorAddress)
-        public
-        view
-        returns (Idea[] memory)
-    {
+    function getIdea(uint256 _ideaIndex) public view returns (Idea memory) {
+        require(_ideaIndex < numberOfIdeas, "Idea does not exist");
+
+        return ideas[_ideaIndex];
+    }
+
+    function getIdeasByCreatorAddress(
+        address _creatorAddress
+    ) public view returns (Idea[] memory) {
         Idea[] memory allIdeas = new Idea[](numberOfIdeas);
         uint256 numberOfIdeasByCreator = 0;
 
@@ -79,10 +85,13 @@ contract ProjectIdeaContract {
             if (ideas[i].creator == _creatorAddress) {
                 allIdeas[numberOfIdeasByCreator] = ideas[i];
                 numberOfIdeasByCreator++;
-            }else{
+            } else {
                 // if the idea has a proposal from the user and the proposal is accepted
-                for(uint256 j = 0; j < ideas[i].proposals.length; j++){
-                    if(ideas[i].proposals[j].proposer == _creatorAddress && ideas[i].proposals[j].isAccepted){
+                for (uint256 j = 0; j < ideas[i].proposals.length; j++) {
+                    if (
+                        ideas[i].proposals[j].proposer == _creatorAddress &&
+                        ideas[i].proposals[j].isAccepted
+                    ) {
                         allIdeas[numberOfIdeasByCreator] = ideas[i];
                         numberOfIdeasByCreator++;
                     }
@@ -101,6 +110,7 @@ contract ProjectIdeaContract {
 
     function submitProposal(
         uint256 _ideaIndex,
+        string memory _name,
         string memory _description
     ) public {
         require(_ideaIndex < numberOfIdeas, "Idea does not exist");
@@ -112,6 +122,7 @@ contract ProjectIdeaContract {
         Proposal memory newProposal = Proposal(
             msg.sender,
             _description,
+            _name,
             block.timestamp,
             false
         );
@@ -144,6 +155,7 @@ contract ProjectIdeaContract {
 
     function commentOnIdea(
         uint256 _ideaIndex,
+        string memory _name,
         string memory _commentText
     ) public {
         require(_ideaIndex < numberOfIdeas, "Idea does not exist");
@@ -151,6 +163,7 @@ contract ProjectIdeaContract {
 
         Comment memory newComment = Comment(
             msg.sender,
+            _name,
             _commentText,
             block.timestamp
         );
@@ -178,15 +191,16 @@ contract ProjectIdeaContract {
         uint min = 0;
         uint max = numberOfIdeas - 1;
 
-        for(uint256 i = 0; i < numberOfIdeas; i++){
+        for (uint256 i = 0; i < numberOfIdeas; i++) {
             ideas[i].isFeatured = false;
         }
 
         require(min <= max, "Invalid range");
-        uint256 random = uint256(keccak256(abi.encodePacked(block.timestamp, numberOfIdeas))) % (max - min + 1);
+        uint256 random = uint256(
+            keccak256(abi.encodePacked(block.timestamp, numberOfIdeas))
+        ) % (max - min + 1);
         uint randomNumber = random + min;
-    
+
         ideas[randomNumber].isFeatured = true;
     }
-
 }
