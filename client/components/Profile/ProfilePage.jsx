@@ -82,7 +82,7 @@ const ProfilePage = () => {
 
       <div className="profileBottomSection m-auto mt-[0.2rem] sm:mt-[3rem] w-[90%]  ">
         <div className="justify-around hidden sm:flex profileFields">
-          <Link
+          <button
             className="text-[#fff] font-semibold cursor-pointer"
             onClick={() => {
               setProgress(25),
@@ -91,8 +91,8 @@ const ProfilePage = () => {
             }}
           >
             Bio
-          </Link>
-          <Link
+          </button>
+          <button
             className="text-[#fff] font-semibold cursor-pointer"
             onClick={() => {
               setProgress(50),
@@ -100,8 +100,8 @@ const ProfilePage = () => {
             }}
           >
             Skills
-          </Link>
-          <Link
+          </button>
+          <button
             className="text-[#fff] font-semibold cursor-pointer"
             onClick={() => {
               setProgress(75),
@@ -109,8 +109,8 @@ const ProfilePage = () => {
             }}
           >
             Project Details
-          </Link>
-          <Link
+          </button>
+          <button
             className="text-[#fff] font-semibold cursor-pointer"
             onClick={() => {
               setProgress(100),
@@ -118,7 +118,7 @@ const ProfilePage = () => {
             }}
           >
             Experience
-          </Link>
+          </button>
         </div>
         <progress
           className="hidden sm:block progress progress-secondary w-[90%] mt-2 m-auto"
