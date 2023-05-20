@@ -11,6 +11,7 @@ import Bio from "./Bio";
 import Projects from "./Projects";
 import Skills from "./Skills";
 import Experience from "./Experience";
+import Link from "next/link";
 
 const ProfilePage = () => {
   const [progress, setProgress] = useState(25);
@@ -81,7 +82,7 @@ const ProfilePage = () => {
 
       <div className="profileBottomSection m-auto mt-[0.2rem] sm:mt-[3rem] w-[90%]  ">
         <div className="justify-around hidden sm:flex profileFields">
-          <a
+          <Link
             className="text-[#fff] font-semibold cursor-pointer"
             onClick={() => {
               setProgress(25),
@@ -90,8 +91,8 @@ const ProfilePage = () => {
             }}
           >
             Bio
-          </a>
-          <a
+          </Link>
+          <Link
             className="text-[#fff] font-semibold cursor-pointer"
             onClick={() => {
               setProgress(50),
@@ -99,8 +100,8 @@ const ProfilePage = () => {
             }}
           >
             Skills
-          </a>
-          <a
+          </Link>
+          <Link
             className="text-[#fff] font-semibold cursor-pointer"
             onClick={() => {
               setProgress(75),
@@ -108,8 +109,8 @@ const ProfilePage = () => {
             }}
           >
             Project Details
-          </a>
-          <a
+          </Link>
+          <Link
             className="text-[#fff] font-semibold cursor-pointer"
             onClick={() => {
               setProgress(100),
@@ -117,7 +118,7 @@ const ProfilePage = () => {
             }}
           >
             Experience
-          </a>
+          </Link>
         </div>
         <progress
           className="hidden sm:block progress progress-secondary w-[90%] mt-2 m-auto"
