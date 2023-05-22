@@ -1,12 +1,14 @@
 import Image from 'next/image'
 import React, { useState } from 'react'
-import { AiFillPlusCircle } from 'react-icons/ai'
+import { AiFillLinkedin, AiFillPlusCircle, AiFillTwitterSquare, AiOutlineMail, AiOutlineRight } from 'react-icons/ai'
 import { BsFillArrowRightCircleFill } from "react-icons/bs"
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdCelebration } from "react-icons/md";
 import { Input } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
 import Link from 'next/link';
+import {HiCheckCircle} from "react-icons/hi"
+import { TbTriangleFilled, TbTriangleInvertedFilled } from 'react-icons/tb';
 
 const ViewIdea = () => {
   const [phonenav, setPhonenav] = useState(false);
@@ -146,7 +148,7 @@ const ViewIdea = () => {
 
       <div className='flex flex-col sm:flex sm:flex-row text-white m-6 rounded-md  bg-[#01002A] sm:bg-inherit px-6 py-8'>
         <div className='flex flex-col sm:w-[60%] sm:m-4'>
-          <h1 className='flex text-2xl '>Project Idea Name    <Image
+          <h1 className='flex text-2xl '>Project Idea Name <Image
             height={6}
             width={14}
             src="/images/blockChainSymbol.png"
@@ -181,12 +183,117 @@ const ViewIdea = () => {
 
       <div className='bg-[#0C0634] flex flex-col text-white m-6 rounded-md sm:rounded-xl px-6 py-8 sm:mx-14 sm:my-10 '>
         <div>
-          <p className='text-[#05EAFA]'>Your Proposal</p>
-          <textarea name="" id="" cols="30" rows="4" className='w-full placeholder:font-semibold bg-inherit' placeholder='Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet. Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.'></textarea>
+          <p className='text-[#05EAFA]'>List of Proposals</p>
+          <div className="grid grid-cols-1 gap-4 mx-6 cardsCollection sm:grid-cols-2 lg:grid-cols-3">
+
+            {/* card  */}
+      <div className="profileCard h-fit rounded-lg w-[100%] md:w-[90%] lg:w-[80%] mt-[1rem] mb-4rem pb-[1rem] pt-[1rem] text-sm
+                bg-[#ffffff21] opacity-[0.87]
+                hover:bg-gradient-to-b from-[#870049] to-[#340362]">
+    <div className="flex justify-between m-3 profileCardUpperSection">
+        <div className='flex justify-start'>
+      <div className="w-[20%] mr-3">
+        <img src="/images/avatar.png" alt="avatar" />
+      </div>
+      <div className=" socialIcons">
+        <h3 className="text-[#fff] mb-0 text-base ">Vansh Verma</h3>
+        <div className="flex justify-start ">
+          <AiOutlineMail size={18} className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-1" />
+          <AiFillLinkedin size={18} className="text-[#fff]  text-lg sm:text-2xl mt-1 mr-1" />
+          <AiFillTwitterSquare size={18} className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-1" />
         </div>
-        <div className='flex sm:justify-end justify-center sm:mt-[2rem] mt-[5rem] sm:-mb-3'>
-          <button className='bg-[#E40E82] opacity-20 flex items-center justify-between w-fit  rounded-2xl px-3 py-2 font-medium'>Send Proposal <BsFillArrowRightCircleFill size={20} className='ml-2' /></button>
+      </div>
+      </div>
+      <div><HiCheckCircle size={25} color='#06DBEE'/></div>
+    </div>
+    <div className='m-4'>
+    Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
+
+
+    </div>
+  </div>
+      
+           {/* card  */}
+           <div className="profileCard h-fit rounded-lg w-[100%] md:w-[90%] lg:w-[80%] mt-[1rem] mb-4rem pb-[1rem] pt-[1rem] text-sm
+                bg-[#ffffff21] opacity-[0.87]
+                hover:bg-gradient-to-b from-[#870049] to-[#340362]">
+    <div className="flex justify-between m-3 profileCardUpperSection">
+        <div className='flex justify-start'>
+      <div className="w-[20%] mr-3">
+        <img src="/images/avatar.png" alt="avatar" />
+      </div>
+      <div className=" socialIcons">
+        <h3 className="text-[#fff] mb-0 text-base ">Vansh Verma</h3>
+        <div className="flex justify-start ">
+          <AiOutlineMail size={18} className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-1" />
+          <AiFillLinkedin size={18} className="text-[#fff]  text-lg sm:text-2xl mt-1 mr-1" />
+          <AiFillTwitterSquare size={18} className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-1" />
         </div>
+      </div>
+      </div>
+      <div><HiCheckCircle size={25} color='#06DBEE'/></div>
+    </div>
+    <div className='m-4'>
+    Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
+
+
+    </div>
+  </div>
+          {/* card  */}
+          <div className="profileCard h-fit rounded-lg w-[100%] md:w-[90%] lg:w-[80%] mt-[1rem] mb-4rem pb-[1rem] pt-[1rem] text-sm
+                bg-[#ffffff21] opacity-[0.87]
+                hover:bg-gradient-to-b from-[#870049] to-[#340362]">
+    <div className="flex justify-between m-3 profileCardUpperSection">
+        <div className='flex justify-start'>
+      <div className="w-[20%] mr-3">
+        <img src="/images/avatar.png" alt="avatar" />
+      </div>
+      <div className=" socialIcons">
+        <h3 className="text-[#fff] mb-0 text-base ">Vansh Verma</h3>
+        <div className="flex justify-start ">
+          <AiOutlineMail size={18} className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-1" />
+          <AiFillLinkedin size={18} className="text-[#fff]  text-lg sm:text-2xl mt-1 mr-1" />
+          <AiFillTwitterSquare size={18} className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-1" />
+        </div>
+      </div>
+      </div>
+      <div><HiCheckCircle size={25} color='#06DBEE'/></div>
+    </div>
+    <div className='m-4'>
+    Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
+
+
+    </div>
+  </div>
+          {/* card  */}
+          <div className="profileCard h-fit rounded-lg w-[100%] md:w-[90%] lg:w-[80%] mt-[1rem] mb-4rem pb-[1rem] pt-[1rem] text-sm
+                bg-[#ffffff21] opacity-[0.87]
+                hover:bg-gradient-to-b from-[#870049] to-[#340362]">
+    <div className="flex justify-between m-3 profileCardUpperSection">
+        <div className='flex justify-start'>
+      <div className="w-[20%] mr-3">
+        <img src="/images/avatar.png" alt="avatar" />
+      </div>
+      <div className=" socialIcons">
+        <h3 className="text-[#fff] mb-0 text-base ">Vansh Verma</h3>
+        <div className="flex justify-start ">
+          <AiOutlineMail size={18} className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-1" />
+          <AiFillLinkedin size={18} className="text-[#fff]  text-lg sm:text-2xl mt-1 mr-1" />
+          <AiFillTwitterSquare size={18} className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-1" />
+        </div>
+      </div>
+      </div>
+      <div><HiCheckCircle size={25} color='#06DBEE'/></div>
+    </div>
+    <div className='m-4'>
+    Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
+
+
+    </div>
+  </div>
+  </div>
+        </div>
+      
       </div>
     </div>
   )

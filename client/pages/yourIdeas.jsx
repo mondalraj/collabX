@@ -42,9 +42,9 @@ const YourIdeas = () => {
           </div>
           <div className='w-[30%]'>
             <ul className='flex justify-between font-medium text-white '>
-            <li><Link href="/listView">Profile</Link></li>
-              <li><Link href="/projectIdeas">Ideas</Link></li>
-                <li>Showcases</li>
+            <li ><Link className="text-white" href="/listView" >Profile</Link></li>
+              <li ><Link className="text-white" href="/projectIdeas">Ideas</Link></li>
+              <li ><Link className="text-white" href="/yourIdeas">Showcases</Link></li>
             </ul>
           </div>
           <div  className='flex items-center'>
@@ -183,7 +183,7 @@ const YourIdeas = () => {
                      </div>
                    
                 </div>
-                <div className='flex items-center justify-center bg-[#01002a] text-[#05EAFA] mt-2 mx-1 rounded-xl text-sm p-2'> View Idea <BiChevronRight color='#05EAFA'/></div>
+                <Link href="/ownerIdea"><div className='flex items-center justify-center bg-[#01002a] text-[#05EAFA] mt-2 mx-1 rounded-xl text-sm p-2'> View Idea <BiChevronRight color='#05EAFA'/></div></Link>
                </div>
                    {/* card  */}
                    <div className=' bg-gradient-to-b from-[#23094E] to-[#000000] p-2 pb-4 rounded-xl mb-8'> 
@@ -207,7 +207,7 @@ const YourIdeas = () => {
                      </div>
                    
                 </div>
-                <div className='flex items-center justify-center bg-[#01002a] text-[#05EAFA] mt-2 mx-1 rounded-xl text-sm p-2'> View Idea <BiChevronRight color='#05EAFA'/></div>
+               <Link href="/ownerIdea"> <div className='flex items-center justify-center bg-[#01002a] text-[#05EAFA] mt-2 mx-1 rounded-xl text-sm p-2'> View Idea <BiChevronRight color='#05EAFA'/></div></Link>
                </div>
             </div>}
         </div>
@@ -300,7 +300,7 @@ const YourIdeas = () => {
                      </div>
                    
                 </div>
-                <div className='flex items-center justify-center bg-[#01002a] text-[#05EAFA] mt-2 mx-1 rounded-xl text-sm p-2'> View Idea <BiChevronRight color='#05EAFA'/></div>
+                <Link href="/ownerIdea"><div className='flex items-center justify-center bg-[#01002a] text-[#05EAFA] mt-2 mx-1 rounded-xl text-sm p-2'> View Idea <BiChevronRight color='#05EAFA'/></div></Link>
                </div>
                    {/* card  */}
                    <div className=' bg-gradient-to-b from-[#23094E] to-[#000000] p-2 pb-4 rounded-xl mb-8'> 
@@ -324,7 +324,7 @@ const YourIdeas = () => {
                      </div>
                    
                 </div>
-                <div className='flex items-center justify-center bg-[#01002a] text-[#05EAFA] mt-2 mx-1 rounded-xl text-sm p-2'> View Idea <BiChevronRight color='#05EAFA'/></div>
+                <Link href="/ownerIdea">  <div className='flex items-center justify-center bg-[#01002a] text-[#05EAFA] mt-2 mx-1 rounded-xl text-sm p-2'> View Idea <BiChevronRight color='#05EAFA'/></div></Link>
                </div>
             </div>
             <div className='sm:w-[49%] sm:bg-[#01002a] rounded-2xl p-6'>
