@@ -47,10 +47,10 @@ const GetProfile = () => {
             <div className="h-12 p-2 socialIcons sm:pl-[8px]">
             <h3 className='text-[#fff] pl-[5px] sm:pl-[1px]'>Social Media</h3>
             <div className="flex  socialIcons2  pl-[3px] sm:pl-[1px]">
-            <AiOutlineMail className='text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-3'/>
-            <AiFillLinkedin className='text-[#fff]  text-lg sm:text-2xl mt-1 mr-3'/>
-            <AiFillTwitterSquare className='text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-3'/>
-            <button class="inline-flex items-center rounded-3xl bg-secondary px-2 py-1  text-xs text-white hover:bg-indigo-500">
+            <AiOutlineMail className='text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-3 cursor-pointer'/>
+            <AiFillLinkedin className='text-[#fff]  text-lg sm:text-2xl mt-1 mr-3 cursor-pointer'/>
+            <AiFillTwitterSquare className='text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-3 cursor-pointer'/>
+            <button class="inline-flex items-center rounded-3xl bg-[#E40E82] px-2 py-1  text-xs text-white hover:bg-indigo-500">
                 Share Profile
                 <IoIosShareAlt size={17} className='ml-1'/>
             </button>  

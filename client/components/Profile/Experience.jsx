@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { useState } from "react";
 import { AiFillPlusCircle,AiFillCaretLeft } from "react-icons/ai";
 const Experience = ({setSection,setProgress}) => {
@@ -163,6 +164,13 @@ const Experience = ({setSection,setProgress}) => {
           Prev
           <AiFillCaretLeft className="inline-block ml-2" />
         </h3>
+        <button className="  text-white font-semibold bg-[#E40E82] flex items-center px-3 py-1 rounded-xl -ml-3">Submit  <Image
+            src="/images/submitIcon.png"
+            width="15"
+            height="15"
+            alt="submit"
+            className="mt-1 ml-1"
+          /></button>
       </div>
     </>
   );

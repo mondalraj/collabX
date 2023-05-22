@@ -54,13 +54,9 @@ const ProjectIdeas = () => {
           </div>
           <div className="w-[30%]">
             <ul className="flex justify-between font-medium text-white ">
-              <li>
-                <Link href="/listView">Profile</Link>
-              </li>
-              <li>
-                <Link href="/projectIdeas">Ideas</Link>
-              </li>
-              <li>Showcases</li>
+            <li ><Link className="text-white" href="/listView" >Profile</Link></li>
+              <li ><Link className="text-white" href="/projectIdeas">Ideas</Link></li>
+              <li ><Link className="text-white" href="/yourIdeas">Showcases</Link></li>
             </ul>
           </div>
           <div className="flex items-center">
