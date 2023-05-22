@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Input } from 'semantic-ui-react'
+import 'semantic-ui-css/semantic.min.css';
+
 import {
   AiOutlineWallet,
   AiOutlineMail,
@@ -16,6 +18,7 @@ import {
   TbSearch,
 } from "react-icons/tb";
 import Link from "next/link";
+import Profile from "./profile";
 const ListView = () => {
   const [showYours, setShowYours] = useState(false);
   const [showOthers, setShowOthers] = useState(false);
@@ -30,7 +33,7 @@ const ListView = () => {
     setPhonenav(!phonenav);
   };
   return (
-    <div className="container1 h-[100%]">
+    <div className="container1 h-[100%] bg-gradient-to-b sm:bg-gradient-to-r from-[#23094E] from-0% to-black to-100%">
       <div
         className="listViewUpperSection pb-8 
         sm:pb-[4rem] rounded-b-[1rem] sm:rounded-b-[4rem]"
@@ -111,12 +114,21 @@ const ListView = () => {
             </button>
           </div>
         </div>
+
+                {/* opennedNav in phn */}
+      {phonenav &&   <div className='relative z-10 w-full ' >
+        <ul className='absolute flex-col items-center justify-between w-full bg-opacity-90  font-medium text-center text-white bg-[#E40E82]'>
+        <Link href="/listView"> <li className='p-3 text-white border-b-2 border-black '>Profiles</li></Link>
+               <Link href="/projectIdeas"> <li className='p-3 text-white border-b-2 border-black '>Ideas</li></Link>
+               <Link href="/yourIdeas">  <li className='p-3 text-white border-b-2 border-black'>Showcases</li></Link>
+            </ul>
+        </div>}
       </div>
 
       <div className="cardsBackground w-[90%] m-auto bg-[#01002a] pt-[10px] pb-[10px] pl-[10px] pr-[10px] sm:p-5 ">
-      <div className='flex items-center w-full  sm:w-[60%] mb-4 m-auto '>
-        <Input icon='search' placeholder='Search Profile' className='w-[90%] m-4 ml-6 p-3' />
-        <AiOutlineSearch size={30} color='#fff' className='mr-4 rounded-full ' />
+       {/* search  */}
+       <div className='flex items-center w-full mb-4 justify-evenly'>
+        <Input icon='search' placeholder='Search by project Ideas or by tags' className='sm:w-[40%] w-[70%] m-4 ml-6' />
         </div>
         <div className="grid grid-cols-1 gap-8 cardsCollection sm:grid-cols-2 lg:grid-cols-3">
       <div className="profileCard rounded-lg w-[100%] md:w-[90%] lg:w-[80%] mt-[1rem] mb-4rem pb-[1rem] pt-[1rem] text-sm
@@ -169,8 +181,9 @@ const ListView = () => {
         </div>
       </div>
       <div className="viewProfile bg-[#01002A] ml-[1.25rem] mr-[1.25rem] mt-2 p-5 rounded-[1rem] flex justify-between">
+       <Link href="/profile" className="flex justify-between w-full">
         <h3 className="text-lg text-[#05eafa]">View Profile</h3>
-        <AiOutlineRight className="text-[#05eafa] mt-2" />
+        <AiOutlineRight className="text-[#05eafa] mt-2" /></Link>
       </div>
     </div>
   </div>
@@ -225,8 +238,9 @@ const ListView = () => {
         </div>
       </div>
       <div className="viewProfile bg-[#01002A] ml-[1.25rem] mr-[1.25rem] mt-2 p-5 rounded-[1rem] flex justify-between">
+      <Link href="/profile" className="flex justify-between w-full">
         <h3 className="text-lg text-[#05eafa]">View Profile</h3>
-        <AiOutlineRight className="text-[#05eafa] mt-2" />
+        <AiOutlineRight className="text-[#05eafa] mt-2" /></Link>
       </div>
     </div>
   </div>
@@ -280,8 +294,9 @@ const ListView = () => {
         </div>
       </div>
       <div className="viewProfile bg-[#01002A] ml-[1.25rem] mr-[1.25rem] mt-2 p-5 rounded-[1rem] flex justify-between">
+      <Link href="/profile" className="flex justify-between w-full">
         <h3 className="text-lg text-[#05eafa]">View Profile</h3>
-        <AiOutlineRight className="text-[#05eafa] mt-2" />
+        <AiOutlineRight className="text-[#05eafa] mt-2" /></Link>
       </div>
     </div>
   </div>

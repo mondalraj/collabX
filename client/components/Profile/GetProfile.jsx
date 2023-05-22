@@ -14,7 +14,7 @@ const GetProfile = () => {
 
      
     return (
-    <div className='container1 '>
+    <div className='container1 bg-gradient-to-r from-[#2A064B] from-50% to-[#030C30] t0-50%'>
         {/* upper section */}
         <div className="profileUpperSection pb-8 
         sm:pb-[4rem] rounded-b-[1rem] sm:rounded-b-[4rem]" style={{background: "linear-gradient(171deg, rgba(0, 0, 0, 0.1352) 57.31%, rgba(228, 14, 130, 0.1248) 95.07%)"}}>
