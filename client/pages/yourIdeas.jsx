@@ -13,6 +13,7 @@ const YourIdeas = () => {
   const [showYours,setShowYours]=useState(false);
   const [showOthers,setShowOthers]=useState(false);
   const [phonenav,setPhonenav]=useState(false);
+  const [modalClick,setModalClick]=useState(false)
   const changeYours=()=>{
      setShowYours(!showYours);
   }
@@ -21,6 +22,9 @@ const YourIdeas = () => {
   }
   const openNav=()=>{
   setPhonenav(!phonenav);
+  }
+  const openModal=()=>{
+    setModalClick(!modalClick)
   }
   return (
     <div
@@ -102,16 +106,45 @@ const YourIdeas = () => {
           {/* search  */}
           <div className='flex items-center w-full mb-4 justify-evenly sm:hidden'>
         <Input icon='search' placeholder='Search by project Ideas or by tags' className='w-[70%] m-4 ml-6' />
-        <AiFillPlusCircle size={45} color='#E40E82' className='mr-4 border-4 border-[#ffffff] border-opacity-[0.16] rounded-full ' />
+        <AiFillPlusCircle size={45} color='#E40E82'  onClick={openModal} className='mr-4 border-4 border-[#ffffff] border-opacity-[0.16] rounded-full cursor-pointer' />
         </div>
          {/* opennedNav in phn */}
       {phonenav &&   <div className='relative w-full ' >
         <ul className='absolute flex-col items-center justify-between w-full bg-opacity-90  font-medium text-center text-white bg-[#E40E82]'>
-                <li className='p-3 border-b-2 border-black '>Profiles</li>
-                <li className='p-3 border-b-2 border-black '>Ideas</li>
-                <li className='p-3 border-b-2 border-black '>Showcases</li>
+        <Link href="/listView"> <li className='p-3 text-white border-b-2 border-black '>Profiles</li></Link>
+               <Link href="/projectIdeas"> <li className='p-3 text-white border-b-2 border-black '>Ideas</li></Link>
+               <Link href="/yourIdeas">  <li className='p-3 text-white border-b-2 border-black'>Showcases</li></Link>
             </ul>
         </div>}
+
+   {/* Modal */}
+   {modalClick && <div className="absolute z-10 w-[97%]">   <div className= ' text-white bg-black bg-opacity-60 w-[100%] h-[80vh] flex flex-col items-center'>
+    <div onClick={openModal} className='flex justify-end w-full px-6 pt-4 text-xl font-semibold cursor-pointer'>✕</div>
+    <div className=' flex flex-col items-center justify-center w-[70%] text-sm font-semibold'>
+        <h1 className='mb-2 text-xl font-semibold'>Create Project Idea</h1>
+        <div className='w-full m-2'>
+            <p>Project Name</p>
+            <input className='w-full py-1 my-1 bg-black border-[0.05rem] rounded-md font-normal text-gray-300' type="text" />
+        </div>
+        <div className='w-full m-2'>
+            <p>Description</p>
+            <textarea className='w-full my-1 rounded-md bg-black border-[0.05rem] font-normal text-gray-300' name="" id="" cols="30" rows="6"></textarea>
+        </div>
+        <div className='w-full m-2'>
+            <p>Skillset Required</p>
+            <input className='w-full py-1 my-1 rounded-md bg-black border-[0.05rem] font-normal text-gray-300' type="text" />
+        </div>
+        <div className='w-full m-2'>
+           <div className='flex'><p className='pr-1'>Url </p><p className='font-normal text-gray-300'> (optional)</p></div> 
+            <input className='w-full py-1 my-1 rounded-md bg-black border-[0.05rem] font-normal text-gray-300' type="text" />
+        </div>
+        <div className='flex justify-end w-full m-2 mb-4 '><button className="bg-[#E40E82] py-1 px-4 rounded-xl font-semibold">CREATE</button></div>
+        </div>    
+    </div></div> } 
+
+
+
+
         {/* second-section */}
         <div className='block h-full text-white sm:hidden '>
           {/* if  */}
@@ -209,7 +242,7 @@ const YourIdeas = () => {
                      </div>
                    
                 </div>
-                <div className='flex items-center justify-center bg-[#01002a] text-[#05EAFA] mt-2 mx-1 rounded-xl text-sm p-2'> View Idea <BiChevronRight color='#05EAFA'/></div>
+                <Link href="/viewIdea">  <div className='flex items-center justify-center bg-[#01002a] text-[#05EAFA] mt-2 mx-1 rounded-xl text-sm p-2'> View Idea <BiChevronRight color='#05EAFA'/></div></Link>
                </div>
                  {/* card  */}
                  <div className=' bg-gradient-to-b from-[#23094E] to-[#000000] p-2 pb-4 rounded-xl mb-8'> 
@@ -233,7 +266,7 @@ const YourIdeas = () => {
                      </div>
                    
                 </div>
-                <div className='flex items-center justify-center bg-[#01002a] text-[#05EAFA] mt-2 mx-1 rounded-xl text-sm p-2'> View Idea <BiChevronRight color='#05EAFA'/></div>
+                <Link href="/viewIdea"> <div className='flex items-center justify-center bg-[#01002a] text-[#05EAFA] mt-2 mx-1 rounded-xl text-sm p-2'> View Idea <BiChevronRight color='#05EAFA'/></div></Link>
                </div>
             </div>}
         </div>
@@ -243,7 +276,7 @@ const YourIdeas = () => {
              <div className='sm:w-[49%] sm:bg-[#01002a] rounded-2xl p-6'>
                 <div className='flex justify-center'>
                <p className=' sm:block hidden mb-6 w-[90%]'>Created by you</p> 
-               <AiFillPlusCircle size={40} color='#E40E82' className='sm:block hidden border-4 border-[#ffffff] border-opacity-[0.16]  rounded-full ' />
+               <AiFillPlusCircle size={40} onClick={openModal} color='#E40E82' className='sm:block hidden border-4 border-[#ffffff] border-opacity-[0.16]  rounded-full cursor-pointer' />
                </div>
                {/* card  */}
                <div className=' bg-gradient-to-b from-[#23094E] to-[#000000] p-2 pb-4 rounded-xl mb-8'> 
@@ -318,7 +351,7 @@ const YourIdeas = () => {
                      </div>
                    
                 </div>
-                <div className='flex items-center justify-center bg-[#01002a] text-[#05EAFA] mt-2 mx-1 rounded-xl text-sm p-2'> View Idea <BiChevronRight color='#05EAFA'/></div>
+               <Link href="/viewIdea"> <div className='flex items-center justify-center bg-[#01002a] text-[#05EAFA] mt-2 mx-1 rounded-xl text-sm p-2'> View Idea <BiChevronRight color='#05EAFA'/></div></Link>
                </div>
                  {/* card  */}
                  <div className=' bg-gradient-to-b from-[#23094E] to-[#000000] p-2 pb-4 rounded-xl mb-8'> 
@@ -342,7 +375,7 @@ const YourIdeas = () => {
                      </div>
                    
                 </div>
-                <div className='flex items-center justify-center bg-[#01002a] text-[#05EAFA] mt-2 mx-1 rounded-xl text-sm p-2'> View Idea <BiChevronRight color='#05EAFA'/></div>
+              <Link href="/viewIdea">  <div className='flex items-center justify-center bg-[#01002a] text-[#05EAFA] mt-2 mx-1 rounded-xl text-sm p-2'> View Idea <BiChevronRight color='#05EAFA'/></div></Link>
                </div>
             </div>
         </div>
