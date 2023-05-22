@@ -1,26 +1,65 @@
-import Link from 'next/link'
-import React from 'react'
+import {
+  ConnectWallet,
+  Web3Button,
+  useAddress,
+  useContract,
+  useNFT,
+  useNFTBalance,
+} from "@thirdweb-dev/react";
+
+const tokenId = 0;
 
 const LandingPage = () => {
+  const address = useAddress();
+
+  const { contract: editionDrop } = useContract(
+    "0x13f7AB181F1371fb1ea1f019e4DC120B26A62033"
+  );
+
+  const { data: nft, isLoading, error } = useNFT(editionDrop, tokenId);
+
+  const {
+    data: NFTBalance,
+    isLoading: isLoadingNFTBalance,
+    error: NFTBalanceError,
+  } = useNFTBalance(editionDrop, address, tokenId);
+
+  if (isLoading) return <div>Fetching NFT…</div>;
+  if (error) return <div>Error fetching NFT</div>;
+
   return (
     <>
-      <div className="p-10 text-center conatiner1">
-      <div className='text-[#897878] text-3xl font-bold'>CollabX </div>
-      <Link href="#my-modal-2" className="mt-5 btn">open modal</Link>
-      <div className="modal" id="my-modal-2"  >
-        <div className="modal-box">
-          <h3 className="text-lg font-bold">Congratulations random Internet user!</h3>
-          <p className="py-4">You &apos ve been selected for a chance to get one year of subscription to use Wikipedia for free!</p>
-          <div className="modal-action"> 
-          <Link href="#" className="btn">Yay!</Link>
-          </div>
-        </div>
-      </div>
+      <div>
+        <ConnectWallet theme="dark" btnTitle="Connect Wallet" />
+        {Number(NFTBalance) > 0 ? (
+          "You owned NFT! Enter CollabX"
+        ) : (
+          // "Claim your Free NFT to enter CollabX"
+          <Web3Button
+            contractAddress={editionDrop?.getAddress() || ""}
+            action={(cntr) => cntr.erc1155.claim(tokenId, 1)}
+            onError={(err) => {
+              console.error(err);
+              alert("Error claiming NFTs");
+            }}
+            onSuccess={() => {
+              alert("Successfully claimed NFTs");
+            }}
+          >
+            {isLoadingNFTBalance
+              ? "Loading..."
+              : "Claim your Free NFT to enter CollabX"}
+          </Web3Button>
+        )}
+        {isLoading ? (
+          <div>Fetching NFT…</div>
+        ) : (
+          <div>NFT: {nft.metadata.name}</div>
+        )}
+        {error && <div>Error fetching NFT</div>}
       </div>
     </>
+  );
+};
 
-    
-  )
-}
-
-export default LandingPage
+export default LandingPage;
