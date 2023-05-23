@@ -1,7 +1,14 @@
 import Image from "next/image";
-import React, { useState } from "react";
-import { AiFillPlusCircle,AiFillCaretLeft } from "react-icons/ai";
-const Experience = ({setSection,setProgress}) => {
+import { useState } from "react";
+import { AiFillCaretLeft, AiFillPlusCircle } from "react-icons/ai";
+var arr = [];
+const Experience = ({
+  setSection,
+  setProgress,
+  formData,
+  setFormData,
+  experience,
+}) => {
   const [expCount, setExpCount] = useState(1);
   const [experienceFields, setExperienceFields] = useState([
     {
@@ -153,24 +160,39 @@ const Experience = ({setSection,setProgress}) => {
           </>
         );
       })}
+
+      {experienceFields.map((form, index) => {
+        experience = {
+          companyName: form.company,
+          role: form.title,
+          startDate: form.stDate,
+          endDate: form.edDate,
+          description: form.expDescription,
+        };
+        arr.push(experience);
+      })}
+      {setFormData({ ...formData, workExperience: arr })}
+
       <div className="flex justify-between pt-3 pb-3 pl-5 pr-5 nextPrevButton sm:hidden">
         <h3
           className="text-[#fff] text-lg "
           onClick={() => {
-            setSection("Project"),
-            setProgress(75)
+            setSection("Project"), setProgress(75);
           }}
         >
           Prev
           <AiFillCaretLeft className="inline-block ml-2" />
         </h3>
-        <button className="  text-white font-semibold bg-[#E40E82] flex items-center px-3 py-1 rounded-xl -ml-3">Submit  <Image
+        <button className="  text-white font-semibold bg-[#E40E82] flex items-center px-3 py-1 rounded-xl -ml-3">
+          Submit{" "}
+          <Image
             src="/images/submitIcon.png"
             width="15"
             height="15"
             alt="submit"
             className="mt-1 ml-1"
-          /></button>
+          />
+        </button>
       </div>
     </>
   );
