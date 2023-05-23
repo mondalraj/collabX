@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
-  AiFillPlusCircle,
   AiFillCaretLeft,
   AiFillCaretRight,
+  AiFillPlusCircle,
 } from "react-icons/ai";
-
-const Projects = ({setSection,setProgress}) => {
+let arr = [];
+const Projects = ({
+  setSection,
+  setProgress,
+  formData,
+  setFormData,
+  projectData,
+}) => {
   const [projectCount, setProjectCount] = useState(1);
   const [formFields, setFormFields] = useState([
     {
@@ -156,12 +162,22 @@ const Projects = ({setSection,setProgress}) => {
           </>
         );
       })}
+      {formFields.map((form, index) => {
+        projectData = {
+          name: form.title,
+          description: form.description,
+          duration: form.duration,
+          link: form.link,
+          techStack: form.tech,
+        };
+        arr.push(projectData);
+      })}
+      {setFormData({ ...formData, projects: arr })}
       <div className="flex justify-between pt-3 pb-3 pl-5 pr-5 nextPrevButton sm:hidden">
         <h3
           className="text-[#fff] text-lg "
           onClick={() => {
-            setSection("Skills")
-            ,setProgress(50)
+            setSection("Skills"), setProgress(50);
           }}
         >
           Prev
@@ -170,8 +186,7 @@ const Projects = ({setSection,setProgress}) => {
         <h3
           className="text-[#fff] text-lg"
           onClick={() => {
-            setSection("Experience")
-            ,setProgress(100)
+            setSection("Experience"), setProgress(100);
           }}
         >
           Next

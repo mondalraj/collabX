@@ -50,7 +50,7 @@ const GetProfile = () => {
             <AiOutlineMail className='text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-3 cursor-pointer'/>
             <AiFillLinkedin className='text-[#fff]  text-lg sm:text-2xl mt-1 mr-3 cursor-pointer'/>
             <AiFillTwitterSquare className='text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-3 cursor-pointer'/>
-            <button class="inline-flex items-center rounded-3xl bg-[#E40E82] px-2 py-1  text-xs text-white hover:bg-indigo-500">
+            <button className="inline-flex items-center rounded-3xl bg-[#E40E82] px-2 py-1  text-xs text-white hover:bg-indigo-500">
                 Share Profile
                 <IoIosShareAlt size={17} className='ml-1'/>
             </button>  
