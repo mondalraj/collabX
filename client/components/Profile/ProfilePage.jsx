@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState,useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   AiFillLinkedin,
   AiFillTwitterSquare,
@@ -40,7 +40,6 @@ const ProfilePage = () => {
   const [modalClickName, setModalClickName] = useState(false);
   const [formData, setFormData] = useState(initialState);
 
-  
   const openModal = () => {
     setModalClick(!modalClick);
   };
@@ -52,8 +51,8 @@ const ProfilePage = () => {
   };
   useEffect(() => {
     console.log(formData);
-  }, [])
-  
+  }, []);
+
   return (
     <div className="container1 h-[100vh] ">
       {/* upper section */}
@@ -255,7 +254,7 @@ const ProfilePage = () => {
           ></progress>
           {progress === 100 && (
             <button
-              onSubmit={formSubmit}
+              onSubmit={() => formSubmit()}
               className="  text-white font-semibold bg-[#E40E82] hidden sm:flex sm:items-center px-3 py-1 rounded-xl -ml-6 -mt-1"
             >
               Submit{" "}
@@ -381,29 +380,25 @@ const ProfilePage = () => {
           </div>
         </div>
 
-        {section === "Bio" ? (
+        {section === "Bio" && (
           <Bio
             section={section}
             setSection={setSection}
             progress={progress}
             setProgress={setProgress}
           />
-        ) : (
-          ""
         )}
 
-        {section === "Skills" ? (
+        {section === "Skills" && (
           <Skills
             setSection={setSection}
             setProgress={setProgress}
             formData={formData}
             setFormData={setFormData}
           />
-        ) : (
-          ""
         )}
 
-        {section === "Project" ? (
+        {section === "Project" && (
           <Projects
             setSection={setSection}
             setProgress={setProgress}
@@ -411,11 +406,9 @@ const ProfilePage = () => {
             setFormData={setFormData}
             projectData={projectData}
           />
-        ) : (
-          ""
         )}
 
-        {section === "Experience" ? (
+        {section === "Experience" && (
           <Experience
             setSection={setSection}
             setProgress={setProgress}
@@ -423,8 +416,6 @@ const ProfilePage = () => {
             setFormData={setFormData}
             experience={experience}
           />
-        ) : (
-          ""
         )}
       </div>
     </div>

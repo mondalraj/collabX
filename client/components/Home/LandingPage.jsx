@@ -6,6 +6,7 @@ import {
   useNFT,
   useNFTBalance,
 } from "@thirdweb-dev/react";
+import Link from "next/link";
 
 const tokenId = 0;
 
@@ -32,7 +33,7 @@ const LandingPage = () => {
       <div>
         <ConnectWallet theme="dark" btnTitle="Connect Wallet" />
         {Number(NFTBalance) > 0 ? (
-          "You owned NFT! Enter CollabX"
+          <Link href={"/projectIdeas"}>You owned NFT! Enter CollabX</Link>
         ) : (
           // "Claim your Free NFT to enter CollabX"
           <Web3Button

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AiFillCaretLeft,
   AiFillCaretRight,
@@ -23,6 +23,11 @@ const Projects = ({
       projectCount: projectCount,
     },
   ]);
+
+  useEffect(() => {
+    setFormData({ ...formData, projects: arr });
+  }, [arr]);
+
   const handleTitle = (event, index) => {
     let data = [...formFields];
     data[index].title = event.target.value;
@@ -172,7 +177,7 @@ const Projects = ({
         };
         arr.push(projectData);
       })}
-      {setFormData({ ...formData, projects: arr })}
+      {/* {setFormData({ ...formData, projects: arr })} */}
       <div className="flex justify-between pt-3 pb-3 pl-5 pr-5 nextPrevButton sm:hidden">
         <h3
           className="text-[#fff] text-lg "

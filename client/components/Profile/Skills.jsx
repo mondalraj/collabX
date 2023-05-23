@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 
 const options = [
@@ -10,6 +10,10 @@ const options = [
 const Skills = ({ setSection, setProgress, formData, setFormData }) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [customOption, setCustomOption] = useState("");
+
+  useEffect(() => {
+    setFormData({ ...formData, skills: selectedOptions });
+  }, [selectedOptions]);
 
   const handleSelectOption = (event) => {
     const selectedValue = event.target.value;
@@ -82,10 +86,9 @@ const Skills = ({ setSection, setProgress, formData, setFormData }) => {
                 >
                   x
                 </button>
-               
               </span>
             ))}
-             {setFormData({ ...formData, skills: selectedOptions })}
+            {/* {setFormData({ ...formData, skills: selectedOptions })} */}
           </div>
         </div>
       </div>

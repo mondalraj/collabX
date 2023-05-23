@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiFillCaretLeft, AiFillPlusCircle } from "react-icons/ai";
-var arr = [];
+let arr = [];
 const Experience = ({
   setSection,
   setProgress,
@@ -20,6 +20,11 @@ const Experience = ({
       expCount: expCount,
     },
   ]);
+
+  useEffect(() => {
+    setFormData({ ...formData, workExperience: arr });
+  }, [arr]);
+
   const handleEXpTitle = (event, index) => {
     let data = [...experienceFields];
     data[index].title = event.target.value;
@@ -171,7 +176,7 @@ const Experience = ({
         };
         arr.push(experience);
       })}
-      {setFormData({ ...formData, workExperience: arr })}
+      {/* {setFormData({ ...formData, workExperience: arr })} */}
 
       <div className="flex justify-between pt-3 pb-3 pl-5 pr-5 nextPrevButton sm:hidden">
         <h3
