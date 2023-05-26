@@ -98,8 +98,11 @@ contract UserProfileContract {
         string[] memory _skills,
         Project[] memory _projects,
         WorkExperience[] memory _workExperience
-    ) public returns (Profile memory){
-        require(profiles[msg.sender].wallet != address(0), "Profile doesn't exist");
+    ) public returns (Profile memory) {
+        require(
+            profiles[msg.sender].wallet != address(0),
+            "Profile doesn't exist"
+        );
 
         Profile storage profileToUpdate = profiles[msg.sender];
         profileToUpdate.name = _name;
@@ -107,7 +110,7 @@ contract UserProfileContract {
         profileToUpdate.phone = _phone;
         profileToUpdate.twitterHandle = _twitterHandle;
         profileToUpdate.skills = _skills;
-        
+
         // Split the _projects array into individual elements
         for (uint i = 0; i < _projects.length; i++) {
             profileToUpdate.projects.push(
@@ -137,11 +140,16 @@ contract UserProfileContract {
     }
 
     function changeLastClaimed() public {
-        require(profiles[msg.sender].wallet != address(0), "Profile doesn't exist");
+        require(
+            profiles[msg.sender].wallet != address(0),
+            "Profile doesn't exist"
+        );
         profiles[msg.sender].lastClaimed = block.timestamp;
     }
 
-    function getProfileByAddress(address _wallet) public view returns (Profile memory) {
+    function getProfileByAddress(
+        address _wallet
+    ) public view returns (Profile memory) {
         return profiles[_wallet];
     }
 
@@ -162,7 +170,10 @@ contract UserProfileContract {
     }
 
     function upvoteProfile(address _wallet) public {
-        require(profiles[_wallet].wallet != address(0), "Profile doesn't exist");
+        require(
+            profiles[_wallet].wallet != address(0),
+            "Profile doesn't exist"
+        );
         profiles[_wallet].upvote_count++;
     }
 }

@@ -47,7 +47,7 @@ const ProfilePage = () => {
     setModalClickName(!modalClickName);
   };
   const formSubmit = () => {
-    console.log(formData);
+    console.log("formdata", formData);
   };
   useEffect(() => {
     console.log(formData);
@@ -254,7 +254,7 @@ const ProfilePage = () => {
           ></progress>
           {progress === 100 && (
             <button
-              onSubmit={() => formSubmit()}
+              onClick={() => formSubmit()}
               className="  text-white font-semibold bg-[#E40E82] hidden sm:flex sm:items-center px-3 py-1 rounded-xl -ml-6 -mt-1"
             >
               Submit{" "}
