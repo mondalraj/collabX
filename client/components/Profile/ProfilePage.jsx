@@ -15,23 +15,11 @@ import Skills from "./Skills";
 const initialState = {
   name: "Enter Your Name",
   twitterHandle: "",
+  phone:"",
+  gmail:"",
   skills: [],
   projects: [],
   workExperience: [],
-};
-const projectData = {
-  name: "",
-  description: "",
-  duration: "",
-  link: "",
-  techStack: "",
-};
-const experience = {
-  companyName: "",
-  role: "",
-  startDate: "",
-  endDate: "",
-  description: "",
 };
 const ProfilePage = () => {
   const [progress, setProgress] = useState(25);
@@ -40,6 +28,22 @@ const ProfilePage = () => {
   const [modalClickName, setModalClickName] = useState(false);
   const [formData, setFormData] = useState(initialState);
 
+  const [projects,setProjects] = useState([{
+    id:1,
+    name: "",
+    description: "",
+    duration: "",
+    link: "",
+    techStack: "",
+  }]) 
+  const [experience,setExperience]=useState([{
+    id:1,
+    companyName: "",
+    role: "",
+    startDate: "",
+    endDate: "",
+    description: "",
+  }])
   const openModal = () => {
     setModalClick(!modalClick);
   };
@@ -48,10 +52,24 @@ const ProfilePage = () => {
   };
   const formSubmit = () => {
     console.log("formdata", formData);
+    setProjects([{
+      id:1,
+      name: "",
+      description: "",
+      duration: "",
+      link: "",
+      techStack: [],
+    }])
+    setExperience([{
+      id:1,
+      companyName: "",
+      role: "",
+      startDate: "",
+      endDate: "",
+      description: "",
+    }])
   };
-  useEffect(() => {
-    console.log(formData);
-  }, []);
+
 
   return (
     <div className="container1 h-[100vh] ">
@@ -130,7 +148,7 @@ const ProfilePage = () => {
                 </div>
 
                 <div className="flex justify-end w-full m-2 mb-4 ">
-                  <button className="bg-[#E40E82] py-1 px-4 rounded-xl font-semibold">
+                  <button   onClick={openModalName} className="bg-[#E40E82] py-1 px-4 rounded-xl font-semibold">
                     SAVE
                   </button>
                 </div>
@@ -174,8 +192,12 @@ const ProfilePage = () => {
             </div>
             <div className="flex flex-col items-center justify-center text-sm font-semibold  w-[80%]">
               <div className="w-full m-2">
-                <p>LinkdIn</p>
+                <p>Phone Number</p>
                 <input
+                 value={formData.phone}
+                 onChange={(e) =>
+                   setFormData({ ...formData, phone: e.target.value })
+                 }
                   className="w-full py-1 my-1 bg-black border-[0.05rem] rounded-md font-normal text-gray-300"
                   type="text"
                 />
@@ -183,8 +205,12 @@ const ProfilePage = () => {
               <div className="w-full m-2">
                 <p>Gmail</p>
                 <input
+                 value={formData.gmail}
+                 onChange={(e) =>
+                   setFormData({ ...formData, gmail: e.target.value })
+                 }
                   className="w-full py-1 my-1 rounded-md bg-black border-[0.05rem] font-normal text-gray-300"
-                  type="text"
+                  type="email"
                 />
               </div>
               <div className="w-full m-2">
@@ -201,7 +227,7 @@ const ProfilePage = () => {
                 />
               </div>
               <div className="flex justify-end w-full m-2 mb-4 ">
-                <button className="bg-[#E40E82] py-1 px-4 rounded-xl font-semibold">
+                <button  onClick={openModal} className="bg-[#E40E82] py-1 px-4 rounded-xl font-semibold">
                   SAVE
                 </button>
               </div>
@@ -404,7 +430,8 @@ const ProfilePage = () => {
             setProgress={setProgress}
             formData={formData}
             setFormData={setFormData}
-            projectData={projectData}
+            projects={projects}
+            setProjects={setProjects}
           />
         )}
 
@@ -415,6 +442,7 @@ const ProfilePage = () => {
             formData={formData}
             setFormData={setFormData}
             experience={experience}
+            setExperience={setExperience}
           />
         )}
       </div>
