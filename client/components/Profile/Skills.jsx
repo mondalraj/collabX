@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import CreatableSelect from "react-select/creatable";
 
 const options = [
   { value: "Java", label: "Java" },
@@ -41,7 +42,7 @@ const Skills = ({ setSection, setProgress, formData, setFormData }) => {
   return (
     <>
       <div className="skillDetails w-[90%] sm:w-[60%] h-[40vh] m-auto mt-7 pt-2 sm:pt-2 bg-gradient-to-r from-[#36094e] to-[#280e55] rounded-lg ">
-        <div className="justify-between h-full upperPart">
+        {/* <div className="justify-between h-full upperPart">
           <div className=" flex sm:flex-row flex-col w-[100%] p-2">
             <div className="w-[70%] sm:ml-0 -ml-3 sm:w-[50%] p-4 text-red-500">
               <select
@@ -88,9 +89,22 @@ const Skills = ({ setSection, setProgress, formData, setFormData }) => {
                 </button>
               </span>
             ))}
-            {/* {setFormData({ ...formData, skills: selectedOptions })} */}
           </div>
-        </div>
+        </div> */}
+        <CreatableSelect
+          isMulti
+          options={options}
+          onChange={(value) => {
+            console.log(value);
+            // setData(
+            //   value.map((val) => {
+            //     return val.value;
+            //   })
+            // );
+
+            // data = string[]
+          }}
+        />
       </div>
       <div className="flex justify-between pt-3 pl-5 pr-5 nextPrevButton sm:hidden">
         <h3

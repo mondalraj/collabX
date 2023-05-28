@@ -155,7 +155,7 @@ const Projects = ({
                   <div className="pl-2 pr-2 m-auto mt-4 form3">
                     <label>Project description</label>
                     <textarea
-                      className="textarea textarea-lg w-[100%] m-auto rounded-lg text-black"
+                      className="textarea textarea-lg w-[100%] m-auto rounded-lg text-black bg-white"
                       placeholder="Write description about your project"
                       onChange={(event) => handleDescription(event, index)}
                       value={form.description}
