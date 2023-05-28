@@ -9,7 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@thirdweb-dev/react": "^3",
+    "@emotion/react": "^11.11.0",
+    "@mantine/core": "^6.0.11",
+    "@mantine/hooks": "^6.0.11",
+    "@thirdweb-dev/react": "^3.12.2",
     "@thirdweb-dev/sdk": "^3",
     "autoprefixer": "10.4.14",
     "daisyui": "^2.51.6",
