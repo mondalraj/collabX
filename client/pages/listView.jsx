@@ -1,24 +1,17 @@
-import React, { useState } from "react";
 import Image from "next/image";
-import { Input } from 'semantic-ui-react'
-import 'semantic-ui-css/semantic.min.css';
+import { useState } from "react";
+import "semantic-ui-css/semantic.min.css";
+import { Input } from "semantic-ui-react";
 
+import Link from "next/link";
 import {
-  AiOutlineWallet,
-  AiOutlineMail,
   AiFillLinkedin,
   AiFillTwitterSquare,
+  AiOutlineMail,
   AiOutlineRight,
-  AiOutlineSearch
 } from "react-icons/ai";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import {
-  TbTriangleFilled,
-  TbTriangleInvertedFilled,
-  TbSearch,
-} from "react-icons/tb";
-import Link from "next/link";
-import Profile from "./profile";
+import { TbTriangleFilled, TbTriangleInvertedFilled } from "react-icons/tb";
 const ListView = () => {
   const [showYours, setShowYours] = useState(false);
   const [showOthers, setShowOthers] = useState(false);
@@ -51,9 +44,21 @@ const ListView = () => {
           </div>
           <div className="w-[30%]">
             <ul className="flex justify-between font-medium text-white ">
-              <li ><Link className="text-white" href="/listView" >Profile</Link></li>
-              <li ><Link className="text-white" href="/projectIdeas">Ideas</Link></li>
-              <li ><Link className="text-white" href="/yourIdeas">Showcases</Link></li>
+              <li>
+                <Link className="text-white" href="/listView">
+                  Profile
+                </Link>
+              </li>
+              <li>
+                <Link className="text-white" href="/projectIdeas">
+                  Ideas
+                </Link>
+              </li>
+              <li>
+                <Link className="text-white" href="/yourIdeas">
+                  Showcases
+                </Link>
+              </li>
             </ul>
           </div>
           <div className="flex items-center">
@@ -115,192 +120,219 @@ const ListView = () => {
           </div>
         </div>
 
-                {/* opennedNav in phn */}
-      {phonenav &&   <div className='relative z-10 w-full ' >
-        <ul className='absolute flex-col items-center justify-between w-full bg-opacity-90  font-medium text-center text-white bg-[#E40E82]'>
-        <Link href="/listView"> <li className='p-3 text-white border-b-2 border-black '>Profiles</li></Link>
-               <Link href="/projectIdeas"> <li className='p-3 text-white border-b-2 border-black '>Ideas</li></Link>
-               <Link href="/yourIdeas">  <li className='p-3 text-white border-b-2 border-black'>Showcases</li></Link>
+        {/* opennedNav in phn */}
+        {phonenav && (
+          <div className="relative z-10 w-full ">
+            <ul className="absolute flex-col items-center justify-between w-full bg-opacity-90  font-medium text-center text-white bg-[#E40E82]">
+              <Link href="/listView">
+                {" "}
+                <li className="p-3 text-white border-b-2 border-black ">
+                  Profiles
+                </li>
+              </Link>
+              <Link href="/projectIdeas">
+                {" "}
+                <li className="p-3 text-white border-b-2 border-black ">
+                  Ideas
+                </li>
+              </Link>
+              <Link href="/yourIdeas">
+                {" "}
+                <li className="p-3 text-white border-b-2 border-black">
+                  Showcases
+                </li>
+              </Link>
             </ul>
-        </div>}
+          </div>
+        )}
       </div>
 
       <div className="cardsBackground w-[90%] m-auto bg-[#01002a] pt-[10px] pb-[10px] pl-[10px] pr-[10px] sm:p-5 ">
-       {/* search  */}
-       <div className='flex items-center w-full mb-4 justify-evenly'>
-        <Input icon='search' placeholder='Search by project Ideas or by tags' className='sm:w-[40%] w-[70%] m-4 ml-6' />
+        {/* search  */}
+        <div className="flex items-center w-full mb-4 justify-evenly">
+          <Input
+            icon="search"
+            placeholder="Search by project Ideas or by tags"
+            className="sm:w-[40%] w-[70%] m-4 ml-6"
+          />
         </div>
         <div className="grid grid-cols-1 gap-8 cardsCollection sm:grid-cols-2 lg:grid-cols-3">
-      <div className="profileCard rounded-lg w-[100%] md:w-[90%] lg:w-[80%] mt-[1rem] mb-4rem pb-[1rem] pt-[1rem] text-sm
+          <div
+            className="profileCard rounded-lg w-[100%] md:w-[90%] lg:w-[80%] mt-[1rem] mb-4rem pb-[1rem] pt-[1rem] text-sm
                 bg-[#ffffff21] opacity-[0.87]
-                hover:bg-gradient-to-b from-[#870049] to-[#340362]">
-    <div className="flex justify-around profileCardUpperSection">
-      <div className="w-[20%]">
-        <img src="/images/avatar.png" alt="avatar" />
-      </div>
-      <div className="h-12 socialIcons">
-        <h3 className="text-[#fff] ">Vansh Verma</h3>
-        <div className="flex justify-center socialIcons2 sm:justify-between ">
-          <AiOutlineMail className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-3" />
-          <AiFillLinkedin className="text-[#fff]  text-lg sm:text-2xl mt-1 mr-3" />
-          <AiFillTwitterSquare className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-3" />
-        </div>
-      </div>
-      <div className="upVoteCount bg-[#01002a] text-[#fff] rounded-full text-center w-[25%] sm:w-[20%] flex-col sm:text-2xl"
-      >
-        <TbTriangleFilled className="text-[#e40e82] m-auto" />
-        <h3 className="">120</h3>
-        <TbTriangleInvertedFilled className="m-auto" />
-      </div>
-    </div>
-    <div className="m-auto profileCardLowerSection">
-      <div className="personDetails flex-col sm:flex sm:flex-row pl-[1rem] pr-[1rem] sm:justify-around">
-        <div className="about bg-[#01002A] p-5 mt-2 rounded-[1rem] sm:w-[45%]">
-          <h3 className="text-lg text-[#05eafa]">About</h3>
-          <p className="text-[#fff]">
-            Amet minim mollit non deserunt ullamco est sit aliqua non
-            deserunt ullamco est sit aliqua{" "}
-          </p>
-        </div>
-        <div className="skills  bg-[#01002A] p-5 mt-2 rounded-[1rem] sm:w-[45%]">
-          <h3 className="text-lg text-[#05eafa]">Skills</h3>
-          <div className="mt-[1rem] grid grid-cols-2 sm:grid-cols-1 gap-4 text-[#fff]">
-            <div className="sm:w-[90%] p-1 px-2 border-2 border-[#e40e82] bg-[#311138] rounded-3xl">
-              #C++
+                hover:bg-gradient-to-b from-[#870049] to-[#340362]"
+          >
+            <div className="flex justify-around profileCardUpperSection">
+              <div className="w-[20%]">
+                <img src="/images/avatar.png" alt="avatar" />
+              </div>
+              <div className="h-12 socialIcons">
+                <h3 className="text-[#fff] ">Vansh Verma</h3>
+                <div className="flex justify-center socialIcons2 sm:justify-between ">
+                  <AiOutlineMail className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-3" />
+                  <AiFillLinkedin className="text-[#fff]  text-lg sm:text-2xl mt-1 mr-3" />
+                  <AiFillTwitterSquare className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-3" />
+                </div>
+              </div>
+              <div className="upVoteCount bg-[#01002a] text-[#fff] rounded-full text-center w-[25%] sm:w-[20%] flex-col sm:text-2xl">
+                <TbTriangleFilled className="text-[#e40e82] m-auto" />
+                <h3 className="">120</h3>
+                <TbTriangleInvertedFilled className="m-auto" />
+              </div>
             </div>
-            <div className="sm:w-[90%] p-1 px-2 border-2 border-[#e40e82] bg-[#311138] rounded-3xl">
-              Javascript
+            <div className="m-auto profileCardLowerSection">
+              <div className="personDetails flex-col sm:flex sm:flex-row pl-[1rem] pr-[1rem] sm:justify-around">
+                <div className="about bg-[#01002A] p-5 mt-2 rounded-[1rem] sm:w-[45%]">
+                  <h3 className="text-lg text-[#05eafa]">About</h3>
+                  <p className="text-[#fff]">
+                    Amet minim mollit non deserunt ullamco est sit aliqua non
+                    deserunt ullamco est sit aliqua{" "}
+                  </p>
+                </div>
+                <div className="skills  bg-[#01002A] p-5 mt-2 rounded-[1rem] sm:w-[45%]">
+                  <h3 className="text-lg text-[#05eafa]">Skills</h3>
+                  <div className="mt-[1rem] grid grid-cols-2 sm:grid-cols-1 gap-4 text-[#fff]">
+                    <div className="sm:w-[90%] p-1 px-2 border-2 border-[#e40e82] bg-[#311138] rounded-3xl">
+                      #C++
+                    </div>
+                    <div className="sm:w-[90%] p-1 px-2 border-2 border-[#e40e82] bg-[#311138] rounded-3xl">
+                      Javascript
+                    </div>
+                    <div className="sm:w-[90%] p-1 px-2 border-2 border-[#e40e82] bg-[#311138] rounded-3xl">
+                      MongoDb
+                    </div>
+                    <div className="sm:w-[90%] p-1 px-2 border-2 border-[#e40e82] bg-[#311138] rounded-3xl">
+                      SQL
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="viewProfile bg-[#01002A] ml-[1.25rem] mr-[1.25rem] mt-2 p-5 rounded-[1rem] flex justify-between">
+                <Link href="/profile" className="flex justify-between w-full">
+                  <h3 className="text-lg text-[#05eafa]">View Profile</h3>
+                  <AiOutlineRight className="text-[#05eafa] mt-2" />
+                </Link>
+              </div>
             </div>
-            <div className="sm:w-[90%] p-1 px-2 border-2 border-[#e40e82] bg-[#311138] rounded-3xl">
-              MongoDb
+          </div>
+
+          <div
+            className="profileCard rounded-lg w-[100%] md:w-[90%] lg:w-[80%] mt-[1rem] mb-4rem pb-[1rem] pt-[1rem] text-sm
+                bg-[#ffffff21] opacity-[0.87]
+                hover:bg-gradient-to-b from-[#870049] to-[#340362]"
+          >
+            <div className="flex justify-around profileCardUpperSection">
+              <div className="w-[20%]">
+                <img src="/images/avatar.png" alt="avatar" />
+              </div>
+              <div className="h-12 socialIcons">
+                <h3 className="text-[#fff] ">Vansh Verma</h3>
+                <div className="flex justify-center socialIcons2 sm:justify-between ">
+                  <AiOutlineMail className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-3" />
+                  <AiFillLinkedin className="text-[#fff]  text-lg sm:text-2xl mt-1 mr-3" />
+                  <AiFillTwitterSquare className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-3" />
+                </div>
+              </div>
+              <div className="upVoteCount bg-[#01002a] text-[#fff] rounded-full text-center w-[25%] sm:w-[20%] flex-col sm:text-2xl">
+                <TbTriangleFilled className="text-[#e40e82] m-auto" />
+                <h3 className="">120</h3>
+                <TbTriangleInvertedFilled className="m-auto" />
+              </div>
             </div>
-            <div className="sm:w-[90%] p-1 px-2 border-2 border-[#e40e82] bg-[#311138] rounded-3xl">
-              SQL
+            <div className="m-auto profileCardLowerSection">
+              <div className="personDetails flex-col sm:flex sm:flex-row pl-[1rem] pr-[1rem] sm:justify-around">
+                <div className="about bg-[#01002A] p-5 mt-2 rounded-[1rem] sm:w-[45%]">
+                  <h3 className="text-lg text-[#05eafa]">About</h3>
+                  <p className="text-[#fff]">
+                    Amet minim mollit non deserunt ullamco est sit aliqua non
+                    deserunt ullamco est sit aliqua{" "}
+                  </p>
+                </div>
+                <div className="skills  bg-[#01002A] p-5 mt-2 rounded-[1rem] sm:w-[45%]">
+                  <h3 className="text-lg text-[#05eafa]">Skills</h3>
+                  <div className="mt-[1rem] grid grid-cols-2 sm:grid-cols-1 gap-4 text-[#fff]">
+                    <div className="sm:w-[90%] p-1 px-2 border-2 border-[#e40e82] bg-[#311138] rounded-3xl">
+                      #C++
+                    </div>
+                    <div className="sm:w-[90%] p-1 px-2 border-2 border-[#e40e82] bg-[#311138] rounded-3xl">
+                      Javascript
+                    </div>
+                    <div className="sm:w-[90%] p-1 px-2 border-2 border-[#e40e82] bg-[#311138] rounded-3xl">
+                      MongoDb
+                    </div>
+                    <div className="sm:w-[90%] p-1 px-2 border-2 border-[#e40e82] bg-[#311138] rounded-3xl">
+                      SQL
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="viewProfile bg-[#01002A] ml-[1.25rem] mr-[1.25rem] mt-2 p-5 rounded-[1rem] flex justify-between">
+                <Link href="/profile" className="flex justify-between w-full">
+                  <h3 className="text-lg text-[#05eafa]">View Profile</h3>
+                  <AiOutlineRight className="text-[#05eafa] mt-2" />
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div
+            className="profileCard rounded-lg w-[100%] md:w-[90%] lg:w-[80%] mt-[1rem] mb-4rem pb-[1rem] pt-[1rem] text-sm
+                bg-[#ffffff21] opacity-[0.87]
+                hover:bg-gradient-to-b from-[#870049] to-[#340362]"
+          >
+            <div className="flex justify-around profileCardUpperSection">
+              <div className="w-[20%]">
+                <img src="/images/avatar.png" alt="avatar" />
+              </div>
+              <div className="h-12 socialIcons">
+                <h3 className="text-[#fff] ">Vansh Verma</h3>
+                <div className="flex justify-center socialIcons2 sm:justify-between ">
+                  <AiOutlineMail className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-3" />
+                  <AiFillLinkedin className="text-[#fff]  text-lg sm:text-2xl mt-1 mr-3" />
+                  <AiFillTwitterSquare className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-3" />
+                </div>
+              </div>
+              <div className="upVoteCount bg-[#01002a] text-[#fff] rounded-full text-center w-[25%] sm:w-[20%] flex-col sm:text-2xl">
+                <TbTriangleFilled className="text-[#e40e82] m-auto" />
+                <h3 className="">120</h3>
+                <TbTriangleInvertedFilled className="m-auto" />
+              </div>
+            </div>
+            <div className="m-auto profileCardLowerSection">
+              <div className="personDetails flex-col sm:flex sm:flex-row pl-[1rem] pr-[1rem] sm:justify-around">
+                <div className="about bg-[#01002A] p-5 mt-2 rounded-[1rem] sm:w-[45%]">
+                  <h3 className="text-lg text-[#05eafa]">About</h3>
+                  <p className="text-[#fff]">
+                    Amet minim mollit non deserunt ullamco est sit aliqua non
+                    deserunt ullamco est sit aliqua{" "}
+                  </p>
+                </div>
+                <div className="skills  bg-[#01002A] p-5 mt-2 rounded-[1rem] sm:w-[45%]">
+                  <h3 className="text-lg text-[#05eafa]">Skills</h3>
+                  <div className="mt-[1rem] grid grid-cols-2 sm:grid-cols-1 gap-4 text-[#fff]">
+                    <div className="sm:w-[90%] p-1 px-2 border-2 border-[#e40e82] bg-[#311138] rounded-3xl">
+                      #C++
+                    </div>
+                    <div className="sm:w-[90%] p-1 px-2 border-2 border-[#e40e82] bg-[#311138] rounded-3xl">
+                      Javascript
+                    </div>
+                    <div className="sm:w-[90%] p-1 px-2 border-2 border-[#e40e82] bg-[#311138] rounded-3xl">
+                      MongoDb
+                    </div>
+                    <div className="sm:w-[90%] p-1 px-2 border-2 border-[#e40e82] bg-[#311138] rounded-3xl">
+                      SQL
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="viewProfile bg-[#01002A] ml-[1.25rem] mr-[1.25rem] mt-2 p-5 rounded-[1rem] flex justify-between">
+                <Link href="/profile" className="flex justify-between w-full">
+                  <h3 className="text-lg text-[#05eafa]">View Profile</h3>
+                  <AiOutlineRight className="text-[#05eafa] mt-2" />
+                </Link>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="viewProfile bg-[#01002A] ml-[1.25rem] mr-[1.25rem] mt-2 p-5 rounded-[1rem] flex justify-between">
-       <Link href="/profile" className="flex justify-between w-full">
-        <h3 className="text-lg text-[#05eafa]">View Profile</h3>
-        <AiOutlineRight className="text-[#05eafa] mt-2" /></Link>
-      </div>
-    </div>
-  </div>
-      
-      <div className="profileCard rounded-lg w-[100%] md:w-[90%] lg:w-[80%] mt-[1rem] mb-4rem pb-[1rem] pt-[1rem] text-sm
-                bg-[#ffffff21] opacity-[0.87]
-                hover:bg-gradient-to-b from-[#870049] to-[#340362]">
-    <div className="flex justify-around profileCardUpperSection">
-      <div className="w-[20%]">
-        <img src="/images/avatar.png" alt="avatar" />
-      </div>
-      <div className="h-12 socialIcons">
-        <h3 className="text-[#fff] ">Vansh Verma</h3>
-        <div className="flex justify-center socialIcons2 sm:justify-between ">
-          <AiOutlineMail className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-3" />
-          <AiFillLinkedin className="text-[#fff]  text-lg sm:text-2xl mt-1 mr-3" />
-          <AiFillTwitterSquare className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-3" />
-        </div>
-      </div>
-      <div className="upVoteCount bg-[#01002a] text-[#fff] rounded-full text-center w-[25%] sm:w-[20%] flex-col sm:text-2xl"
-      >
-        <TbTriangleFilled className="text-[#e40e82] m-auto" />
-        <h3 className="">120</h3>
-        <TbTriangleInvertedFilled className="m-auto" />
-      </div>
-    </div>
-    <div className="m-auto profileCardLowerSection">
-      <div className="personDetails flex-col sm:flex sm:flex-row pl-[1rem] pr-[1rem] sm:justify-around">
-        <div className="about bg-[#01002A] p-5 mt-2 rounded-[1rem] sm:w-[45%]">
-          <h3 className="text-lg text-[#05eafa]">About</h3>
-          <p className="text-[#fff]">
-            Amet minim mollit non deserunt ullamco est sit aliqua non
-            deserunt ullamco est sit aliqua{" "}
-          </p>
-        </div>
-        <div className="skills  bg-[#01002A] p-5 mt-2 rounded-[1rem] sm:w-[45%]">
-          <h3 className="text-lg text-[#05eafa]">Skills</h3>
-          <div className="mt-[1rem] grid grid-cols-2 sm:grid-cols-1 gap-4 text-[#fff]">
-            <div className="sm:w-[90%] p-1 px-2 border-2 border-[#e40e82] bg-[#311138] rounded-3xl">
-              #C++
-            </div>
-            <div className="sm:w-[90%] p-1 px-2 border-2 border-[#e40e82] bg-[#311138] rounded-3xl">
-              Javascript
-            </div>
-            <div className="sm:w-[90%] p-1 px-2 border-2 border-[#e40e82] bg-[#311138] rounded-3xl">
-              MongoDb
-            </div>
-            <div className="sm:w-[90%] p-1 px-2 border-2 border-[#e40e82] bg-[#311138] rounded-3xl">
-              SQL
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="viewProfile bg-[#01002A] ml-[1.25rem] mr-[1.25rem] mt-2 p-5 rounded-[1rem] flex justify-between">
-      <Link href="/profile" className="flex justify-between w-full">
-        <h3 className="text-lg text-[#05eafa]">View Profile</h3>
-        <AiOutlineRight className="text-[#05eafa] mt-2" /></Link>
-      </div>
-    </div>
-  </div>
-      <div className="profileCard rounded-lg w-[100%] md:w-[90%] lg:w-[80%] mt-[1rem] mb-4rem pb-[1rem] pt-[1rem] text-sm
-                bg-[#ffffff21] opacity-[0.87]
-                hover:bg-gradient-to-b from-[#870049] to-[#340362]">
-    <div className="flex justify-around profileCardUpperSection">
-      <div className="w-[20%]">
-        <img src="/images/avatar.png" alt="avatar" />
-      </div>
-      <div className="h-12 socialIcons">
-        <h3 className="text-[#fff] ">Vansh Verma</h3>
-        <div className="flex justify-center socialIcons2 sm:justify-between ">
-          <AiOutlineMail className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-3" />
-          <AiFillLinkedin className="text-[#fff]  text-lg sm:text-2xl mt-1 mr-3" />
-          <AiFillTwitterSquare className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-3" />
-        </div>
-      </div>
-      <div className="upVoteCount bg-[#01002a] text-[#fff] rounded-full text-center w-[25%] sm:w-[20%] flex-col sm:text-2xl"
-      >
-        <TbTriangleFilled className="text-[#e40e82] m-auto" />
-        <h3 className="">120</h3>
-        <TbTriangleInvertedFilled className="m-auto" />
-      </div>
-    </div>
-    <div className="m-auto profileCardLowerSection">
-      <div className="personDetails flex-col sm:flex sm:flex-row pl-[1rem] pr-[1rem] sm:justify-around">
-        <div className="about bg-[#01002A] p-5 mt-2 rounded-[1rem] sm:w-[45%]">
-          <h3 className="text-lg text-[#05eafa]">About</h3>
-          <p className="text-[#fff]">
-            Amet minim mollit non deserunt ullamco est sit aliqua non
-            deserunt ullamco est sit aliqua{" "}
-          </p>
-        </div>
-        <div className="skills  bg-[#01002A] p-5 mt-2 rounded-[1rem] sm:w-[45%]">
-          <h3 className="text-lg text-[#05eafa]">Skills</h3>
-          <div className="mt-[1rem] grid grid-cols-2 sm:grid-cols-1 gap-4 text-[#fff]">
-            <div className="sm:w-[90%] p-1 px-2 border-2 border-[#e40e82] bg-[#311138] rounded-3xl">
-              #C++
-            </div>
-            <div className="sm:w-[90%] p-1 px-2 border-2 border-[#e40e82] bg-[#311138] rounded-3xl">
-              Javascript
-            </div>
-            <div className="sm:w-[90%] p-1 px-2 border-2 border-[#e40e82] bg-[#311138] rounded-3xl">
-              MongoDb
-            </div>
-            <div className="sm:w-[90%] p-1 px-2 border-2 border-[#e40e82] bg-[#311138] rounded-3xl">
-              SQL
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="viewProfile bg-[#01002A] ml-[1.25rem] mr-[1.25rem] mt-2 p-5 rounded-[1rem] flex justify-between">
-      <Link href="/profile" className="flex justify-between w-full">
-        <h3 className="text-lg text-[#05eafa]">View Profile</h3>
-        <AiOutlineRight className="text-[#05eafa] mt-2" /></Link>
-      </div>
-    </div>
-  </div>
-  </div>
       </div>
     </div>
   );
@@ -310,4 +342,3 @@ export default ListView;
 
 // hover:border-solid hover:border-[10px] hover:border-[#472027]
 // hover:shadow-shadow-[10px_10px_10px_#472027]
-

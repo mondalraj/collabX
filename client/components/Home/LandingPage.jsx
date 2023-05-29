@@ -1,3 +1,4 @@
+import { NFT_CONTRACT_ADDRESS } from "@/constants";
 import {
   ConnectWallet,
   Web3Button,
@@ -13,9 +14,7 @@ const tokenId = 0;
 const LandingPage = () => {
   const address = useAddress();
 
-  const { contract: editionDrop } = useContract(
-    "0x13f7AB181F1371fb1ea1f019e4DC120B26A62033"
-  );
+  const { contract: editionDrop } = useContract(NFT_CONTRACT_ADDRESS);
 
   const { data: nft, isLoading, error } = useNFT(editionDrop, tokenId);
 
@@ -33,7 +32,7 @@ const LandingPage = () => {
       <div>
         <ConnectWallet theme="dark" btnTitle="Connect Wallet" />
         {Number(NFTBalance) > 0 ? (
-          <Link href={"/projectIdeas"}>You owned NFT! Enter CollabX</Link>
+          <Link href={"/profile"}>You owned NFT! Enter CollabX</Link>
         ) : (
           // "Claim your Free NFT to enter CollabX"
           <Web3Button

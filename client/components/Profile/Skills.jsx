@@ -8,33 +8,30 @@ const options = [
   { value: "Tailwind", label: "Tailwind" },
 ];
 
-
 const Skills = ({ setSection, setProgress, formData, setFormData }) => {
-  const [data,setData]=useState([]);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     setFormData({ ...formData, skills: data });
   }, [data]);
 
-
-
   return (
     <>
-      <div className="skillDetails w-[90%] sm:w-[60%] h-[40vh] m-auto mt-7 pt-2 sm:pt-2 bg-gradient-to-r from-[#36094e] to-[#280e55] rounded-lg ">
+      <div className="skillDetails w-[90%] sm:w-[60%] h-[40vh] m-auto mt-7 p-5 sm:pt-2 bg-gradient-to-r from-[#36094e] to-[#280e55] rounded-lg ">
+        <p className="text-[#fff] py-4">
+          Select Skills (You can create one as well)
+        </p>
         <CreatableSelect
           isMulti
           options={options}
           onChange={(values) => {
-            setData( values.map((val)=>{
-              return val.value
-             
-            })) 
-         
-         
-            
+            setData(
+              values.map((val) => {
+                return val.value;
+              })
+            );
           }}
         />
-
       </div>
       <div className="flex justify-between pt-3 pl-5 pr-5 nextPrevButton sm:hidden">
         <h3

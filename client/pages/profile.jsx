@@ -1,12 +1,76 @@
-import React from 'react'
-import GetProfile from '../components/Profile/GetProfile'
+import AuthenticatedUser from "@/components/Auth/AuthenticatedUser";
+import { USERPROFILE_CONTRACT_ADDRESS } from "@/constants";
+import { useAddress, useContract } from "@thirdweb-dev/react";
+import { useEffect, useState } from "react";
+import GetProfile from "../components/Profile/GetProfile";
 
 const Profile = () => {
+  const [userProfileExist, setUserProfileExist] = useState(false);
+
+  const address = useAddress();
+
+  const { contract, isLoading } = useContract(USERPROFILE_CONTRACT_ADDRESS);
+
+  useEffect(() => {
+    async function isProfileAlreadyExist() {
+      const profile = await contract?.call("getProfileByAddress", [address]);
+
+      console.log("profile", profile);
+
+      if (!profile) {
+        return false;
+      }
+
+      if (profile?.name !== "") {
+        return true;
+      }
+
+      return false;
+    }
+
+    isProfileAlreadyExist(address)
+      .then((doesProfileExist) => {
+        setUserProfileExist(doesProfileExist);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }, [address, isLoading]);
+
+  if (isLoading) {
+    return (
+      <div
+        className="h-screen w-screen flex flex-col
+      justify-center items-center gap-5"
+      >
+        <AuthenticatedUser />
+        <div>Loading Data... Please wait.</div>
+      </div>
+    );
+  }
+
+  if (!userProfileExist) {
+    return (
+      <div
+        className="h-screen w-screen flex flex-col
+      justify-center items-center gap-5"
+      >
+        <AuthenticatedUser />
+        <div>User Profile Does Not Exist</div>
+
+        <button className="btn btn-active btn-secondary btn-sm">
+          <a href="/createProfile">Create Profile</a>
+        </button>
+      </div>
+    );
+  }
+
   return (
     <>
-    <GetProfile/>
+      <AuthenticatedUser />
+      <GetProfile />
     </>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

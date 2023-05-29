@@ -1,4 +1,14 @@
+"use client";
+
+import { USERPROFILE_CONTRACT_ADDRESS } from "@/constants";
+import {
+  ConnectWallet,
+  useAddress,
+  useContract,
+  useContractWrite,
+} from "@thirdweb-dev/react";
 import Image from "next/image";
+import { Notify } from "notiflix";
 import { useEffect, useState } from "react";
 import {
   AiFillLinkedin,
@@ -7,16 +17,17 @@ import {
   AiOutlineWallet,
 } from "react-icons/ai";
 import { MdArrowDropDown } from "react-icons/md";
+import AuthenticatedUser from "../Auth/AuthenticatedUser";
 import Bio from "./Bio";
 import Experience from "./Experience";
 import Projects from "./Projects";
 import Skills from "./Skills";
 
 const initialState = {
-  name: "Enter Your Name",
+  name: "",
   twitterHandle: "",
-  phone:"",
-  gmail:"",
+  phone: "",
+  gmail: "",
   skills: [],
   projects: [],
   workExperience: [],
@@ -27,52 +38,166 @@ const ProfilePage = () => {
   const [modalClick, setModalClick] = useState(false);
   const [modalClickName, setModalClickName] = useState(false);
   const [formData, setFormData] = useState(initialState);
+  const [userProfileExist, setUserProfileExist] = useState(false);
 
-  const [projects,setProjects] = useState([{
-    id:1,
-    name: "",
-    description: "",
-    duration: "",
-    link: "",
-    techStack: "",
-  }]) 
-  const [experience,setExperience]=useState([{
-    id:1,
-    companyName: "",
-    role: "",
-    startDate: "",
-    endDate: "",
-    description: "",
-  }])
+  const [projects, setProjects] = useState([
+    {
+      id: 1,
+      name: "",
+      description: "",
+      duration: "",
+      link: "",
+      techStack: "",
+    },
+  ]);
+  const [experience, setExperience] = useState([
+    {
+      id: 1,
+      companyName: "",
+      role: "",
+      startDate: "",
+      endDate: "",
+      description: "",
+    },
+  ]);
+
+  const address = useAddress();
+
+  const { contract, isLoading } = useContract(USERPROFILE_CONTRACT_ADDRESS);
+
+  const { mutateAsync: createProfile } = useContractWrite(
+    contract,
+    "createProfile"
+  );
+
+  useEffect(() => {
+    async function isProfileAlreadyExist() {
+      const profile = await contract?.call("getProfileByAddress", [address]);
+
+      console.log("profile", profile);
+
+      if (!profile) {
+        return false;
+      }
+
+      if (profile?.name !== "") {
+        return true;
+      }
+
+      return false;
+    }
+
+    isProfileAlreadyExist(address)
+      .then((doesProfileExist) => {
+        setUserProfileExist(doesProfileExist);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }, [address, isLoading]);
+
   const openModal = () => {
     setModalClick(!modalClick);
   };
   const openModalName = () => {
     setModalClickName(!modalClickName);
   };
-  const formSubmit = () => {
-    console.log("formdata", formData);
-    setProjects([{
-      id:1,
-      name: "",
-      description: "",
-      duration: "",
-      link: "",
-      techStack: [],
-    }])
-    setExperience([{
-      id:1,
-      companyName: "",
-      role: "",
-      startDate: "",
-      endDate: "",
-      description: "",
-    }])
+  const formSubmit = async () => {
+    if (!address) {
+      Notify.warning("Please connect your wallet to create campaign");
+      return;
+    }
+
+    if (!formData.name) {
+      Notify.warning("Please enter your name");
+      return;
+    }
+
+    if (!formData.gmail || !formData.phone || !formData.twitterHandle) {
+      Notify.warning(
+        "Please enter your email, phone number and twitter handle"
+      );
+      return;
+    }
+
+    try {
+      const data = await createProfile({
+        args: [
+          formData.name,
+          formData.gmail,
+          formData.phone,
+          formData.twitterHandle,
+          formData.skills,
+          formData.projects.map((project) => ({
+            name: project.name,
+            description: project.description,
+            duration: project.duration,
+            link: project.link,
+            techStack: project.techStack,
+          })),
+          formData.workExperience.map((exp) => ({
+            companyName: exp.companyName,
+            role: exp.role,
+            duration: `${exp.startDate} - ${exp.endDate}`,
+            description: exp.description,
+          })),
+        ],
+      });
+      console.info("contract call successs", data);
+      setProjects([
+        {
+          id: 1,
+          name: "",
+          description: "",
+          duration: "",
+          link: "",
+          techStack: [],
+        },
+      ]);
+      setExperience([
+        {
+          id: 1,
+          companyName: "",
+          role: "",
+          startDate: "",
+          endDate: "",
+          description: "",
+        },
+      ]);
+      window.location.href = "/profile";
+    } catch (err) {
+      console.error("contract call failure", err);
+    }
   };
 
+  if (isLoading) {
+    return (
+      <div
+        className="h-screen w-screen flex flex-col
+      justify-center items-center gap-5"
+      >
+        <div>Loading Data... Please wait.</div>
+      </div>
+    );
+  }
 
+  if (userProfileExist) {
+    return (
+      <div
+        className="h-screen w-screen flex flex-col
+      justify-center items-center gap-5"
+      >
+        <div>User Profile Already Exists</div>
+
+        <button className="btn btn-active btn-secondary btn-sm">
+          <a href="/profile">Go to Profile</a>
+        </button>
+      </div>
+    );
+  }
   return (
     <div className="container1 h-[100vh] ">
+      <AuthenticatedUser />
       {/* upper section */}
       <div
         className="profileUpperSection bg-gradient-to-r from-[#36094e] to-[#280e55] pb-8 
@@ -99,7 +224,7 @@ const ProfilePage = () => {
 
       {/* middle section */}
       <div className="profileMiddleSection sm:flex justify-evenly w-[90%] text-center m-auto pt-10">
-        <div className="connectWallet flex h-12 mt-[-5rem] sm:mt-0">
+        {/* <div className="connectWallet flex h-12 mt-[-5rem] sm:mt-0">
           <p
             className="cursor-pointer hidden sm:flex text-[#fff] border-2 border-slate-200 rounded-full p-3 "
             onClick={() => {
@@ -109,7 +234,8 @@ const ProfilePage = () => {
             Connect Wallet &nbsp;
             <AiOutlineWallet className="text-[#fff] mt-1 mr-3" />
           </p>
-        </div>
+        </div> */}
+        <ConnectWallet theme="light" btnTitle="Connect Wallet" />
 
         <div className="avatar flex-col mt-[-4rem] ">
           <div className="w-[50%] sm:w-[90%] m-auto">
@@ -120,7 +246,7 @@ const ProfilePage = () => {
             />
           </div>
           <h1 onClick={openModalName} className="mt-2 text-white">
-            {formData.name}
+            {formData.name ? formData.name : "Your Name"}
           </h1>
         </div>
         {/* ModalName */}
@@ -139,16 +265,20 @@ const ProfilePage = () => {
                   <p>Enter your name here</p>
                   <input
                     value={formData.name}
+                    placeholder="Enter your name"
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="w-full py-1 my-1 bg-black border-[0.05rem] rounded-md font-normal text-gray-300"
+                    className="w-full p-1 my-1 bg-black border-[0.05rem] rounded-md font-normal text-gray-300"
                     type="text"
                   />
                 </div>
 
                 <div className="flex justify-end w-full m-2 mb-4 ">
-                  <button   onClick={openModalName} className="bg-[#E40E82] py-1 px-4 rounded-xl font-semibold">
+                  <button
+                    onClick={openModalName}
+                    className="bg-[#E40E82] py-1 px-4 rounded-xl font-semibold"
+                  >
                     SAVE
                   </button>
                 </div>
@@ -194,22 +324,24 @@ const ProfilePage = () => {
               <div className="w-full m-2">
                 <p>Phone Number</p>
                 <input
-                 value={formData.phone}
-                 onChange={(e) =>
-                   setFormData({ ...formData, phone: e.target.value })
-                 }
-                  className="w-full py-1 my-1 bg-black border-[0.05rem] rounded-md font-normal text-gray-300"
+                  value={formData.phone}
+                  placeholder="Enter your phone number"
+                  onChange={(e) =>
+                    setFormData({ ...formData, phone: e.target.value })
+                  }
+                  className="w-full p-1 my-1 bg-black border-[0.05rem] rounded-md font-normal text-gray-300"
                   type="text"
                 />
               </div>
               <div className="w-full m-2">
                 <p>Gmail</p>
                 <input
-                 value={formData.gmail}
-                 onChange={(e) =>
-                   setFormData({ ...formData, gmail: e.target.value })
-                 }
-                  className="w-full py-1 my-1 rounded-md bg-black border-[0.05rem] font-normal text-gray-300"
+                  value={formData.gmail}
+                  placeholder="Enter your email"
+                  onChange={(e) =>
+                    setFormData({ ...formData, gmail: e.target.value })
+                  }
+                  className="w-full p-1 my-1 rounded-md bg-black border-[0.05rem] font-normal text-gray-300"
                   type="email"
                 />
               </div>
@@ -219,15 +351,22 @@ const ProfilePage = () => {
                 </div>
                 <input
                   value={formData.twitterHandle}
+                  placeholder="Enter your twitter handle"
                   onChange={(e) =>
-                    setFormData({ ...formData, twitterHandle: e.target.value })
+                    setFormData({
+                      ...formData,
+                      twitterHandle: e.target.value,
+                    })
                   }
-                  className="w-full py-1 my-1 rounded-md bg-black border-[0.05rem] font-normal text-gray-300"
+                  className="w-full p-1 my-1 rounded-md bg-black border-[0.05rem] font-normal text-gray-300"
                   type="text"
                 />
               </div>
               <div className="flex justify-end w-full m-2 mb-4 ">
-                <button  onClick={openModal} className="bg-[#E40E82] py-1 px-4 rounded-xl font-semibold">
+                <button
+                  onClick={openModal}
+                  className="bg-[#E40E82] py-1 px-4 rounded-xl font-semibold"
+                >
                   SAVE
                 </button>
               </div>
