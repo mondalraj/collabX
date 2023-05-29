@@ -29,3 +29,7 @@
 - Chainlink Keepers - Automation of tasks like voting, proposal closing, task closing etc.
   - Time Based Automation - Daily Featuring of random Project Idea.
   - Custom logic Automation - Automatically perform action after voting (24 hours) - For Proposal Voting, Task Status Update etc.
+
+#### Contract Addresses
+
+- UserProfileContract -> 0xce4a0B24fE14e2f87FB6618e4F24aDb32EcA3764
