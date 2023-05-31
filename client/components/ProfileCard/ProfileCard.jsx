@@ -1,20 +1,11 @@
 import Link from "next/link";
-import { useState } from "react";
 import {
   AiFillLinkedin,
   AiFillTwitterSquare,
   AiOutlineMail,
   AiOutlineRight,
 } from "react-icons/ai";
-import { TbTriangleFilled, TbTriangleInvertedFilled } from "react-icons/tb";
 const ProfileCard = () => {
-  const [upVote, setUpVote] = useState(0);
-  const incVote = () => {
-    setUpVote(upVote + 1);
-  };
-  const decVote = () => {
-    setUpVote(upVote - 1);
-  };
   return (
     <div
       className="profileCard rounded-lg w-[100%] md:w-[90%] lg:w-[80%] mt-[1rem] mb-4rem pb-[1rem] pt-[1rem] text-sm
@@ -33,16 +24,8 @@ const ProfileCard = () => {
             <AiFillTwitterSquare className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-3" />
           </div>
         </div>
-        <div className="upVoteCount bg-[#01002a] text-[#fff] rounded-full text-center w-[25%] sm:w-[20%] flex-col sm:text-2xl">
-          <TbTriangleFilled
-            onClick={incVote}
-            className="text-[#e40e82] m-auto"
-          />
-          <h3 className="">{upVote}</h3>
-          <TbTriangleInvertedFilled onClick={decVote} className="m-auto" />
-        </div>
       </div>
-      <div className="m-auto profileCardLowerSection">
+      <div className="m-auto mt-3 profileCardLowerSection">
         <div className="personDetails flex-col sm:flex sm:flex-row pl-[1rem] pr-[1rem] sm:justify-around">
           <div className="about bg-[#01002A] p-5 mt-2 rounded-[1rem] sm:w-[45%]">
             <h3 className="text-lg text-[#05eafa]">About</h3>
