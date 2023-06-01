@@ -37,9 +37,9 @@ const Navbar = ({ phonenav, openNav }) => {
               </Link>
             </li>
             <li>
-              <Link className="text-white" href="/profile">
+              <a className="text-white" href="/myProfile">
                 Your Profile
-              </Link>
+              </a>
             </li>
           </ul>
         </div>

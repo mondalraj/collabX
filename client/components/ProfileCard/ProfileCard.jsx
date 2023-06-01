@@ -53,7 +53,7 @@ const ProfileCard = () => {
           </div>
         </div>
         <div className="viewProfile bg-[#01002A] ml-[1.25rem] mr-[1.25rem] mt-2 p-5 rounded-[1rem] flex justify-between">
-          <Link href="/profile" className="flex justify-between w-full">
+          <Link href="/profile/address" className="flex justify-between w-full">
             <h3 className="text-lg text-[#05eafa]">View Profile</h3>
             <AiOutlineRight className="text-[#05eafa] mt-2" />
           </Link>

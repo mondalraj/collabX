@@ -32,7 +32,7 @@ const LandingPage = () => {
       <div>
         <ConnectWallet theme="dark" btnTitle="Connect Wallet" />
         {Number(NFTBalance) > 0 ? (
-          <Link href={"/profile"}>You owned NFT! Enter CollabX</Link>
+          <Link href={"/myProfile"}>You owned NFT! Enter CollabX</Link>
         ) : (
           // "Claim your Free NFT to enter CollabX"
           <Web3Button

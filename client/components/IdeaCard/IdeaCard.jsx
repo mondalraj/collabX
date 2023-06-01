@@ -39,7 +39,7 @@ const IdeaCard = ({ owner, member }) => {
         <Link href="/ownerIdea">
           <div className="flex items-center justify-center bg-[#01002a] text-[#05EAFA] mt-2 mx-1 rounded-xl text-sm p-2">
             {" "}
-            View Idea <BiChevronRight color="#05EAFA" />
+            Open Idea <BiChevronRight color="#05EAFA" />
           </div>
         </Link>
       )}

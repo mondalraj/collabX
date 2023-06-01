@@ -77,7 +77,9 @@ const Profile = () => {
     <>
       <AuthenticatedUser />
       <Navbar phonenav={phonenav} openNav={openNav} />
-      <GetProfile />
+      <div className="max-w-screen-xl m-auto text-sm">
+        <GetProfile />
+      </div>
     </>
   );
 };
