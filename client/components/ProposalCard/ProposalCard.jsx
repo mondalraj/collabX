@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   AiFillLinkedin,
   AiFillTwitterSquare,
@@ -5,6 +6,10 @@ import {
 } from "react-icons/ai";
 import { HiCheckCircle } from "react-icons/hi";
 const ProposalCard = () => {
+  const [acceptProposal, setAcceptProposal] = useState(false);
+  const handleTick = () => {
+    setAcceptProposal(!acceptProposal);
+  };
   return (
     <div>
       <div
@@ -36,7 +41,20 @@ const ProposalCard = () => {
             </div>
           </div>
           <div>
-            <HiCheckCircle size={25} color="#06DBEE" />
+            {acceptProposal ? (
+              <HiCheckCircle
+                size={25}
+                color="#06DBEE"
+                className="cursor-pointer "
+                onClick={handleTick}
+              />
+            ) : (
+              <HiCheckCircle
+                size={25}
+                className="cursor-pointer "
+                onClick={handleTick}
+              />
+            )}
           </div>
         </div>
         <div className="m-4">
