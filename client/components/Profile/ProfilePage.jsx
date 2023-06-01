@@ -104,7 +104,7 @@ const ProfilePage = () => {
   };
   const formSubmit = async () => {
     if (!address) {
-      Notify.warning("Please connect your wallet to create campaign");
+      Notify.warning("Please connect your wallet to create profile");
       return;
     }
 
@@ -164,7 +164,7 @@ const ProfilePage = () => {
           description: "",
         },
       ]);
-      window.location.href = "/profile";
+      window.location.href = "/myProfile";
     } catch (err) {
       console.error("contract call failure", err);
     }
@@ -190,7 +190,7 @@ const ProfilePage = () => {
         <div>User Profile Already Exists</div>
 
         <button className="btn btn-active btn-secondary btn-sm">
-          <a href="/profile">Go to Profile</a>
+          <a href="/myProfile">Go to Profile</a>
         </button>
       </div>
     );

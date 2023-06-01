@@ -32,6 +32,8 @@ contract UserProfileContract {
 
     mapping(address => Profile) public profiles;
 
+    address[] public profiles_data;
+
     uint256 public numberOfUsers = 0;
 
     function createProfile(
@@ -86,6 +88,8 @@ contract UserProfileContract {
         profiles[msg.sender] = newProfile;
 
         numberOfUsers++;
+
+        profiles_data.push(msg.sender);
 
         return newProfile;
     }
@@ -165,6 +169,18 @@ contract UserProfileContract {
         Profile[] memory allProfiles = new Profile[](numberOfUsers);
         for (uint256 i = 0; i < numberOfUsers; i++) {
             allProfiles[i] = profiles[msg.sender];
+        }
+        return allProfiles;
+    }
+
+    function getAllProfilesWithMapping()
+        public
+        view
+        returns (Profile[] memory)
+    {
+        Profile[] memory allProfiles = new Profile[](numberOfUsers);
+        for (uint256 i = 0; i < numberOfUsers; i++) {
+            allProfiles[i] = profiles[profiles_data[i]];
         }
         return allProfiles;
     }

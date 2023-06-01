@@ -1,10 +1,13 @@
+import { ConnectWallet } from "@thirdweb-dev/react";
 import Image from "next/image";
 import Link from "next/link";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import AuthenticatedUser from "../Auth/AuthenticatedUser";
 
 const Navbar = ({ phonenav, openNav }) => {
   return (
     <div>
+      <AuthenticatedUser />
       {/* nav */}
       <div className="mt-10 mb-8 hidden sm:flex flex-row justify-between items-center w-[90%] m-auto  bg-gradient-to-r from-[#030C30] from-50% to-[#43087A] t0-50% rounded-full p-2 pl-3">
         <div className="ml-3 -mt-2 img">
@@ -20,23 +23,28 @@ const Navbar = ({ phonenav, openNav }) => {
           <ul className="flex justify-between font-medium text-white ">
             <li>
               <Link className="text-white" href="/listView">
-                Profile
+                All Users
               </Link>
             </li>
             <li>
               <Link className="text-white" href="/projectIdeas">
-                Ideas
+                All Ideas
               </Link>
             </li>
             <li>
               <Link className="text-white" href="/yourIdeas">
-                Showcases
+                Your Projects
               </Link>
+            </li>
+            <li>
+              <a className="text-white" href="/myProfile">
+                Your Profile
+              </a>
             </li>
           </ul>
         </div>
         <div className="flex items-center">
-          <div className="text-[#E40E82] bg-[#1C0041] flex items-center p-2 rounded-xl mr-7">
+          {/* <div className="text-[#E40E82] bg-[#1C0041] flex items-center p-2 rounded-xl mr-7">
             <Image
               height={20}
               width={20}
@@ -45,7 +53,14 @@ const Navbar = ({ phonenav, openNav }) => {
               className="mr-2 "
             />
             <p>120.00 CX</p>
-          </div>
+          </div> */}
+          <ConnectWallet
+            style={{
+              transform: "scale(0.8)",
+            }}
+            theme="light"
+            btnTitle="Connect Wallet"
+          />
           <Image
             height={40}
             width={40}
