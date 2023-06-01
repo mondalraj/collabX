@@ -104,7 +104,7 @@ const ProfilePage = () => {
   };
   const formSubmit = async () => {
     if (!address) {
-      Notify.warning("Please connect your wallet to create campaign");
+      Notify.warning("Please connect your wallet to create profile");
       return;
     }
 

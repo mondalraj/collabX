@@ -1,13 +1,38 @@
 import Navbar from "@/components/Nav/Navbar";
 import ProfileCard from "@/components/ProfileCard/ProfileCard";
-import { useState } from "react";
+import { USERPROFILE_CONTRACT_ADDRESS } from "@/constants";
+import { useAddress, useContract } from "@thirdweb-dev/react";
+import { useEffect, useState } from "react";
 import "semantic-ui-css/semantic.min.css";
 import { Input } from "semantic-ui-react";
 const ListView = () => {
   const [phonenav, setPhonenav] = useState(false);
+  const [allProfiles, setAllProfiles] = useState([]);
+
+  const address = useAddress();
+
+  const { contract, isLoading } = useContract(USERPROFILE_CONTRACT_ADDRESS);
+
+  useEffect(() => {
+    async function getAllUserProfiles() {
+      const profiles = await contract?.call("getAllProfilesWithMapping");
+      return profiles;
+    }
+
+    getAllUserProfiles()
+      .then((profiles) => {
+        setAllProfiles(profiles);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }, [address, isLoading]);
+  console.log("ALL PROFILES", allProfiles);
+
   const openNav = () => {
     setPhonenav(!phonenav);
   };
+
   return (
     <div className="container1 h-[100%] bg-gradient-to-b sm:bg-gradient-to-r from-[#23094E] from-0% to-black to-100%">
       <div

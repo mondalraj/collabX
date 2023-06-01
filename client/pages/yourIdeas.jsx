@@ -1,7 +1,9 @@
 import IdeaCard from "@/components/IdeaCard/IdeaCard";
 import Modal from "@/components/Modal";
 import Navbar from "@/components/Nav/Navbar";
-import { useState } from "react";
+import { PROJECTIDEA_CONTRACT_ADDRESS } from "@/constants";
+import { useAddress, useContract, useContractWrite } from "@thirdweb-dev/react";
+import { useEffect, useState } from "react";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { IoMdArrowDropdown, IoMdArrowDropright } from "react-icons/io";
 import "semantic-ui-css/semantic.min.css";
@@ -12,19 +14,59 @@ const YourIdeas = () => {
   const [showOthers, setShowOthers] = useState(false);
   const [phonenav, setPhonenav] = useState(false);
   const [modalClick, setModalClick] = useState(false);
+  const [loadingCreation, setLoadingCreation] = useState(false);
   const [projectIdea, setProjectIdea] = useState({
     name: "",
     description: "",
     tags: [],
   });
-  const create = () => {
-    console.log(projectIdea);
-    setModalClick(!modalClick);
-    setProjectIdea({
-      name: "",
-      description: "",
-      tags: [],
-    });
+  const [allIdeas, setAllIdeas] = useState([]);
+
+  const address = useAddress();
+
+  const { contract, isLoading } = useContract(PROJECTIDEA_CONTRACT_ADDRESS);
+
+  useEffect(() => {
+    async function getAllIdeas() {
+      const ideas = await contract?.call("getIdeasByCreatorAddress", [address]);
+
+      return ideas;
+    }
+
+    getAllIdeas()
+      .then((ideas) => {
+        setAllIdeas(ideas);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }, [address, isLoading]);
+  console.log("ALL IDEAS", allIdeas);
+
+  const { mutateAsync: createIdea } = useContractWrite(contract, "createIdea");
+
+  const create = async () => {
+    if (!address) {
+      Notify.warning("Please connect your wallet to create idea");
+      return;
+    }
+    setLoadingCreation(true);
+    try {
+      const data = await createIdea({
+        args: [projectIdea.name, projectIdea.description, projectIdea.tags],
+      });
+      console.info("contract call successs", data);
+      setLoadingCreation(false);
+      setModalClick(!modalClick);
+      setProjectIdea({
+        name: "",
+        description: "",
+        tags: [],
+      });
+    } catch (err) {
+      setLoadingCreation(false);
+      console.error("contract call failure", err);
+    }
   };
   const changeYours = () => {
     setShowYours(!showYours);
@@ -65,6 +107,7 @@ const YourIdeas = () => {
         projectIdea={projectIdea}
         setProjectIdea={setProjectIdea}
         create={create}
+        loadingCreation={loadingCreation}
       />
 
       {/* second-section */}

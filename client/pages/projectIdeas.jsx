@@ -1,33 +1,80 @@
 import Modal from "@/components/Modal";
 import Navbar from "@/components/Nav/Navbar";
 import ProjectCard from "@/components/ProjectCard/ProjectCard";
-import { useState } from "react";
+import { PROJECTIDEA_CONTRACT_ADDRESS } from "@/constants";
+import { useAddress, useContract, useContractWrite } from "@thirdweb-dev/react";
+import { Notify } from "notiflix";
+import { useEffect, useState } from "react";
 import { AiFillPlusCircle } from "react-icons/ai";
 import "semantic-ui-css/semantic.min.css";
 import { Input } from "semantic-ui-react";
 const ProjectIdeas = () => {
   const [phonenav, setPhonenav] = useState(false);
   const [modalClick, setModalClick] = useState(false);
+  const [loadingCreation, setLoadingCreation] = useState(false);
   const [projectIdea, setProjectIdea] = useState({
     name: "",
     description: "",
     tags: [],
   });
-  const create = () => {
-    console.log(projectIdea);
-    setModalClick(!modalClick);
-    setProjectIdea({
-      name: "",
-      description: "",
-      tags: [],
-    });
+
+  const [allIdeas, setAllIdeas] = useState([]);
+
+  const address = useAddress();
+
+  const { contract, isLoading } = useContract(PROJECTIDEA_CONTRACT_ADDRESS);
+
+  useEffect(() => {
+    async function getAllIdeas() {
+      const ideas = await contract?.call("getAllIdeas");
+
+      return ideas;
+    }
+
+    getAllIdeas()
+      .then((ideas) => {
+        setAllIdeas(ideas);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }, [address, isLoading]);
+  console.log("ALL IDEAS", allIdeas);
+
+  const { mutateAsync: createIdea } = useContractWrite(contract, "createIdea");
+
+  const create = async () => {
+    if (!address) {
+      Notify.warning("Please connect your wallet to create idea");
+      return;
+    }
+    setLoadingCreation(true);
+    try {
+      const data = await createIdea({
+        args: [projectIdea.name, projectIdea.description, projectIdea.tags],
+      });
+      console.info("contract call successs", data);
+      setLoadingCreation(false);
+      setModalClick(!modalClick);
+      setProjectIdea({
+        name: "",
+        description: "",
+        tags: [],
+      });
+    } catch (err) {
+      setLoadingCreation(false);
+      console.error("contract call failure", err);
+    }
   };
+
   const openNav = () => {
     setPhonenav(!phonenav);
   };
+
   const openModal = () => {
     setModalClick(!modalClick);
   };
+
   return (
     <div className="container1 min-h-[100vh] bg-gradient-to-b sm:bg-gradient-to-r from-[#2A064B] from-50% to-[#030C30] t0-50%">
       <div
@@ -58,6 +105,7 @@ const ProjectIdeas = () => {
         projectIdea={projectIdea}
         setProjectIdea={setProjectIdea}
         create={create}
+        loadingCreation={loadingCreation}
       />
 
       <div className="relative cardsBackground w-[90%] m-auto bg-[#01002a] pt-[10px] pb-[10px] pl-[10px] pr-[10px] sm:p-5 ">

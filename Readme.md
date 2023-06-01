@@ -32,4 +32,8 @@
 
 #### Contract Addresses
 
-- UserProfileContract -> 0xce4a0B24fE14e2f87FB6618e4F24aDb32EcA3764
+- UserProfileContract ->
+- ProjectIdeaContract ->
+- ProjectRoomDAOContract ->
+- CX Coins ->
+- CollabX Entry Pass NFT ->

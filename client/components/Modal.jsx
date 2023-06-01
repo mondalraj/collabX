@@ -6,6 +6,7 @@ const Modal = ({
   projectIdea,
   setProjectIdea,
   create,
+  loadingCreation,
 }) => {
   const [options, setOptions] = useState([
     { value: "Java", label: "Java" },
@@ -105,8 +106,9 @@ const Modal = ({
                 <button
                   onClick={create}
                   className="bg-[#E40E82] py-1 px-4 rounded-xl font-semibold"
+                  disabled={loadingCreation}
                 >
-                  CREATE
+                  {loadingCreation ? "CREATING..." : "CREATE"}
                 </button>
               </div>
             </div>

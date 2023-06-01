@@ -1,11 +1,14 @@
 import AuthenticatedUser from "@/components/Auth/AuthenticatedUser";
+import Navbar from "@/components/Nav/Navbar";
 import { USERPROFILE_CONTRACT_ADDRESS } from "@/constants";
 import { useAddress, useContract } from "@thirdweb-dev/react";
 import { useEffect, useState } from "react";
 import GetProfile from "../components/Profile/GetProfile";
 
 const Profile = () => {
+  const [phonenav, setPhonenav] = useState(false);
   const [userProfileExist, setUserProfileExist] = useState(false);
+  const [myProfileData, setMyProfileData] = useState(null);
 
   const address = useAddress();
 
@@ -15,13 +18,14 @@ const Profile = () => {
     async function isProfileAlreadyExist() {
       const profile = await contract?.call("getProfileByAddress", [address]);
 
-      console.log("profile", profile);
+      console.log("MY PROFILE", profile);
 
       if (!profile) {
         return false;
       }
 
       if (profile?.name !== "") {
+        setMyProfileData(profile);
         return true;
       }
 
@@ -36,6 +40,10 @@ const Profile = () => {
         console.log("error", error);
       });
   }, [address, isLoading]);
+
+  const openNav = () => {
+    setPhonenav(!phonenav);
+  };
 
   if (isLoading) {
     return (
@@ -68,6 +76,7 @@ const Profile = () => {
   return (
     <>
       <AuthenticatedUser />
+      <Navbar phonenav={phonenav} openNav={openNav} />
       <GetProfile />
     </>
   );
