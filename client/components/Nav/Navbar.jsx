@@ -55,7 +55,7 @@ const Navbar = ({ phonenav, openNav }) => {
         <div className="w-[30%]">
           <ul className="flex justify-between font-medium text-white ">
             <li>
-              <Link className="text-white" href="/listView">
+              <Link className="text-white" href="/allProfiles">
                 All Users
               </Link>
             </li>
@@ -138,7 +138,7 @@ const Navbar = ({ phonenav, openNav }) => {
       {phonenav && (
         <div className="relative z-10 w-full ">
           <ul className="absolute flex-col items-center justify-between w-full bg-opacity-90  font-medium text-center text-white bg-[#E40E82]">
-            <Link href="/listView">
+            <Link href="/allProfiles">
               {" "}
               <li className="p-3 text-white border-b-2 border-black ">
                 Profiles
