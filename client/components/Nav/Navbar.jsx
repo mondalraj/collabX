@@ -1,10 +1,43 @@
-import { ConnectWallet } from "@thirdweb-dev/react";
+import { USERPROFILE_CONTRACT_ADDRESS } from "@/constants";
+import {
+  ConnectWallet,
+  useAddress,
+  useContract,
+  useContractRead,
+} from "@thirdweb-dev/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import AuthenticatedUser from "../Auth/AuthenticatedUser";
 
 const Navbar = ({ phonenav, openNav }) => {
+  const address = useAddress();
+
+  const { contract, isLoading } = useContract(USERPROFILE_CONTRACT_ADDRESS);
+
+  const { data: currentUserData, isLoading: currentUserLoading } =
+    useContractRead(contract, "getProfileByAddress", [address]);
+
+  useEffect(() => {
+    if (!isLoading && !currentUserLoading) {
+      if (currentUserData?.name == "") {
+        window.location.href = "/createProfile";
+      }
+    }
+  }, [currentUserData]);
+
+  if (isLoading || currentUserLoading) {
+    return (
+      <div
+        className="h-screen w-screen flex flex-col
+      justify-center items-center gap-5 text-white text-xl"
+      >
+        <AuthenticatedUser />
+        <div>Loading Data... Please wait.</div>
+      </div>
+    );
+  }
   return (
     <div>
       <AuthenticatedUser />

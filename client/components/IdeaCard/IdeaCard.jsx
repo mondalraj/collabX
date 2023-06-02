@@ -36,7 +36,7 @@ const IdeaCard = ({ owner, member }) => {
         </div>
       </div>
       {owner && !member && (
-        <Link href="/ownerIdea">
+        <Link href="/idea/id">
           <div className="flex items-center justify-center bg-[#01002a] text-[#05EAFA] mt-2 mx-1 rounded-xl text-sm p-2">
             {" "}
             Open Idea <BiChevronRight color="#05EAFA" />
@@ -44,7 +44,7 @@ const IdeaCard = ({ owner, member }) => {
         </Link>
       )}
       {!owner && member && (
-        <Link href="/viewIdea">
+        <Link href="/idea/id">
           {" "}
           <div className="flex items-center justify-center bg-[#01002a] text-[#05EAFA] mt-2 mx-1 rounded-xl text-sm p-2">
             {" "}

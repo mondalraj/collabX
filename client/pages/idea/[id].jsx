@@ -1,26 +1,83 @@
 import Modal from "@/components/Modal";
 import Navbar from "@/components/Nav/Navbar";
 import ProposalCard from "@/components/ProposalCard/ProposalCard";
+import {
+  PROJECTIDEA_CONTRACT_ADDRESS,
+  USERPROFILE_CONTRACT_ADDRESS,
+} from "@/constants";
+import {
+  useAddress,
+  useContract,
+  useContractRead,
+  useContractWrite,
+} from "@thirdweb-dev/react";
 import Image from "next/image";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { Notify } from "notiflix";
+import { useEffect, useState } from "react";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { MdCelebration } from "react-icons/md";
 import "semantic-ui-css/semantic.min.css";
 import { Input } from "semantic-ui-react";
 
-const OwnerIdea = () => {
+const IndividualIdea = () => {
   const [owner, setOwner] = useState(false);
   const [phonenav, setPhonenav] = useState(false);
   const [modalClick, setModalClick] = useState(false);
-  const [room, setRoom] = useState(true);
-  const [proposal, setProposal] = useState(false);
+  const [room, setRoom] = useState(false);
+  const [proposal, setProposal] = useState(true);
+  const [proposalAccepted, setProposalAccepted] = useState(false);
   const [desc, setDesc] = useState("");
   const [projectIdea, setProjectIdea] = useState({
     name: "",
     description: "",
     tags: [],
   });
+  const router = useRouter();
+  const address = useAddress();
+
+  console.log("OWNER", owner, "PROPOSAL", proposal, "Room", room);
+
+  const { contract, isLoading: isLoadingContract } = useContract(
+    PROJECTIDEA_CONTRACT_ADDRESS
+  );
+
+  const {
+    contract: useProfileContract,
+    isLoading: userProfileContractLoading,
+  } = useContract(USERPROFILE_CONTRACT_ADDRESS);
+
+  const { data: currentUserData, isLoading: currentUserLoading } =
+    useContractRead(useProfileContract, "getProfileByAddress", [address]);
+
+  console.log("CURRENT USER", currentUserData);
+
+  const { data, isLoading } = useContractRead(contract, "getIdea", [
+    router.query.id,
+  ]);
+
+  const { mutateAsync: createProposal, isLoading: isLoadingSubmitProposal } =
+    useContractWrite(contract, "submitProposal");
+
+  console.log("DATA", data);
+
+  useEffect(() => {
+    if (data && address) {
+      if (data[0] === address) {
+        setOwner(true);
+      } else {
+        const proposal = data[5].find((proposal) => proposal[0] === address);
+        if (!proposal) {
+          setProposal(false);
+        } else {
+          setDesc(proposal[1]);
+          setProposalAccepted(proposal[4]);
+        }
+      }
+    }
+  }, [data, address]);
+
   const create = () => {
     console.log(projectIdea);
     setModalClick(!modalClick);
@@ -30,15 +87,30 @@ const OwnerIdea = () => {
       tags: [],
     });
   };
+
+  const submitProposal = async () => {
+    if (desc.length === 0) {
+      Notify.warning("Please Type your Proposal");
+      return;
+    }
+
+    try {
+      const data = await createProposal({
+        args: [router.query.id, currentUserData.name, desc],
+      });
+      console.info("contract call successs", data);
+      setProposal((prev) => !prev);
+      Notify.success("Proposal Submitted Successfully");
+    } catch (err) {
+      console.error("contract call failure", err);
+    }
+  };
+
   const openNav = () => {
     setPhonenav(!phonenav);
   };
   const openModal = () => {
     setModalClick(!modalClick);
-  };
-  const printDesc = () => {
-    console.log(desc);
-    setDesc("");
   };
   return (
     <div className=" min-h-[100vh] sm:p-10  w-full bg-gradient-to-b sm:bg-gradient-to-r from-[#23094E] from-0% to-black to-100%">
@@ -67,7 +139,7 @@ const OwnerIdea = () => {
         setProjectIdea={setProjectIdea}
         create={create}
       />
-      <div className="flex justify-end mt-4 mb-6 mr-4 sm:hidden">
+      <div className="flex justify-end mt-4 mb-6 mr-4">
         {/* owner  */}
         {owner ? (
           room ? (
@@ -96,16 +168,18 @@ const OwnerIdea = () => {
         ) : (
           // user and proposal sent
           proposal &&
+          proposalAccepted &&
           (!room ? (
             // part of it
-            <div className="flex items-center justify-end mx-6 -mb-4 text-white sm:hidden ">
+            <div className="flex items-center justify-end mx-6 -mb-4 text-white">
               {" "}
               <MdCelebration className="mr-2" size={20} />
-              You are part of this project
+              You are part of this project.
+              <br /> Please wait for the owner to create a room.
             </div>
           ) : (
             // enter room
-            <div className="flex justify-end mx-6 mb-1 mr-4 sm:hidden">
+            <div className="flex justify-end mx-6 mb-1 mr-4">
               <button className="flex items-center bg-white text-[#0D0B37] font-medium p-2 rounded-xl">
                 Enter Room{" "}
                 <Image
@@ -148,7 +222,7 @@ const OwnerIdea = () => {
           </div>
           <div className="flex flex-col mt-6 sm:w-[40%] sm:m-6 sm:mt-14">
             {/* entry room  */}
-            <div className="justify-end hidden mb-6 -mt-10 sm:flex">
+            {/* <div className="justify-end hidden mb-6 -mt-10 sm:flex">
               <button className="flex items-center bg-white text-[#0D0B37] font-medium p-2 rounded-xl">
                 {room ? "Enter Room" : "Create Room"}
                 {room ? (
@@ -169,7 +243,7 @@ const OwnerIdea = () => {
                   />
                 )}
               </button>
-            </div>
+            </div> */}
             <p className="text-[#05EAFA]">Skills Required</p>
             <div className="grid grid-cols-4 text-xs sm:grid-cols-3 md:grid-cols-4 gap-y-2">
               {" "}
@@ -220,8 +294,9 @@ const OwnerIdea = () => {
                 id=""
                 cols="30"
                 rows="4"
-                className="w-full placeholder:font-semibold bg-inherit"
-                placeholder="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet. Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
+                className="w-full bg-inherit outline-none "
+                placeholder="Type your proposal here..."
+                disabled={proposal}
               ></textarea>
             </div>
             <div className="flex sm:justify-end justify-center sm:mt-[2rem] mt-[5rem] sm:-mb-3">
@@ -235,7 +310,7 @@ const OwnerIdea = () => {
                 </button>
               ) : (
                 <button
-                  onClick={printDesc}
+                  onClick={submitProposal}
                   className="bg-[#E40E82] flex items-center justify-between w-fit  rounded-2xl px-3 py-2 font-medium"
                 >
                   Send Proposal{" "}
@@ -250,4 +325,4 @@ const OwnerIdea = () => {
   );
 };
 
-export default OwnerIdea;
+export default IndividualIdea;
