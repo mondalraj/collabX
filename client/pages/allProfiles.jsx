@@ -34,7 +34,7 @@ const ListView = () => {
   };
 
   return (
-    <div className="container1 h-[100%] bg-gradient-to-b sm:bg-gradient-to-r from-[#23094E] from-0% to-black to-100%">
+    <div className="container1 min-h-[100vh] bg-gradient-to-b sm:bg-gradient-to-r from-[#2A064B] from-50% to-[#030C30] t0-50%">
       <div
         className="listViewUpperSection pb-8 
         sm:pb-[4rem] rounded-b-[1rem] sm:rounded-b-[4rem]"
@@ -52,9 +52,14 @@ const ListView = () => {
           />
         </div>
         <div className="grid grid-cols-1 gap-8 cardsCollection sm:grid-cols-2 lg:grid-cols-3">
-          <ProfileCard />
-          <ProfileCard />
-          <ProfileCard />
+          {allProfiles?.map((profile) => (
+            <ProfileCard
+              name={profile[1]}
+              skills={profile[5]}
+              id={profile[0]}
+              twit={profile[4]}
+            />
+          ))}
         </div>
       </div>
     </div>

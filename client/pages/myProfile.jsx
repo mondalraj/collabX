@@ -47,10 +47,7 @@ const Profile = () => {
 
   if (isLoading) {
     return (
-      <div
-        className="h-screen w-screen flex flex-col
-      justify-center items-center gap-5"
-      >
+      <div className="flex flex-col items-center justify-center w-screen h-screen gap-5">
         <AuthenticatedUser />
         <div>Loading Data... Please wait.</div>
       </div>
@@ -59,10 +56,7 @@ const Profile = () => {
 
   if (!userProfileExist) {
     return (
-      <div
-        className="h-screen w-screen flex flex-col
-      justify-center items-center gap-5"
-      >
+      <div className="flex flex-col items-center justify-center w-screen h-screen gap-5">
         <AuthenticatedUser />
         <div>User Profile Does Not Exist</div>
 
@@ -78,7 +72,7 @@ const Profile = () => {
       <AuthenticatedUser />
       <Navbar phonenav={phonenav} openNav={openNav} />
       <div className="max-w-screen-xl m-auto text-sm">
-        <GetProfile />
+        <GetProfile profile={myProfileData} />
       </div>
     </>
   );

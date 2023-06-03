@@ -138,10 +138,19 @@ const YourIdeas = () => {
                     className="sm:block hidden border-4 border-[#ffffff] border-opacity-[0.16]  rounded-full"
                   />
                 </div>
-                {/* card  */}
-                <IdeaCard owner={true} member={false} />
-                {/* card  */}
-                <IdeaCard owner={true} member={false} />
+                {allIdeas?.map((ele, idx) => {
+                  if (ele[0] === address) {
+                    return (
+                      <IdeaCard
+                        key={idx}
+                        owner={true}
+                        member={false}
+                        idea={ele}
+                        index={idx}
+                      />
+                    );
+                  }
+                })}
               </div>
             )}
           </div>
@@ -183,10 +192,11 @@ const YourIdeas = () => {
                 className="sm:block hidden border-4 border-[#ffffff] border-opacity-[0.16]  rounded-full cursor-pointer"
               />
             </div>
-            {/* card  */}
-            <IdeaCard owner={true} member={false} />
-            {/* card  */}
-            <IdeaCard owner={true} member={false} />
+            {allIdeas?.map((ele) => {
+              if (ele[0] === address) {
+                return <IdeaCard owner={true} member={false} idea={ele} />;
+              }
+            })}
           </div>
           <div className="sm:w-[49%] sm:bg-[#01002a] rounded-2xl p-6">
             <p className="hidden mb-6 sm:block"> You are a part of it</p>
