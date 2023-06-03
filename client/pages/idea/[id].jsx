@@ -198,7 +198,7 @@ const IndividualIdea = () => {
         <div className="flex flex-col sm:flex sm:flex-row text-white m-6 rounded-md  bg-[#01002A] sm:bg-inherit px-6 py-8">
           <div className="flex flex-col sm:w-[60%] sm:m-4">
             <h1 className="flex text-2xl ">
-              Project Idea Name{" "}
+              {data?.[1]}
               <Image
                 height={6}
                 width={14}
@@ -207,61 +207,16 @@ const IndividualIdea = () => {
                 className="ml-4 rotate-12"
               />
             </h1>
-            <p>
-              Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-              amet sint. Velit officia consequat duis enim velit mollit.
-              Exercitation veniam consequat sunt nostrud amet. Amet minim mollit
-              non deserunt ullamco est sit aliqua dolor do amet sint. Velit
-              officia consequat duis enim velit mollit.
-              <br />
-              <br />
-              Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-              amet sint. Velit officia consequat duis enim velit mollit.
-              Exercitation veniam consequat sunt nostrud amet.
-            </p>
+            <p>{data?.[2]}</p>
           </div>
           <div className="flex flex-col mt-6 sm:w-[40%] sm:m-6 sm:mt-14">
-            {/* entry room  */}
-            {/* <div className="justify-end hidden mb-6 -mt-10 sm:flex">
-              <button className="flex items-center bg-white text-[#0D0B37] font-medium p-2 rounded-xl">
-                {room ? "Enter Room" : "Create Room"}
-                {room ? (
-                  <Image
-                    height={8}
-                    width={14}
-                    src="/images/enterArrow.png"
-                    alt="enter room"
-                    className="ml-3"
-                  />
-                ) : (
-                  <Image
-                    height={8}
-                    width={14}
-                    src="/images/plus.png"
-                    alt="create room"
-                    className="ml-3"
-                  />
-                )}
-              </button>
-            </div> */}
             <p className="text-[#05EAFA]">Skills Required</p>
             <div className="grid grid-cols-4 text-xs sm:grid-cols-3 md:grid-cols-4 gap-y-2">
-              {" "}
-              <div className="border-[#E40E82] border rounded-lg lg:min-w-[70%] lg:max-w-fit h-fit py-1 px-2 lg:my-1 mx-2 lg:tracking-wide">
-                #C++
-              </div>
-              <div className="border-[#E40E82] border rounded-lg lg:min-w-[70%] lg:max-w-fit h-fit py-1 px-2 lg:my-1 mx-2 lg:tracking-wide">
-                #C
-              </div>
-              <div className="border-[#E40E82] border rounded-lg lg:min-w-[70%] lg:max-w-fit h-fit py-1 px-2 lg:my-1 mx-2 lg:tracking-wide">
-                #JS
-              </div>
-              <div className="border-[#E40E82] border rounded-lg lg:min-w-[70%] lg:max-w-fit h-fit py-1 px-2 lg:my-1 mx-2 lg:tracking-wide">
-                #Java
-              </div>
-              <div className="border-[#E40E82] border rounded-lg lg:min-w-[70%] lg:max-w-fit h-fit py-1 px-2 lg:my-1 mx-2 lg:tracking-wide">
-                #Java
-              </div>
+              {data?.[4]?.map((ele) => (
+                <div className="border-[#E40E82] border rounded-lg lg:min-w-[70%] lg:max-w-fit h-fit py-1 px-2 lg:my-1 mx-2 lg:tracking-wide">
+                  {ele}
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -272,11 +227,9 @@ const IndividualIdea = () => {
             <div>
               <p className="text-[#05EAFA]">List of Proposals</p>
               <div className="grid grid-cols-1 gap-4 mx-6 cardsCollection sm:grid-cols-2 lg:grid-cols-3">
-                {/* card  */}
-                <ProposalCard />
-                <ProposalCard />
-                <ProposalCard />
-                <ProposalCard />
+                {data?.[5]?.map((ele, idx) => (
+                  <ProposalCard key={idx} prop={ele} />
+                ))}
               </div>
             </div>
           </div>
@@ -294,7 +247,7 @@ const IndividualIdea = () => {
                 id=""
                 cols="30"
                 rows="4"
-                className="w-full bg-inherit outline-none "
+                className="w-full outline-none bg-inherit "
                 placeholder="Type your proposal here..."
                 disabled={proposal}
               ></textarea>

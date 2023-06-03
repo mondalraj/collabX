@@ -110,10 +110,16 @@ const ProjectIdeas = () => {
 
       <div className="relative cardsBackground w-[90%] m-auto bg-[#01002a] pt-[10px] pb-[10px] pl-[10px] pr-[10px] sm:p-5 ">
         <div className="z-0 grid grid-cols-1 gap-8 cardsCollection sm:grid-cols-2 lg:grid-cols-3">
-          <ProjectCard />
-          <ProjectCard />
-          <ProjectCard />
-          <ProjectCard />
+          {allIdeas?.map((ele, idx) => (
+            <ProjectCard
+              key={idx}
+              index={idx}
+              name={ele[1]}
+              about={ele[2]}
+              skills={ele[4]}
+              id={ele[0]}
+            />
+          ))}
         </div>
       </div>
     </div>

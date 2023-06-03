@@ -1,11 +1,6 @@
 import { useState } from "react";
-import {
-  AiFillLinkedin,
-  AiFillTwitterSquare,
-  AiOutlineMail,
-} from "react-icons/ai";
 import { HiCheckCircle } from "react-icons/hi";
-const ProposalCard = () => {
+const ProposalCard = ({ prop }) => {
   const [acceptProposal, setAcceptProposal] = useState(false);
   const handleTick = () => {
     setAcceptProposal(!acceptProposal);
@@ -23,8 +18,8 @@ const ProposalCard = () => {
               <img src="/images/avatar.png" alt="avatar" />
             </div>
             <div className=" socialIcons">
-              <h3 className="text-[#fff] mb-0 text-base ">Vansh Verma</h3>
-              <div className="flex justify-start ">
+              <h3 className="text-[#fff] mb-0 text-base ">{prop?.[2]}</h3>
+              {/* <div className="flex justify-start ">
                 <AiOutlineMail
                   size={18}
                   className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-1"
@@ -37,7 +32,7 @@ const ProposalCard = () => {
                   size={18}
                   className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-1"
                 />
-              </div>
+              </div> */}
             </div>
           </div>
           <div>
@@ -57,11 +52,7 @@ const ProposalCard = () => {
             )}
           </div>
         </div>
-        <div className="m-4">
-          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-          sint. Velit officia consequat duis enim velit mollit. Exercitation
-          veniam consequat sunt nostrud amet.
-        </div>
+        <div className="m-4">{prop?.[1]}</div>
       </div>
     </div>
   );

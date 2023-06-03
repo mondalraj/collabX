@@ -1,3 +1,5 @@
+import AuthenticatedUser from "@/components/Auth/AuthenticatedUser";
+import GetProfile from "@/components/Profile/GetProfile";
 import { USERPROFILE_CONTRACT_ADDRESS } from "@/constants";
 import { useContract } from "@thirdweb-dev/react";
 import { useRouter } from "next/router";
@@ -35,8 +37,22 @@ const UserProfile = () => {
   }, [router, isLoading]);
 
   console.log("User Profile Data", profileData);
-
-  return <div>User Profile</div>;
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center w-screen h-screen gap-5">
+        <AuthenticatedUser />
+        <div>Loading Data... Please wait.</div>
+      </div>
+    );
+  }
+  return (
+    <>
+      <AuthenticatedUser />
+      <div className="max-w-screen-xl m-auto text-sm">
+        <GetProfile profile={profileData} />
+      </div>
+    </>
+  );
 };
 
 export default UserProfile;
