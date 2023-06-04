@@ -1,16 +1,7 @@
 import Link from "next/link";
-import { useState } from "react";
 import { AiOutlineRight } from "react-icons/ai";
-import { TbTriangleFilled, TbTriangleInvertedFilled } from "react-icons/tb";
 
 const ProjectCard = ({ name, about, skills, id, index }) => {
-  const [upVote, setUpVote] = useState(0);
-  const incVote = () => {
-    setUpVote(upVote + 1);
-  };
-  const decVote = () => {
-    setUpVote(upVote - 1);
-  };
   return (
     <div>
       <div
@@ -25,17 +16,6 @@ const ProjectCard = ({ name, about, skills, id, index }) => {
           {/* <div className="">
             <FiLink className="text-2xl text-[#fff]" />
           </div> */}
-          <div className="upVoteCount bg-[#01002a] text-[#fff] w-[25%] rounded-full text-center  flex-col justify-center sm:text-2xl">
-            <TbTriangleFilled
-              onClick={incVote}
-              className="text-[#e40e82] m-auto -mb-8"
-            />
-            <h3 className="text-2xl">{upVote}</h3>
-            <TbTriangleInvertedFilled
-              onClick={decVote}
-              className="m-auto -mt-4"
-            />
-          </div>
         </div>
         <div className="m-auto profileCardLowerSection">
           <div className="personDetails flex flex-col pl-[1rem] pr-[1rem] sm:justify-around">

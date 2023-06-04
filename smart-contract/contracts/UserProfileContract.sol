@@ -5,6 +5,7 @@ contract UserProfileContract {
     struct Profile {
         address wallet;
         string name;
+        string bio;
         string email;
         string phone;
         string twitterHandle;
@@ -38,6 +39,7 @@ contract UserProfileContract {
 
     function createProfile(
         string memory _name,
+        string memory _bio,
         string memory _email,
         string memory _phone,
         string memory _twitterHandle,
@@ -53,6 +55,7 @@ contract UserProfileContract {
         Profile storage newProfile = profiles[msg.sender];
         newProfile.wallet = msg.sender;
         newProfile.name = _name;
+        newProfile.bio = _bio;
         newProfile.email = _email;
         newProfile.phone = _phone;
         newProfile.twitterHandle = _twitterHandle;
@@ -96,6 +99,7 @@ contract UserProfileContract {
 
     function editProfile(
         string memory _name,
+        string memory _bio,
         string memory _email,
         string memory _phone,
         string memory _twitterHandle,
@@ -110,6 +114,7 @@ contract UserProfileContract {
 
         Profile storage profileToUpdate = profiles[msg.sender];
         profileToUpdate.name = _name;
+        profileToUpdate.bio = _bio;
         profileToUpdate.email = _email;
         profileToUpdate.phone = _phone;
         profileToUpdate.twitterHandle = _twitterHandle;

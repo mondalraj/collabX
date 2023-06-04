@@ -54,10 +54,13 @@ const ListView = () => {
         <div className="grid grid-cols-1 gap-8 cardsCollection sm:grid-cols-2 lg:grid-cols-3">
           {allProfiles?.map((profile) => (
             <ProfileCard
+              address={profile[0]}
               name={profile[1]}
-              skills={profile[5]}
+              skills={profile[6]}
               id={profile[0]}
-              twit={profile[4]}
+              bio={profile[2]}
+              twit={profile[5]}
+              upvote={Number(profile.upvote_count)}
             />
           ))}
         </div>

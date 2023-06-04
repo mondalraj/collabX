@@ -1,9 +1,48 @@
+import {
+  DAOROOM_CONTRACT_ADDRESS,
+  PROJECTIDEA_CONTRACT_ADDRESS,
+} from "@/constants";
+import { useContract, useContractWrite } from "@thirdweb-dev/react";
+import { useRouter } from "next/router";
+import { Notify } from "notiflix";
 import { useState } from "react";
 import { HiCheckCircle } from "react-icons/hi";
-const ProposalCard = ({ prop }) => {
-  const [acceptProposal, setAcceptProposal] = useState(false);
-  const handleTick = () => {
-    setAcceptProposal(!acceptProposal);
+const ProposalCard = ({ prop, id }) => {
+  const [acceptProposal, setAcceptProposal] = useState(prop?.isAccepted);
+  const router = useRouter();
+
+  const { contract } = useContract(PROJECTIDEA_CONTRACT_ADDRESS);
+  const { contract: DAOContract } = useContract(DAOROOM_CONTRACT_ADDRESS);
+  const { mutateAsync: proposalAccept, isLoading } = useContractWrite(
+    contract,
+    "acceptProposal"
+  );
+  const { mutateAsync: addParticipant } = useContractWrite(
+    DAOContract,
+    "addParticipant"
+  );
+
+  console.log("proposal", prop, id);
+
+  const handleTick = async () => {
+    if (acceptProposal) return;
+    setAcceptProposal(true);
+    try {
+      const res = await proposalAccept({
+        args: [Number(router.query.id), id],
+      });
+      console.info("contract call successs", res);
+      Notify.success("Proposal Accepted");
+      // Add Participant to the DAO Room
+      const data = await addParticipant({
+        args: [router.query.id, prop.name, prop.proposer],
+      });
+      console.info("contract call successs", data);
+      Notify.success("Participant Added to DAO Room");
+    } catch (err) {
+      console.error("contract call failure", err);
+      Notify.failure("Proposal Acceptance Failed");
+    }
   };
   return (
     <div>
@@ -40,8 +79,7 @@ const ProposalCard = ({ prop }) => {
               <HiCheckCircle
                 size={25}
                 color="#06DBEE"
-                className="cursor-pointer "
-                onClick={handleTick}
+                className="cursor-not-allowed"
               />
             ) : (
               <HiCheckCircle

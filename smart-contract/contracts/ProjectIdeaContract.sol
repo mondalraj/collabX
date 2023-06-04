@@ -12,6 +12,7 @@ contract ProjectIdeaContract {
         Comment[] comments;
         bool isCompleted;
         bool isFeatured;
+        uint256 id;
     }
 
     struct Proposal {
@@ -53,6 +54,7 @@ contract ProjectIdeaContract {
         newIdea.dateCreated = block.timestamp;
         newIdea.isCompleted = false;
         newIdea.isFeatured = false;
+        newIdea.id = numberOfIdeas;
 
         numberOfIdeas++;
 

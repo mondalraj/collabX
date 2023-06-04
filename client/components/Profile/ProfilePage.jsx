@@ -25,6 +25,7 @@ import Skills from "./Skills";
 
 const initialState = {
   name: "",
+  bio: "",
   twitterHandle: "",
   phone: "",
   gmail: "",
@@ -124,6 +125,7 @@ const ProfilePage = () => {
       const data = await createProfile({
         args: [
           formData.name,
+          formData.bio,
           formData.gmail,
           formData.phone,
           formData.twitterHandle,
@@ -551,6 +553,8 @@ const ProfilePage = () => {
             setSection={setSection}
             progress={progress}
             setProgress={setProgress}
+            formData={formData}
+            setFormData={setFormData}
           />
         )}
 
