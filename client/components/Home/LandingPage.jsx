@@ -12,7 +12,7 @@ import Image from "next/image";
 import {
     AiOutlineWallet,
   } from "react-icons/ai";
-import Carousel from 'react-elastic-carousel';
+// import Carousel from 'react-elastic-carousel';
 const tokenId = 0;
 
 const LandingPage = () => {
