@@ -13,6 +13,7 @@ contract ProjectRoomDAOContract {
         Comment[] comments;
         Proposal[] proposals;
         Task[] tasks;
+        uint256 id;
     }
 
     struct Participant {
@@ -57,6 +58,7 @@ contract ProjectRoomDAOContract {
     uint256 public numberOfRooms = 0;
 
     function createRoom(
+        uint256 _id,
         string memory _name,
         string memory _description,
         string memory _link
@@ -67,7 +69,7 @@ contract ProjectRoomDAOContract {
             "Room description cannot be empty"
         );
 
-        ProjectRoom storage newRoom = rooms[numberOfRooms];
+        ProjectRoom storage newRoom = rooms[_id];
 
         newRoom.creator = msg.sender;
         newRoom.name = _name;
@@ -75,22 +77,20 @@ contract ProjectRoomDAOContract {
         newRoom.link = _link;
         newRoom.dateCreated = block.timestamp;
         newRoom.isCompleted = false;
+        newRoom.id = _id;
 
         numberOfRooms++;
 
-        return numberOfRooms - 1;
+        return _id;
     }
 
     function getProjectRoom(
         uint256 _roomId
     ) public view returns (ProjectRoom memory) {
-        require(_roomId < numberOfRooms, "Room does not exist");
-
         return rooms[_roomId];
     }
 
     function completeProjectRoom(uint256 _roomId) public {
-        require(_roomId < numberOfRooms, "Room does not exist");
         require(
             rooms[_roomId].creator == msg.sender,
             "Only creator can complete the room"
@@ -104,7 +104,6 @@ contract ProjectRoomDAOContract {
         string memory _name,
         address _address
     ) public {
-        require(_roomId < numberOfRooms, "Room does not exist");
         require(bytes(_name).length > 0, "Participant name cannot be empty");
 
         Participant memory newParticipant;
@@ -119,8 +118,6 @@ contract ProjectRoomDAOContract {
         uint256 _roomId,
         address _participant
     ) public {
-        require(_roomId < numberOfRooms, "Room does not exist");
-
         for (uint256 i = 0; i < rooms[_roomId].participants.length; i++) {
             if (rooms[_roomId].participants[i].participant == _participant) {
                 delete rooms[_roomId].participants[i];
@@ -132,8 +129,6 @@ contract ProjectRoomDAOContract {
     function getProjectRoomParticipants(
         uint256 _roomId
     ) public view returns (Participant[] memory) {
-        require(_roomId < numberOfRooms, "Room does not exist");
-
         return rooms[_roomId].participants;
     }
 
@@ -143,7 +138,6 @@ contract ProjectRoomDAOContract {
         string memory _commentText,
         address _commenter
     ) public {
-        require(_roomId < numberOfRooms, "Room does not exist");
         require(bytes(_name).length > 0, "Comment name cannot be empty");
         require(bytes(_commentText).length > 0, "Comment text cannot be empty");
 
@@ -159,8 +153,6 @@ contract ProjectRoomDAOContract {
     function getProjectRoomComments(
         uint256 _roomId
     ) public view returns (Comment[] memory) {
-        require(_roomId < numberOfRooms, "Room does not exist");
-
         return rooms[_roomId].comments;
     }
 
@@ -170,7 +162,6 @@ contract ProjectRoomDAOContract {
         string memory _description,
         address _proposer
     ) public {
-        require(_roomId < numberOfRooms, "Room does not exist");
         require(bytes(_name).length > 0, "Proposal name cannot be empty");
         require(
             bytes(_description).length > 0,
@@ -192,8 +183,6 @@ contract ProjectRoomDAOContract {
     function getProjectRoomProposals(
         uint256 _roomId
     ) public view returns (Proposal[] memory) {
-        require(_roomId < numberOfRooms, "Room does not exist");
-
         return rooms[_roomId].proposals;
     }
 
@@ -202,7 +191,6 @@ contract ProjectRoomDAOContract {
         uint256 _proposalId,
         uint256 _vote
     ) public {
-        require(_roomId < numberOfRooms, "Room does not exist");
         require(
             _proposalId < rooms[_roomId].proposals.length,
             "Proposal does not exist"
@@ -223,7 +211,6 @@ contract ProjectRoomDAOContract {
         uint256 _roomId,
         uint256 _proposalId
     ) external {
-        require(_roomId < numberOfRooms, "Room does not exist");
         require(
             _proposalId < rooms[_roomId].proposals.length,
             "Proposal does not exist"
@@ -260,13 +247,10 @@ contract ProjectRoomDAOContract {
     function getProjectRoomTasks(
         uint256 _roomId
     ) public view returns (Task[] memory) {
-        require(_roomId < numberOfRooms, "Room does not exist");
-
         return rooms[_roomId].tasks;
     }
 
     function assignTaskToParticipant(uint256 _roomId, uint256 _taskId) public {
-        require(_roomId < numberOfRooms, "Room does not exist");
         require(_taskId < rooms[_roomId].tasks.length, "Task does not exist");
 
         rooms[_roomId].tasks[_taskId].assignedTo = msg.sender;
@@ -278,7 +262,6 @@ contract ProjectRoomDAOContract {
         uint256 _taskId,
         uint256 _status
     ) public {
-        require(_roomId < numberOfRooms, "Room does not exist");
         require(_taskId < rooms[_roomId].tasks.length, "Task does not exist");
         require(
             _status >= 0 && _status <= 1,
@@ -305,7 +288,6 @@ contract ProjectRoomDAOContract {
         uint256 _taskId,
         uint256 _vote
     ) public {
-        require(_roomId < numberOfRooms, "Room does not exist");
         require(_taskId < rooms[_roomId].tasks.length, "Task does not exist");
         require(_vote >= 0 && _vote <= 1, "Vote must be between 0 and 1");
 
@@ -321,7 +303,6 @@ contract ProjectRoomDAOContract {
         uint256 _roomId,
         uint256 _taskId
     ) external {
-        require(_roomId < numberOfRooms, "Room does not exist");
         require(_taskId < rooms[_roomId].tasks.length, "Task does not exist");
 
         if (

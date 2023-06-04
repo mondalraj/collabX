@@ -1,7 +1,7 @@
-import Modal from "@/components/Modal";
 import Navbar from "@/components/Nav/Navbar";
 import ProposalCard from "@/components/ProposalCard/ProposalCard";
 import {
+  DAOROOM_CONTRACT_ADDRESS,
   PROJECTIDEA_CONTRACT_ADDRESS,
   USERPROFILE_CONTRACT_ADDRESS,
 } from "@/constants";
@@ -60,6 +60,23 @@ const IndividualIdea = () => {
   const { mutateAsync: createProposal, isLoading: isLoadingSubmitProposal } =
     useContractWrite(contract, "submitProposal");
 
+  const { contract: DAOContract } = useContract(DAOROOM_CONTRACT_ADDRESS);
+  const { data: roomData } = useContractRead(DAOContract, "getProjectRoom", [
+    router.query.id,
+  ]);
+
+  const { mutateAsync: createNewRoom } = useContractWrite(
+    DAOContract,
+    "createRoom"
+  );
+
+  console.log("ROOM", roomData);
+  useEffect(() => {
+    if (roomData && roomData?.name !== "") {
+      setRoom(true);
+    }
+  }, [roomData]);
+
   console.log("DATA", data);
 
   useEffect(() => {
@@ -78,14 +95,20 @@ const IndividualIdea = () => {
     }
   }, [data, address]);
 
-  const create = () => {
-    console.log(projectIdea);
-    setModalClick(!modalClick);
-    setProjectIdea({
-      name: "",
-      description: "",
-      tags: [],
-    });
+  const createRoom = async () => {
+    try {
+      const res = await createNewRoom({
+        args: [router.query.id, `${data.name} Room`, data.description, "#"],
+      });
+      console.info("contract call successs", res);
+      setRoom(true);
+      Notify.success("Room Created Successfully");
+
+      window.location.href = `/room/${router.query.id}`;
+    } catch (err) {
+      console.error("contract call failure", err);
+      Notify.failure("Room Creation Failed");
+    }
   };
 
   const submitProposal = async () => {
@@ -96,7 +119,7 @@ const IndividualIdea = () => {
 
     try {
       const data = await createProposal({
-        args: [router.query.id, currentUserData.name, desc],
+        args: [router.query.id, desc, currentUserData.name],
       });
       console.info("contract call successs", data);
       setProposal((prev) => !prev);
@@ -131,30 +154,27 @@ const IndividualIdea = () => {
         />
       </div>
 
-      {/* Modal */}
-      <Modal
-        openModal={openModal}
-        modalClick={modalClick}
-        projectIdea={projectIdea}
-        setProjectIdea={setProjectIdea}
-        create={create}
-      />
       <div className="flex justify-end mt-4 mb-6 mr-4">
         {/* owner  */}
         {owner ? (
           room ? (
-            <button className="flex items-center bg-white text-[#0D0B37] font-medium p-2 rounded-xl">
-              Enter Room{" "}
-              <Image
-                height={8}
-                width={14}
-                src="/images/enterArrow.png"
-                alt="enter room"
-                className="ml-3"
-              />{" "}
-            </button>
+            <a href={`/room/${router.query.id}`}>
+              <button className="flex items-center bg-white text-[#0D0B37] font-medium p-2 rounded-xl">
+                Enter Room{" "}
+                <Image
+                  height={8}
+                  width={14}
+                  src="/images/enterArrow.png"
+                  alt="enter room"
+                  className="ml-3"
+                />{" "}
+              </button>
+            </a>
           ) : (
-            <button className="flex items-center bg-white text-[#0D0B37] font-medium p-2 rounded-xl">
+            <button
+              className="flex items-center bg-white text-[#0D0B37] font-medium p-2 rounded-xl"
+              onClick={createRoom}
+            >
               Create Room{" "}
               <Image
                 height={8}
@@ -180,16 +200,18 @@ const IndividualIdea = () => {
           ) : (
             // enter room
             <div className="flex justify-end mx-6 mb-1 mr-4">
-              <button className="flex items-center bg-white text-[#0D0B37] font-medium p-2 rounded-xl">
-                Enter Room{" "}
-                <Image
-                  height={8}
-                  width={14}
-                  src="/images/enterArrow.png"
-                  alt="enter room"
-                  className="ml-3"
-                />{" "}
-              </button>
+              <a href={`/room/${router.query.id}`}>
+                <button className="flex items-center bg-white text-[#0D0B37] font-medium p-2 rounded-xl">
+                  Enter Room{" "}
+                  <Image
+                    height={8}
+                    width={14}
+                    src="/images/enterArrow.png"
+                    alt="enter room"
+                    className="ml-3"
+                  />{" "}
+                </button>
+              </a>
             </div>
           ))
         )}
@@ -228,7 +250,7 @@ const IndividualIdea = () => {
               <p className="text-[#05EAFA]">List of Proposals</p>
               <div className="grid grid-cols-1 gap-4 mx-6 cardsCollection sm:grid-cols-2 lg:grid-cols-3">
                 {data?.[5]?.map((ele, idx) => (
-                  <ProposalCard key={idx} prop={ele} />
+                  <ProposalCard key={idx} id={idx} prop={ele} />
                 ))}
               </div>
             </div>

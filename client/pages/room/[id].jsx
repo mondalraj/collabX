@@ -1,5 +1,13 @@
+import AuthenticatedUser from "@/components/Auth/AuthenticatedUser";
+import { DAOROOM_CONTRACT_ADDRESS } from "@/constants";
+import {
+  ConnectWallet,
+  useContract,
+  useContractRead,
+} from "@thirdweb-dev/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { AiOutlineLeft } from "react-icons/ai";
 import {
@@ -16,6 +24,16 @@ const daoRoom = () => {
   const [option, setOption] = useState("tasks");
   const [taskOption, setTaskOption] = useState("To Do");
   const [clickHam, setClickHam] = useState(false);
+  const router = useRouter();
+  const { contract: DAOContract } = useContract(DAOROOM_CONTRACT_ADDRESS);
+  const { data: roomData, isLoading: isLoadingRoom } = useContractRead(
+    DAOContract,
+    "getProjectRoom",
+    [router.query.id]
+  );
+
+  console.log("ROOMDATA", roomData);
+
   const changeHam = () => {
     setClickHam(!clickHam);
   };
@@ -28,12 +46,30 @@ const daoRoom = () => {
   const openNav = () => {
     setPhonenav(!phonenav);
   };
+
+  console.log(isLoadingRoom);
+
+  if (isLoadingRoom) {
+    return (
+      <div
+        className="h-screen w-screen flex flex-col
+      justify-center items-center gap-5 text-white text-xl"
+      >
+        <AuthenticatedUser />
+        <div>Loading Data... Please wait.</div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative container1">
       <div className="navbar">
-        <div className="mt-10 mb-8 hidden sm:flex flex-row justify-between items-center w-[90%] m-auto rounded-full p-2 pl-3">
+        <div className="mt-5 mb-5 hidden sm:flex flex-row justify-between items-center w-[90%] m-auto rounded-full p-2 pl-3">
           <div className="ml-3 -mt-2 img sm:flex justify-start items-center sm:w-[35%]">
-            <AiOutlineLeft className="text-[#fff] mt-2 text-2xl cursor-pointer" />
+            <AiOutlineLeft
+              className="text-[#fff] mt-2 text-2xl cursor-pointer"
+              onClick={() => router.back()}
+            />
             <GiHamburgerMenu
               onClick={changeHam}
               size={25}
@@ -43,7 +79,7 @@ const daoRoom = () => {
             <p className="text-[#fff] text-2xl">Project Idea Name</p>
           </div>
           <div className="flex items-center">
-            <div className="text-[#E40E82] bg-[#1C0041] flex items-center p-2 rounded-xl mr-7">
+            {/* <div className="text-[#E40E82] bg-[#1C0041] flex items-center p-2 rounded-xl mr-7">
               <Image
                 height={20}
                 width={20}
@@ -52,7 +88,14 @@ const daoRoom = () => {
                 className="mr-2 "
               />
               <p>120.00 CX</p>
-            </div>
+            </div> */}
+            <ConnectWallet
+              style={{
+                transform: "scale(0.8)",
+              }}
+              theme="light"
+              btnTitle="Connect Wallet"
+            />
             <Image
               height={40}
               width={40}

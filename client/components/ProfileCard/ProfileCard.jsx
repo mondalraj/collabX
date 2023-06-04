@@ -1,11 +1,33 @@
+import { USERPROFILE_CONTRACT_ADDRESS } from "@/constants";
+import { useContract, useContractWrite } from "@thirdweb-dev/react";
 import Link from "next/link";
+import { Notify } from "notiflix";
 import {
   AiFillLinkedin,
   AiFillTwitterSquare,
   AiOutlineMail,
   AiOutlineRight,
 } from "react-icons/ai";
-const ProfileCard = ({ name, skills, id, twit }) => {
+import { TbTriangleFilled } from "react-icons/tb";
+const ProfileCard = ({ address, name, skills, id, twit, bio, upvote }) => {
+  const { contract } = useContract(USERPROFILE_CONTRACT_ADDRESS);
+  const { mutateAsync: upvoteProfile, isLoading } = useContractWrite(
+    contract,
+    "upvoteProfile"
+  );
+
+  const incVote = async () => {
+    try {
+      const data = await upvoteProfile({ args: [address] });
+      console.info("contract call successs", data);
+
+      Notify.success("Upvoted Successfully");
+      window.location.reload();
+    } catch (err) {
+      console.error("contract call failure", err);
+      Notify.failure("Upvote Failed");
+    }
+  };
   return (
     <div
       className="profileCard rounded-lg w-[100%] md:w-[90%] lg:w-[80%] mt-[1rem] mb-4rem pb-[1rem] pt-[1rem] text-sm
@@ -27,15 +49,19 @@ const ProfileCard = ({ name, skills, id, twit }) => {
             </Link>
           </div>
         </div>
+        <div className="upVoteCount bg-[#01002a] text-[#fff]  rounded-full text-center  flex-col justify-center sm:text-2xl p-3 px-5">
+          <TbTriangleFilled
+            onClick={incVote}
+            className="text-[#e40e82] m-auto -mb-8 cursor-pointer"
+          />
+          <h3 className="text-2xl">{upvote}</h3>
+        </div>
       </div>
       <div className="m-auto mt-3 profileCardLowerSection">
         <div className="personDetails flex-col sm:flex sm:flex-row pl-[1rem] pr-[1rem] sm:justify-around">
           <div className="about bg-[#01002A] p-5 mt-2 rounded-[1rem] sm:w-[45%]">
             <h3 className="text-lg text-[#05eafa]">About</h3>
-            <p className="text-[#fff]">
-              Amet minim mollit non deserunt ullamco est sit aliqua non deserunt
-              ullamco est sit aliqua{" "}
-            </p>
+            <p className="text-[#fff]">{bio}</p>
           </div>
           <div className="skills  bg-[#01002A] p-5 mt-2 rounded-[1rem] sm:w-[45%]">
             <h3 className="text-lg text-[#05eafa]">Skills</h3>

@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { BiChevronRight } from "react-icons/bi";
 
-const IdeaCard = ({ owner, member, idea, index }) => {
+const IdeaCard = ({ owner, member, idea }) => {
   return (
     <div className=" bg-gradient-to-b from-[#23094E] to-[#000000] p-2 pb-4 rounded-xl mb-8">
       <div className="flex justify-between p-2 mx-1">
@@ -31,7 +31,7 @@ const IdeaCard = ({ owner, member, idea, index }) => {
         </div>
       </div>
       {owner && !member && (
-        <Link href={`/idea/${index}`}>
+        <Link href={`/idea/${idea.id}`}>
           <div className="flex items-center justify-center bg-[#01002a] text-[#05EAFA] mt-2 mx-1 rounded-xl text-sm p-2">
             {" "}
             Open Idea <BiChevronRight color="#05EAFA" />
@@ -39,7 +39,7 @@ const IdeaCard = ({ owner, member, idea, index }) => {
         </Link>
       )}
       {!owner && member && (
-        <Link href="/idea/id">
+        <Link href={`/idea/${idea.id}`}>
           {" "}
           <div className="flex items-center justify-center bg-[#01002a] text-[#05EAFA] mt-2 mx-1 rounded-xl text-sm p-2">
             {" "}

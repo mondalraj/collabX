@@ -200,10 +200,16 @@ const YourIdeas = () => {
           </div>
           <div className="sm:w-[49%] sm:bg-[#01002a] rounded-2xl p-6">
             <p className="hidden mb-6 sm:block"> You are a part of it</p>
+
+            {allIdeas?.map((ele) => {
+              if (ele[0] !== address) {
+                // here we are checking if the address is not the owner of the idea then he is part of the project, call the component for you are part of it.
+              }
+            })}
             {/* card  */}
-            <IdeaCard owner={false} member={true} />
+            {/* <IdeaCard owner={false} member={true} /> */}
             {/* card  */}
-            <IdeaCard owner={false} member={true} />
+            {/* <IdeaCard owner={false} member={true} /> */}
           </div>
         </div>
       </div>
