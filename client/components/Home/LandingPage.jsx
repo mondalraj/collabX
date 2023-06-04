@@ -158,10 +158,10 @@ const LandingPage = () => {
           className="m-auto mt-[-6rem]   block sm:hidden z-[-100]"
         />
         <div className="PlanetCards absolute top-[92%] w-[100%] mt-[-9rem] sm:mt-[-13rem]">
-        <Carousel>
+        <div className="carousel sm:bg-[rgba(0,0,0,0.5)]">
             {/* ***************************** Card -1  */}
-          <div className="PlanetCard m-auto w-[100%] sm:bg-[rgba(0,0,0,0.5)] sm:backdrop-blur-md 
-          sm:pl-[13rem] sm:pr-[13rem] items-center justify-items-center">
+          <div className="PlanetCard carousel-item m-auto w-[100%] sm:pl-[13rem] sm:pr-[13rem] items-center justify-items-center 
+          ml-0 sm:ml-[-35rem]">
             <div className="abovePart w-[15%] ml-auto mr-0 hidden sm:block">
               <div className="whyCollabX flex justify-around">
                 <h2 className="text-[#fff] text-lg font-semibold">
@@ -198,8 +198,7 @@ const LandingPage = () => {
           </div>
 
           {/* ***************************** Card -2  */}
-          <div className="PlanetCard m-auto w-[100%] sm:bg-[rgba(0,0,0,0.5)] sm:backdrop-blur-md 
-          sm:pl-[13rem] sm:pr-[13rem]">
+          <div className="PlanetCard carousel-item m-auto w-[100%]  sm:pl-[13rem] sm:pr-[13rem] ml-0 sm:ml-[-35rem]">
                         <div className="abovePart w-[15%] ml-auto mr-0 hidden sm:block sm:invisible">
               <div className="whyCollabX flex justify-around">
                 <h2 className="text-[#fff] text-lg font-semibold">
@@ -235,8 +234,8 @@ const LandingPage = () => {
             </div>
           </div>
                     {/* ***************************** Card -3  */}
-          <div className="PlanetCard m-auto w-[100%] sm:bg-[rgba(0,0,0,0.5)] sm:backdrop-blur-md 
-          sm:pl-[13rem] sm:pr-[13rem]">
+          <div className="PlanetCard carousel-item m-auto w-[100%]
+          sm:pl-[13rem] sm:pr-[13rem] ml-0 sm:ml-0">
             <div className="abovePart w-[15%] ml-auto mr-0 hidden sm:block sm:invisible">
               <div className="whyCollabX flex justify-around">
                 <h2 className="text-[#fff] text-lg font-semibold">
@@ -271,7 +270,7 @@ const LandingPage = () => {
               </div>
             </div>
           </div>
-        </Carousel>
+        </div>
         </div>
 
         <div className="CollabXWorks relative mt-[-10rem] sm:mt-[-68rem] bg-black z-10 pb-20">
