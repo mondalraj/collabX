@@ -334,50 +334,50 @@ const LandingPage = () => {
           </div>
         </div>
 
-        <div className="OurTeam mt-8 hidden sm:block relative bg-black sm:mt-[-0.2rem]  ">
+        <div className="OurTeam mt-[-1rem]  relative bg-black sm:mt-[-0.2rem]  ">
           <div className="ourTeamTitle ">
             <div className="whyCollabX flex pl-[8rem]">
               <img
                 src="./images/pinkRectangle.png"
                 alt=""
-                className=""
+                className="hidden sm:block"
               />
               <h2 className="text-[#fff] text-[2rem] font-semibold pl-6">
                 Our Team
               </h2>
             </div>
           </div>
-          <div className="ourTeamMembers p-20 hidden sm:flex justify-around">
-            <div className="memberCollabX">
-                <div className="memberImage">
+          <div className="ourTeamMembers p-20 grid grid-cols-2 sm:grid-cols-4 gap-[3rem] sm:gap-20 justify-around text-center">
+            <div className="memberCollabX m-auto">
+                <div className="memberImage m-auto">
                     <img src="./images/profileImage.png" alt="" />
                 </div>
-                <div className="name pl-5">
-                    <h2 className="text-[#fff] text-[1.5rem]">Rajib Mondal</h2>
+                <div className="name">
+                    <h2 className="text-[#fff] text-[1.3rem] sm:text-[1.5rem]">Rajib Mondal</h2>
                 </div>
             </div>
-            <div className="memberCollabX">
-                <div className="memberImage">
+            <div className="memberCollabX m-auto">
+                <div className="memberImage m-auto">
                     <img src="./images/profileImage.png" alt="" />
                 </div>
-                <div className="name pl-5">
-                    <h2 className="text-[#fff] text-[1.5rem]">Rajib Mondal</h2>
+                <div className="name">
+                    <h2 className="text-[#fff] text-[1.3rem] sm:text-[1.5rem]">Aryan Singla</h2>
                 </div>
             </div>
-            <div className="memberCollabX">
-                <div className="memberImage">
+            <div className="memberCollabX m-auto">
+                <div className="memberImage m-auto">
                     <img src="./images/profileImage.png" alt="" />
                 </div>
-                <div className="name pl-5">
-                    <h2 className="text-[#fff] text-[1.5rem]">Rajib Mondal</h2>
+                <div className="name">
+                    <h2 className="text-[#fff] text-[1.3rem] sm:text-[1.5rem]">Simran Dhankar</h2>
                 </div>
             </div>
-            <div className="memberCollabX">
-                <div className="memberImage">
+            <div className="memberCollabX m-auto">
+                <div className="memberImage m-auto">
                     <img src="./images/profileImage.png" alt="" />
                 </div>
-                <div className="name pl-5">
-                    <h2 className="text-[#fff] text-[1.5rem]">Rajib Mondal</h2>
+                <div className="name">
+                    <h2 className="text-[#fff] text-[1.3rem] sm:text-[1.5rem]">Vanshika Goel</h2>
                 </div>
             </div>
           </div>
