@@ -34,6 +34,9 @@ const daoRoom = () => {
   const [taskOption, setTaskOption] = useState("To Do");
   const [clickHam, setClickHam] = useState(false);
   const [modalClick, setModalClick] = useState(false);
+  const [todo, setTodo] = useState(false);
+  const [assigned, setAssigned] = useState(false);
+
   const [createProposal, setCreateProposal] = useState({
     address: "",
     desc: "",
@@ -484,37 +487,40 @@ const daoRoom = () => {
                         </div>
                       </div>
                       <div className="threeDotIcon">
-                        {/* <BsThreeDotsVertical color="white" size={30} /> */}
-                        <MdOutlinePersonRemove
-                          color="white"
-                          size={27}
-                          className="cursor-pointer"
-                        />
+                        {address !== roomData?.[0] ? (
+                          <BsThreeDotsVertical color="white" size={30} />
+                        ) : (
+                          <MdOutlinePersonRemove
+                            color="white"
+                            size={27}
+                            className="cursor-pointer"
+                          />
+                        )}
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-              <div className="contibutorBoxPlusIcon absolute right-4 mt-[-10px] md:hidden cursor-pointer">
-                <BsPlusCircleFill color="white" size="50" />
-              </div>
 
               <div className="mt-20 leaveAndComplete">
-                <div className="leaveButtonContainer text-center bg-[#fff]">
-                  <div className="leaveRoomButton flex justify-center bg-[#fff] p-2 w-[95%] cursor-pointer m-auto">
-                    <div className="font-bold leaveText">Leave Room</div>
-                    <div className="leaveIcon">
-                      <BsArrowRightSquareFill size={30} className="pl-3 " />
+                {address !== roomData?.[0] ? (
+                  <div className="leaveButtonContainer text-center bg-[#fff]">
+                    <div className="leaveRoomButton flex justify-center bg-[#fff] p-2 w-[95%] cursor-pointer m-auto">
+                      <div className="font-bold leaveText">Leave Room</div>
+                      <div className="leaveIcon">
+                        <BsArrowRightSquareFill size={30} className="pl-3 " />
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="completeButtonContainer mt-3 text-center border-solid border-[1px] border-[#05ff00]">
-                  <div className="p-2 m-auto cursor-pointer leaveRoomButton">
-                    <div className="leaveText font-semibold text-[#05ff00]">
-                      Mark Project as Completed
+                ) : (
+                  <div className="completeButtonContainer mt-3 text-center border-solid border-[1px] border-[#05ff00]">
+                    <div className="p-2 m-auto cursor-pointer leaveRoomButton">
+                      <div className="leaveText font-semibold text-[#05ff00]">
+                        Mark Project as Completed
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
             <div className="newProposalBox">
