@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useState } from "react";
 
-const RoomProposalCard = ({ prop }) => {
+const RoomProposalCard = ({ ele }) => {
   const [yes, setYes] = useState(0);
   const [no, setNo] = useState(0);
   const yesVote = () => {
@@ -25,10 +25,10 @@ const RoomProposalCard = ({ prop }) => {
         </div>
         <div className="pl-3 proposalRight">
           <div className="text-sm font-semibold proposalRightTop">
-            {ele?.[2]}
+            {ele?.name}
           </div>
           <div className="text-xs text-gray-300 proposalRightBottom">
-            <p>{ele?.[1]}</p>
+            <p>{ele?.description}</p>
           </div>
         </div>
       </div>

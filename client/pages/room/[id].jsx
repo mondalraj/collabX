@@ -1,16 +1,22 @@
 import AuthenticatedUser from "@/components/Auth/AuthenticatedUser";
 import RoomModal from "@/components/RoomModal";
 import RoomProposalCard from "@/components/RoomProposalCard/RoomProposalCard";
-import { DAOROOM_CONTRACT_ADDRESS } from "@/constants";
+import {
+  DAOROOM_CONTRACT_ADDRESS,
+  USERPROFILE_CONTRACT_ADDRESS,
+} from "@/constants";
 import {
   ConnectWallet,
+  useAddress,
   useContract,
   useContractRead,
+  useContractWrite,
 } from "@thirdweb-dev/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { Notify } from "notiflix";
+import { useEffect, useState } from "react";
 import { AiOutlineLeft } from "react-icons/ai";
 import {
   BsArrowRightSquareFill,
@@ -29,18 +35,78 @@ const daoRoom = () => {
   const [clickHam, setClickHam] = useState(false);
   const [modalClick, setModalClick] = useState(false);
   const [createProposal, setCreateProposal] = useState({
-    address: "address",
+    address: "",
     desc: "",
   });
   const router = useRouter();
+  const address = useAddress();
+
+  useEffect(() => {
+    if (address) {
+      setCreateProposal({
+        ...createProposal,
+        address: address,
+      });
+    }
+  }, [address]);
+
+  const {
+    contract: useProfileContract,
+    isLoading: userProfileContractLoading,
+  } = useContract(USERPROFILE_CONTRACT_ADDRESS);
+
+  const { data: currentUserData, isLoading: currentUserLoading } =
+    useContractRead(useProfileContract, "getProfileByAddress", [address]);
+
+  console.log("CURRENT USER", currentUserData);
+
   const { contract: DAOContract } = useContract(DAOROOM_CONTRACT_ADDRESS);
   const { data: roomData, isLoading: isLoadingRoom } = useContractRead(
     DAOContract,
     "getProjectRoom",
     [router.query.id]
   );
+  const { mutateAsync: addProposal, isLoading } = useContractWrite(
+    DAOContract,
+    "addProposal"
+  );
 
   console.log("ROOMDATA", roomData);
+
+  const submitNewProposal = async () => {
+    if (!createProposal.address || !createProposal.desc) {
+      Notify.warning("Please Type your Proposal");
+      return;
+    }
+
+    try {
+      const data = await addProposal({
+        args: [
+          router.query.id,
+          currentUserData.name,
+          createProposal.desc,
+          createProposal.address,
+        ],
+      });
+      console.info("contract call successs", data);
+      Notify.success("Proposal Submitted Successfully");
+      window.location.reload();
+    } catch (err) {
+      console.error("contract call failure", err);
+      Notify.failure("Proposal Submission Failed");
+    }
+
+    // try {
+    //   const data = await createProposal({
+    //     args: [router.query.id, desc, currentUserData.name],
+    //   });
+    //   console.info("contract call successs", data);
+    //   setProposal((prev) => !prev);
+    //   Notify.success("Proposal Submitted Successfully");
+    // } catch (err) {
+    //   console.error("contract call failure", err);
+    // }
+  };
 
   const changeHam = () => {
     setClickHam(!clickHam);
@@ -76,6 +142,7 @@ const daoRoom = () => {
         modalClick={modalClick}
         createProposal={createProposal}
         setCreateProposal={setCreateProposal}
+        submitNewProposal={submitNewProposal}
       />
       <div className="navbar">
         <div className="mt-2 mb-5 hidden sm:flex flex-row justify-between items-center w-[90%] m-auto rounded-full p-2 pl-3">
@@ -205,7 +272,7 @@ const daoRoom = () => {
               </div>
               <div>
                 {roomData?.proposals.map((ele, idx) => (
-                  <RoomProposalCard key={idx} prop={ele} />
+                  <RoomProposalCard key={idx} ele={ele} />
                 ))}
               </div>
 
@@ -337,7 +404,7 @@ const daoRoom = () => {
               <>
                 <div className="w-full m-auto proposalList">
                   {roomData?.proposals.map((ele, idx) => (
-                    <RoomProposalCard key={idx} prop={ele} />
+                    <RoomProposalCard key={idx} ele={ele} />
                   ))}
                   <div className="z-10 flex justify-end mr-2 contibutorBoxPlusIcon">
                     <BsPlusCircleFill
