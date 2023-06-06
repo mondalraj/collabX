@@ -1,4 +1,6 @@
 import AuthenticatedUser from "@/components/Auth/AuthenticatedUser";
+import RoomModal from "@/components/RoomModal";
+import RoomProposalCard from "@/components/RoomProposalCard/RoomProposalCard";
 import { DAOROOM_CONTRACT_ADDRESS } from "@/constants";
 import {
   ConnectWallet,
@@ -16,6 +18,7 @@ import {
   BsThreeDotsVertical,
 } from "react-icons/bs";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { MdOutlinePersonRemove } from "react-icons/md";
 
 const daoRoom = () => {
   const [showYours, setShowYours] = useState(false);
@@ -24,6 +27,11 @@ const daoRoom = () => {
   const [option, setOption] = useState("tasks");
   const [taskOption, setTaskOption] = useState("To Do");
   const [clickHam, setClickHam] = useState(false);
+  const [modalClick, setModalClick] = useState(false);
+  const [createProposal, setCreateProposal] = useState({
+    address: "address",
+    desc: "",
+  });
   const router = useRouter();
   const { contract: DAOContract } = useContract(DAOROOM_CONTRACT_ADDRESS);
   const { data: roomData, isLoading: isLoadingRoom } = useContractRead(
@@ -47,14 +55,14 @@ const daoRoom = () => {
     setPhonenav(!phonenav);
   };
 
+  const openModal = () => {
+    setModalClick(!modalClick);
+  };
   console.log(isLoadingRoom);
 
   if (isLoadingRoom) {
     return (
-      <div
-        className="h-screen w-screen flex flex-col
-      justify-center items-center gap-5 text-white text-xl"
-      >
+      <div className="flex flex-col items-center justify-center w-screen h-screen gap-5 text-xl text-white">
         <AuthenticatedUser />
         <div>Loading Data... Please wait.</div>
       </div>
@@ -63,32 +71,28 @@ const daoRoom = () => {
 
   return (
     <div className="relative container1">
+      <RoomModal
+        openModal={openModal}
+        modalClick={modalClick}
+        createProposal={createProposal}
+        setCreateProposal={setCreateProposal}
+      />
       <div className="navbar">
-        <div className="mt-5 mb-5 hidden sm:flex flex-row justify-between items-center w-[90%] m-auto rounded-full p-2 pl-3">
+        <div className="mt-2 mb-5 hidden sm:flex flex-row justify-between items-center w-[90%] m-auto rounded-full p-2 pl-3">
           <div className="ml-3 -mt-2 img sm:flex justify-start items-center sm:w-[35%]">
             <AiOutlineLeft
-              className="text-[#fff] mt-2 text-2xl cursor-pointer"
+              className="text-[#fff] mt-2 mb-1 text-2xl cursor-pointer"
               onClick={() => router.back()}
             />
             <GiHamburgerMenu
               onClick={changeHam}
               size={25}
-              className="mt-1 mr-1"
+              className="mt-1 mr-1 cursor-pointer"
               color="white"
             />
-            <p className="text-[#fff] text-2xl">Project Idea Name</p>
+            <p className="text-[#fff] text-2xl">{roomData?.[1]}</p>
           </div>
           <div className="flex items-center">
-            {/* <div className="text-[#E40E82] bg-[#1C0041] flex items-center p-2 rounded-xl mr-7">
-              <Image
-                height={20}
-                width={20}
-                src="/images/symbol.png"
-                alt="chain"
-                className="mr-2 "
-              />
-              <p>120.00 CX</p>
-            </div> */}
             <ConnectWallet
               style={{
                 transform: "scale(0.8)",
@@ -108,11 +112,11 @@ const daoRoom = () => {
 
         {/* mobile */}
         {/* nav */}
-        <div className="flex flex-row items-center justify-between m-5 sm:hidden">
+        <div className="flex flex-row items-center justify-between w-full m-1 sm:hidden">
           <div className="flex p-3">
             <AiOutlineLeft
               onClick={changeHam}
-              className="text-[#fff] mt-2 text-2xl cursor-pointer"
+              className="text-[#fff] mt-2 text-3xl cursor-pointer mr-2"
             />
             <Image
               height={48}
@@ -164,162 +168,62 @@ const daoRoom = () => {
           </ul>
         </div>
       )}
+
       <div className=" h-fit">
         <div className="relative z-0 min-h-full">
-          <div className=" roomDesktopView hidden md:flex flex-row w-[90%] m-auto justify-around">
-            <div className="taskPortion w-[50%] flex-[0.6]">
-              <div className="headingTasks flex justify-between text-[#fff]">
-                <div className="heading1 w-[25%]">Todo</div>
-                <div className="heading2 w-[25%]">In Progress</div>
-                <div className="heading3 w-[25%]">Completed</div>
-                <div className="heading4 w-[25%]">Abondoned</div>
+          {/* desktop view  */}
+          <div className=" roomDesktopView hidden md:flex flex-row w-[95%] m-auto justify-around">
+            <div className="flex taskPortion w-[70%] text-white pr-10">
+              <div className="heading1 w-[25%] flex-col">
+                <div className="p-1 pb-2 border-b-[1px] border-white ">
+                  Todo
+                </div>
+                <div className=""></div>
               </div>
-              <hr
-                style={{
-                  color: "white",
-                  backgroundColor: "white",
-                  height: "5",
-                }}
-              />
-              <div className="tasksBox"></div>
+              <div className="heading1 w-[25%] flex-col">
+                <div className="p-1 pb-2 border-b-[1px] border-white ">
+                  In Progress
+                </div>
+                <div className=""></div>
+              </div>
+              <div className="heading1 w-[30%] flex-col">
+                <div className="p-1 pb-2 border-b-[1px] border-white ">
+                  Completed
+                </div>
+                <div className=""></div>
+              </div>
+              <div className="heading1 w-[25%] flex-col">
+                <div className="p-1 pb-2 border-b-[1px] border-white ">
+                  Abondoned
+                </div>
+                <div className=""></div>
+              </div>
             </div>
-            <div className="proposalPortion flex-[0.3] bg-[#01002A] p-6">
-              <div className="heading4 text-[#06dbee] text-2xl font-semibold">
+            <div className="proposalPortion flex flex-col w-[35%] bg-[#01002A] p-4">
+              <div className="heading4 text-[#06dbee] text-lg font-semibold">
                 All Proposals
               </div>
-              <div className="mt-4 border-2 border-white border-solid proposal">
-                <div className="proposalTop flex flex-row text-[#fff] p-3">
-                  <div className="proposalLeft w-[20%] ">
-                    <Image
-                      height={48}
-                      width={48}
-                      src="/images/avatar.png"
-                      alt="avatar"
-                      className=""
-                    />
-                  </div>
-                  <div className="pl-3 proposalRight">
-                    <div className="proposalRightTop">Rajib Mondal</div>
-                    <div className="proposalRightBottom">
-                      <p>
-                        Amet minim mollit non deserunt ullamco est sit aliqua
-                        dolor do amet sint. Velit offic Amet minim mollit non
-                        deserunt ullamco est sit aliqua{" "}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="proposalOptions flex flex-row border-solid border-2 border-white text-[#fff] ">
-                  <div className="option1 border-solid border-[1px] border-white w-[33%] text-center">
-                    Yes
-                  </div>
-                  <div
-                    className="option2 border-solid border-[1px] border-white w-[33%]
-                        text-center"
-                  >
-                    No
-                  </div>
-                  <div
-                    className="option3 border-solid border-[1px] border-white w-[34%]
-                        text-center"
-                  >
-                    Abstain
-                  </div>
-                </div>
+              <div>
+                {roomData?.proposals.map((ele, idx) => (
+                  <RoomProposalCard key={idx} prop={ele} />
+                ))}
               </div>
-              <div className="mt-4 border-2 border-white border-solid proposal">
-                <div className="proposalTop flex flex-row text-[#fff] p-3">
-                  <div className="proposalLeft w-[20%] ">
-                    <Image
-                      height={48}
-                      width={48}
-                      src="/images/avatar.png"
-                      alt="avatar"
-                      className=""
-                    />
-                  </div>
-                  <div className="pl-3 proposalRight">
-                    <div className="proposalRightTop">Rajib Mondal</div>
-                    <div className="proposalRightBottom">
-                      <p>
-                        Amet minim mollit non deserunt ullamco est sit aliqua
-                        dolor do amet sint. Velit offic Amet minim mollit non
-                        deserunt ullamco est sit aliqua{" "}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="proposalOptions flex flex-row border-solid border-2 border-white text-[#fff] ">
-                  <div className="option1 border-solid border-[1px] border-white w-[33%] text-center">
-                    Yes
-                  </div>
-                  <div
-                    className="option2 border-solid border-[1px] border-white w-[33%]
-                        text-center"
-                  >
-                    No
-                  </div>
-                  <div
-                    className="option3 border-solid border-[1px] border-white w-[34%]
-                        text-center"
-                  >
-                    Abstain
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 border-2 border-white border-solid proposal">
-                <div className="proposalTop flex flex-row text-[#fff] p-3">
-                  <div className="proposalLeft w-[20%] ">
-                    <Image
-                      height={48}
-                      width={48}
-                      src="/images/avatar.png"
-                      alt="avatar"
-                      className=""
-                    />
-                  </div>
-                  <div className="pl-3 proposalRight">
-                    <div className="proposalRightTop">Rajib Mondal</div>
-                    <div className="proposalRightBottom">
-                      <p>
-                        Amet minim mollit non deserunt ullamco est sit aliqua
-                        dolor do amet sint. Velit offic Amet minim mollit non
-                        deserunt ullamco est sit aliqua{" "}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="proposalOptions flex flex-row border-solid border-2 border-white text-[#fff] ">
-                  <div className="option1 border-solid border-[1px] border-white w-[33%] text-center">
-                    Yes
-                  </div>
-                  <div
-                    className="option2 border-solid border-[1px] border-white w-[33%]
-                        text-center"
-                  >
-                    No
-                  </div>
-                  <div
-                    className="option3 border-solid border-[1px] border-white w-[34%]
-                        text-center"
-                  >
-                    Abstain
-                  </div>
-                </div>
-              </div>
-              <div className="contibutorBoxPlusIcon w-[10%] absolute right-3 z-10">
+
+              <div className="z-10 flex justify-end mt-2 contibutorBoxPlusIcon">
                 <BsPlusCircleFill
+                  onClick={openModal}
                   color="white"
-                  size="50"
-                  className="items-end"
+                  size="40"
+                  className="items-end cursor-pointer"
                 />
               </div>
             </div>
           </div>
 
+          {/* phone view  */}
           <div className="roomOptions flex m-auto w-[90%] text-[#fff] justify-around md:hidden">
             <div
-              className="option1 pt-3 pb-3 pl-7 pr-7 hover:bg-[#0c0634]"
+              className="option1 pt-3 pb-3 pl-7 pr-7 hover:bg-[#0c0634] cursor-pointer"
               onClick={() => {
                 setOption("tasks");
               }}
@@ -327,7 +231,7 @@ const daoRoom = () => {
               Tasks
             </div>
             <div
-              className="option2 pt-3 pb-3 pl-7 pr-7 hover:bg-[#0c0634]"
+              className="option2 pt-3 pb-3 pl-7 pr-7 hover:bg-[#0c0634] cursor-pointer"
               onClick={() => {
                 setOption("proposal");
               }}
@@ -335,6 +239,7 @@ const daoRoom = () => {
               All Proposals
             </div>
           </div>
+
           <div className="mobileViewRoom md:hidden">
             {option === "tasks" ? (
               <>
@@ -430,49 +335,13 @@ const daoRoom = () => {
               </>
             ) : (
               <>
-                <div className="proposalList w-[90%] m-auto">
-                  <div className="border-2 border-white border-solid proposal">
-                    <div className="proposalTop flex flex-row text-[#fff] p-3">
-                      <div className="proposalLeft w-[20%] ">
-                        <Image
-                          height={48}
-                          width={48}
-                          src="/images/avatar.png"
-                          alt="avatar"
-                          className=""
-                        />
-                      </div>
-                      <div className="pl-3 proposalRight">
-                        <div className="proposalRightTop">Rajib Mondal</div>
-                        <div className="proposalRightBottom">
-                          <p>
-                            Amet minim mollit non deserunt ullamco est sit
-                            aliqua dolor do amet sint. Velit offic Amet minim
-                            mollit non deserunt ullamco est sit aliqua{" "}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="proposalOptions flex flex-row border-solid border-2 border-white text-[#fff] ">
-                      <div className="option1 border-solid border-[1px] border-white w-[33%] text-center">
-                        Yes
-                      </div>
-                      <div
-                        className="option2 border-solid border-[1px] border-white w-[33%]
-                        text-center"
-                      >
-                        No
-                      </div>
-                      <div
-                        className="option3 border-solid border-[1px] border-white w-[34%]
-                        text-center"
-                      >
-                        Abstain
-                      </div>
-                    </div>
-                  </div>
-                  <div className="contibutorBoxPlusIcon w-[10%] absolute right-3 z-10">
+                <div className="w-full m-auto proposalList">
+                  {roomData?.proposals.map((ele, idx) => (
+                    <RoomProposalCard key={idx} prop={ele} />
+                  ))}
+                  <div className="z-10 flex justify-end mr-2 contibutorBoxPlusIcon">
                     <BsPlusCircleFill
+                      onClick={openModal}
                       color="white"
                       size="50"
                       className="items-end"
@@ -486,15 +355,15 @@ const daoRoom = () => {
         {/* go back section  */}
 
         {clickHam && (
-          <div className="z-10 h-screen absolute newProposal p-6 top-0 bg-[rgba(0,0,0,0.67)] backdrop-blur-md flex flex-col md:p-10">
+          <div className="z-10 w-full h-screen absolute newProposal p-6 top-0 bg-[rgba(0,0,0,0.67)] backdrop-blur-md flex flex-col md:p-6 md:pb-10">
             <div className="flex justify-between w-full p-2">
               <div className="flex items-center">
                 {" "}
                 <AiOutlineLeft
                   onClick={changeHam}
-                  className="text-[#fff] mt-2 mr-2 text-2xl cursor-pointer"
+                  className="text-[#fff] mt-2 mr-2 text-2xl cursor-pointer mb-2"
                 />{" "}
-                <p className="text-xl text-white"> Go Back</p>
+                <p className="hidden text-xl text-white sm:block"> Go Back</p>
               </div>
               <div className="flex items-center">
                 <div className="text-[#E40E82] bg-[#1C0041] flex items-center p-2 rounded-xl mr-7">
@@ -503,7 +372,7 @@ const daoRoom = () => {
                     width={20}
                     src="/images/symbol.png"
                     alt="chain"
-                    className="mr-2 "
+                    className="sm:mr-2 "
                   />
                   <p>120.00 CX</p>
                 </div>
@@ -518,87 +387,54 @@ const daoRoom = () => {
             </div>
             <div className="projectIdeaDetails md:w-[20%]">
               <div className="heading4 text-[#06dbee] text-xl font-semibold">
-                Project Idea Name
+                {roomData?.[1]}
               </div>
               <div className="projectIdeaText text-[#fff] text-sm">
-                <p className="mt-4">
-                  Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                  amet sint. Velit officia consequat duis enim velit mollit.
-                  Exercitation veniam consequat sunt nostrud amet.Amet minim
-                  mollit non deserunt ullamco est sit aliqua dolor do amet sint.
-                </p>
+                <p className="mt-4">{roomData?.[2]}</p>
               </div>
               <div className="contributorsBox border-solid border-[1px] border-white p-4 mt-3">
                 <div className="heading4 text-[#06dbee] text-xl font-semibold">
                   Contributors
                 </div>
                 <div className="mt-3 contributorsList">
-                  <div className="flex justify-between mt-3 contributor">
-                    <div className="flex contributorDetails">
-                      <div className="contributorImage w-[20%]">
-                        <Image
-                          height={48}
-                          width={48}
-                          src="/images/avatar.png"
-                          alt="avatar"
-                          className=""
+                  {roomData?.[6]?.map((ele, idx) => (
+                    <div
+                      key={idx}
+                      className="flex justify-between mt-3 contributor"
+                    >
+                      <div className="flex contributorDetails">
+                        <div className="contributorImage w-[20%]">
+                          <Image
+                            height={48}
+                            width={48}
+                            src="/images/avatar.png"
+                            alt="avatar"
+                            className=""
+                          />
+                        </div>
+                        <div className="contributorName text-[#fff] pl-3">
+                          <p>{ele?.[0].substring(0, 6)}...</p>
+                        </div>
+                      </div>
+                      <div className="threeDotIcon">
+                        {/* <BsThreeDotsVertical color="white" size={30} /> */}
+                        <MdOutlinePersonRemove
+                          color="white"
+                          size={27}
+                          className="cursor-pointer"
                         />
                       </div>
-                      <div className="contributorName text-[#fff] pl-3">
-                        <p>Jack Sparrow</p>
-                      </div>
                     </div>
-                    <div className="threeDotIcon">
-                      <BsThreeDotsVertical color="white" size={30} />
-                    </div>
-                  </div>
-                  <div className="flex justify-between mt-3 contributor">
-                    <div className="flex contributorDetails">
-                      <div className="contributorImage w-[20%]">
-                        <Image
-                          height={48}
-                          width={48}
-                          src="/images/avatar.png"
-                          alt="avatar"
-                          className=""
-                        />
-                      </div>
-                      <div className="contributorName text-[#fff] pl-3">
-                        <p>Jack Sparrow</p>
-                      </div>
-                    </div>
-                    <div className="threeDotIcon">
-                      <BsThreeDotsVertical color="white" size={30} />
-                    </div>
-                  </div>
-                  <div className="flex justify-between mt-3 contributor">
-                    <div className="flex contributorDetails">
-                      <div className="contributorImage w-[20%]">
-                        <Image
-                          height={48}
-                          width={48}
-                          src="/images/avatar.png"
-                          alt="avatar"
-                          className=""
-                        />
-                      </div>
-                      <div className="contributorName text-[#fff] pl-3">
-                        <p>Jack Sparrow</p>
-                      </div>
-                    </div>
-                    <div className="threeDotIcon">
-                      <BsThreeDotsVertical color="white" size={30} />
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
-              <div className="contibutorBoxPlusIcon absolute right-4 mt-[-10px] md:hidden">
+              <div className="contibutorBoxPlusIcon absolute right-4 mt-[-10px] md:hidden cursor-pointer">
                 <BsPlusCircleFill color="white" size="50" />
               </div>
 
               <div className="mt-20 leaveAndComplete">
                 <div className="leaveButtonContainer text-center bg-[#fff]">
-                  <div className="leaveRoomButton flex bg-[#fff] p-2 w-[45%] m-auto">
+                  <div className="leaveRoomButton flex justify-center bg-[#fff] p-2 w-[95%] cursor-pointer m-auto">
                     <div className="font-bold leaveText">Leave Room</div>
                     <div className="leaveIcon">
                       <BsArrowRightSquareFill size={30} className="pl-3 " />
@@ -606,7 +442,7 @@ const daoRoom = () => {
                   </div>
                 </div>
                 <div className="completeButtonContainer mt-3 text-center border-solid border-[1px] border-[#05ff00]">
-                  <div className="p-2 m-auto leaveRoomButton">
+                  <div className="p-2 m-auto cursor-pointer leaveRoomButton">
                     <div className="leaveText font-semibold text-[#05ff00]">
                       Mark Project as Completed
                     </div>
@@ -620,7 +456,12 @@ const daoRoom = () => {
                   <p>Create New Proposal</p>
                 </div>
                 <div className="contibutorBoxPlusIcon">
-                  <BsPlusCircleFill color="white" size="50" />
+                  <BsPlusCircleFill
+                    onClick={openModal}
+                    color="white"
+                    size="50"
+                    className="cursor-pointer"
+                  />
                 </div>
               </div>
             </div>
