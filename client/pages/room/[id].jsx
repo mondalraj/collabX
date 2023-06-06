@@ -28,6 +28,10 @@ const daoRoom = () => {
   const [taskOption, setTaskOption] = useState("To Do");
   const [clickHam, setClickHam] = useState(false);
   const [modalClick, setModalClick] = useState(false);
+  const [createProposal, setCreateProposal] = useState({
+    address: "address",
+    desc: "",
+  });
   const router = useRouter();
   const { contract: DAOContract } = useContract(DAOROOM_CONTRACT_ADDRESS);
   const { data: roomData, isLoading: isLoadingRoom } = useContractRead(
@@ -67,20 +71,26 @@ const daoRoom = () => {
 
   return (
     <div className="relative container1">
+      <RoomModal
+        openModal={openModal}
+        modalClick={modalClick}
+        createProposal={createProposal}
+        setCreateProposal={setCreateProposal}
+      />
       <div className="navbar">
         <div className="mt-2 mb-5 hidden sm:flex flex-row justify-between items-center w-[90%] m-auto rounded-full p-2 pl-3">
           <div className="ml-3 -mt-2 img sm:flex justify-start items-center sm:w-[35%]">
             <AiOutlineLeft
-              className="text-[#fff] mt-2 text-2xl cursor-pointer"
+              className="text-[#fff] mt-2 mb-1 text-2xl cursor-pointer"
               onClick={() => router.back()}
             />
             <GiHamburgerMenu
               onClick={changeHam}
               size={25}
-              className="mt-1 mr-1"
+              className="mt-1 mr-1 cursor-pointer"
               color="white"
             />
-            <p className="text-[#fff] text-2xl">Project Idea Name</p>
+            <p className="text-[#fff] text-2xl">{roomData?.[1]}</p>
           </div>
           <div className="flex items-center">
             <ConnectWallet
@@ -158,7 +168,7 @@ const daoRoom = () => {
           </ul>
         </div>
       )}
-      <RoomModal openModal={openModal} modalClick={modalClick} />
+
       <div className=" h-fit">
         <div className="relative z-0 min-h-full">
           {/* desktop view  */}
@@ -194,7 +204,9 @@ const daoRoom = () => {
                 All Proposals
               </div>
               <div>
-                <RoomProposalCard />
+                {roomData?.proposals.map((ele, idx) => (
+                  <RoomProposalCard key={idx} prop={ele} />
+                ))}
               </div>
 
               <div className="z-10 flex justify-end mt-2 contibutorBoxPlusIcon">
@@ -324,7 +336,9 @@ const daoRoom = () => {
             ) : (
               <>
                 <div className="w-full m-auto proposalList">
-                  <RoomProposalCard />
+                  {roomData?.proposals.map((ele, idx) => (
+                    <RoomProposalCard key={idx} prop={ele} />
+                  ))}
                   <div className="z-10 flex justify-end mr-2 contibutorBoxPlusIcon">
                     <BsPlusCircleFill
                       onClick={openModal}
@@ -341,7 +355,7 @@ const daoRoom = () => {
         {/* go back section  */}
 
         {clickHam && (
-          <div className="z-10 w-full h-screen absolute newProposal p-6 top-0 bg-[rgba(0,0,0,0.67)] backdrop-blur-md flex flex-col md:p-10">
+          <div className="z-10 w-full h-screen absolute newProposal p-6 top-0 bg-[rgba(0,0,0,0.67)] backdrop-blur-md flex flex-col md:p-6 md:pb-10">
             <div className="flex justify-between w-full p-2">
               <div className="flex items-center">
                 {" "}
