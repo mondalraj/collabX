@@ -32,11 +32,9 @@ const daoRoom = () => {
   const [showOthers, setShowOthers] = useState(false);
   const [phonenav, setPhonenav] = useState(false);
   const [option, setOption] = useState("tasks");
-  const [taskOption, setTaskOption] = useState("To Do");
   const [clickHam, setClickHam] = useState(false);
   const [modalClick, setModalClick] = useState(false);
-  const [todo, setTodo] = useState(false);
-  const [assigned, setAssigned] = useState(false);
+  const [isRoomMember, setIsRoomMember] = useState(false);
 
   const [createProposal, setCreateProposal] = useState({
     address: "",
@@ -45,6 +43,13 @@ const daoRoom = () => {
   const router = useRouter();
   const address = useAddress();
 
+  const { contract: DAOContract } = useContract(DAOROOM_CONTRACT_ADDRESS);
+  const { data: roomData, isLoading: isLoadingRoom } = useContractRead(
+    DAOContract,
+    "getProjectRoom",
+    [router.query.id]
+  );
+
   useEffect(() => {
     if (address) {
       setCreateProposal({
@@ -52,7 +57,19 @@ const daoRoom = () => {
         address: address,
       });
     }
-  }, [address]);
+    // check if you are a member of the room
+    if (address && roomData) {
+      const isMember = roomData.participants.find(
+        (participant) => participant.participant === address
+      );
+      if (isMember) {
+        setIsRoomMember(true);
+      }
+      if (roomData.creator === address) {
+        setIsRoomMember(true);
+      }
+    }
+  }, [address, roomData]);
 
   const {
     contract: useProfileContract,
@@ -64,15 +81,19 @@ const daoRoom = () => {
 
   console.log("CURRENT USER", currentUserData);
 
-  const { contract: DAOContract } = useContract(DAOROOM_CONTRACT_ADDRESS);
-  const { data: roomData, isLoading: isLoadingRoom } = useContractRead(
-    DAOContract,
-    "getProjectRoom",
-    [router.query.id]
-  );
-  const { mutateAsync: addProposal, isLoading } = useContractWrite(
+  const { mutateAsync: addProposal } = useContractWrite(
     DAOContract,
     "addProposal"
+  );
+
+  const { mutateAsync: leaveOrKickParticipant } = useContractWrite(
+    DAOContract,
+    "leaveOrKickParticipant"
+  );
+
+  const { mutateAsync: completeProjectRoom } = useContractWrite(
+    DAOContract,
+    "completeProjectRoom"
   );
 
   console.log("ROOMDATA", roomData);
@@ -99,17 +120,46 @@ const daoRoom = () => {
       console.error("contract call failure", err);
       Notify.failure("Proposal Submission Failed");
     }
+  };
 
-    // try {
-    //   const data = await createProposal({
-    //     args: [router.query.id, desc, currentUserData.name],
-    //   });
-    //   console.info("contract call successs", data);
-    //   setProposal((prev) => !prev);
-    //   Notify.success("Proposal Submitted Successfully");
-    // } catch (err) {
-    //   console.error("contract call failure", err);
-    // }
+  const leaveRoom = async () => {
+    try {
+      const data = await leaveOrKickParticipant({
+        args: [router.query.id, address],
+      });
+      console.info("contract call successs", data);
+      Notify.success("Left Room Successfully");
+      router.push("/yourIdeas");
+    } catch (err) {
+      console.error("contract call failure", err);
+    }
+  };
+
+  const kickParticipantFromRoom = async (participantAddress) => {
+    console.log("KICK PARTICIPANT", participantAddress);
+    try {
+      const data = await leaveOrKickParticipant({
+        args: [router.query.id, participantAddress],
+      });
+      console.info("contract call successs", data);
+      Notify.success("Kick Participant from Room Successfully");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    } catch (err) {
+      console.error("contract call failure", err);
+    }
+  };
+
+  const markProjectAsCompleted = async () => {
+    try {
+      const data = await completeProjectRoom({ args: [router.query.id] });
+      console.info("contract call successs", data);
+      Notify.success("Marked Project as Completed Successfully");
+      router.push(`/idea/${router.query.id}`);
+    } catch (err) {
+      console.error("contract call failure", err);
+    }
   };
 
   const changeHam = () => {
@@ -128,7 +178,6 @@ const daoRoom = () => {
   const openModal = () => {
     setModalClick(!modalClick);
   };
-  console.log(isLoadingRoom);
 
   if (isLoadingRoom) {
     return (
@@ -139,6 +188,23 @@ const daoRoom = () => {
     );
   }
 
+  if (!isRoomMember) {
+    return (
+      <div className="flex flex-col items-center justify-center w-screen h-screen gap-5 text-xl text-white">
+        <AuthenticatedUser />
+        <div>You are not authorized to access this room.</div>
+        <div className="text-sm">
+          Please wait for your proposal to get accepted by Idea owner.
+        </div>
+        <button
+          className="bg-pink-600 px-5 py-2 rounded-md text-white text-sm"
+          onClick={() => router.push(`/idea/${router.query.id}`)}
+        >
+          Go Back
+        </button>
+      </div>
+    );
+  }
   return (
     <div className="relative container1">
       <RoomModal
@@ -198,7 +264,7 @@ const daoRoom = () => {
             />
           </div>
           <div className="flex items-center">
-            <div className="text-[#E40E82] bg-[#1C0041] flex items-center p-2 rounded-xl mr-2">
+            {/* <div className="text-[#E40E82] bg-[#1C0041] flex items-center p-2 rounded-xl mr-2">
               <Image
                 height={26}
                 width={26}
@@ -207,7 +273,14 @@ const daoRoom = () => {
                 className="mr-2 "
               />
               <p>120.00 CX</p>
-            </div>
+            </div> */}
+            <ConnectWallet
+              style={{
+                transform: "scale(0.8)",
+              }}
+              theme="light"
+              btnTitle="Connect Wallet"
+            />
 
             <button onClick={openNav}>
               {" "}
@@ -529,7 +602,7 @@ const daoRoom = () => {
                 <p className="hidden text-xl text-white sm:block"> Go Back</p>
               </div>
               <div className="flex items-center">
-                <div className="text-[#E40E82] bg-[#1C0041] flex items-center p-2 rounded-xl mr-7">
+                {/* <div className="text-[#E40E82] bg-[#1C0041] flex items-center p-2 rounded-xl mr-7">
                   <Image
                     height={20}
                     width={20}
@@ -538,7 +611,14 @@ const daoRoom = () => {
                     className="sm:mr-2 "
                   />
                   <p>120.00 CX</p>
-                </div>
+                </div> */}
+                <ConnectWallet
+                  style={{
+                    transform: "scale(0.8)",
+                  }}
+                  theme="light"
+                  btnTitle="Connect Wallet"
+                />
                 <Image
                   height={40}
                   width={40}
@@ -560,46 +640,58 @@ const daoRoom = () => {
                   Contributors
                 </div>
                 <div className="mt-3 contributorsList">
-                  {roomData?.[6]?.map((ele, idx) => (
-                    <div
-                      key={idx}
-                      className="flex justify-between mt-3 contributor"
-                    >
-                      <div className="flex contributorDetails">
-                        <div className="contributorImage w-[20%]">
-                          <Image
-                            height={48}
-                            width={48}
-                            src="/images/avatar.png"
-                            alt="avatar"
-                            className=""
-                          />
+                  {roomData?.[6]?.map((ele, idx) => {
+                    if (ele.name) {
+                      return (
+                        <div
+                          key={idx}
+                          className="flex justify-between mt-3 contributor"
+                        >
+                          <div className="flex contributorDetails">
+                            <div className="contributorImage w-[20%]">
+                              <Image
+                                height={48}
+                                width={48}
+                                src="/images/avatar.png"
+                                alt="avatar"
+                                className=""
+                              />
+                            </div>
+                            <div className="contributorName text-[#fff] pl-3">
+                              <p>{ele?.[0].substring(0, 6)}...</p>
+                            </div>
+                          </div>
+                          <div className="threeDotIcon">
+                            {address !== roomData?.[0] ? (
+                              <BsThreeDotsVertical color="white" size={30} />
+                            ) : (
+                              <MdOutlinePersonRemove
+                                color="white"
+                                size={27}
+                                className="cursor-pointer"
+                                onClick={() =>
+                                  kickParticipantFromRoom(ele?.participant)
+                                }
+                              />
+                            )}
+                          </div>
                         </div>
-                        <div className="contributorName text-[#fff] pl-3">
-                          <p>{ele?.[0].substring(0, 6)}...</p>
-                        </div>
-                      </div>
-                      <div className="threeDotIcon">
-                        {address !== roomData?.[0] ? (
-                          <BsThreeDotsVertical color="white" size={30} />
-                        ) : (
-                          <MdOutlinePersonRemove
-                            color="white"
-                            size={27}
-                            className="cursor-pointer"
-                          />
-                        )}
-                      </div>
-                    </div>
-                  ))}
+                      );
+                    }
+                  })}
                 </div>
               </div>
 
               <div className="mt-20 leaveAndComplete">
                 {address !== roomData?.[0] ? (
-                  <div className="leaveButtonContainer text-center bg-[#fff]">
+                  <div
+                    className="leaveButtonContainer text-center bg-[#fff]"
+                    onClick={leaveRoom}
+                  >
                     <div className="leaveRoomButton flex justify-center bg-[#fff] p-2 w-[95%] cursor-pointer m-auto">
-                      <div className="font-bold leaveText">Leave Room</div>
+                      <div className="font-bold leaveText text-black">
+                        Leave Room
+                      </div>
                       <div className="leaveIcon">
                         <BsArrowRightSquareFill size={30} className="pl-3 " />
                       </div>
@@ -607,7 +699,10 @@ const daoRoom = () => {
                   </div>
                 ) : (
                   <div className="completeButtonContainer mt-3 text-center border-solid border-[1px] border-[#05ff00]">
-                    <div className="p-2 m-auto cursor-pointer leaveRoomButton">
+                    <div
+                      className="p-2 m-auto cursor-pointer leaveRoomButton"
+                      onClick={markProjectAsCompleted}
+                    >
                       <div className="leaveText font-semibold text-[#05ff00]">
                         Mark Project as Completed
                       </div>
