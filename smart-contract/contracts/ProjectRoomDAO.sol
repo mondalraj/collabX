@@ -14,6 +14,8 @@ contract ProjectRoomDAOContract {
         Proposal[] proposals;
         Task[] tasks;
         uint256 id;
+        uint256 noOfProposals;
+        uint256 noOfTasks;
     }
 
     struct Participant {
@@ -30,27 +32,29 @@ contract ProjectRoomDAOContract {
     }
 
     struct Proposal {
+        uint256 id;
         address proposer;
         string name;
         string description;
         uint256 dateSubmitted;
+        uint256 endProposalVotingDate;
         uint256 yesVoted;
         uint256 noVoted;
-        uint256 abstained;
     }
 
     struct Task {
+        uint256 id;
         address assignedTo;
         string name;
         string description;
         uint256 dateCreated;
+        uint256 votingStartedAt;
         string status;
         bool isCompletedRequested;
         bool isAbandonedRequested;
         uint256 yesVoted;
         uint256 noVoted;
         bool autoTrigger;
-        uint256 autoTriggerTimestamp;
     }
 
     mapping(uint256 => ProjectRoom) public rooms;
@@ -78,6 +82,8 @@ contract ProjectRoomDAOContract {
         newRoom.dateCreated = block.timestamp;
         newRoom.isCompleted = false;
         newRoom.id = _id;
+        newRoom.noOfProposals = 0;
+        newRoom.noOfTasks = 0;
 
         numberOfRooms++;
 
@@ -169,15 +175,17 @@ contract ProjectRoomDAOContract {
         );
 
         Proposal memory newProposal;
+        newProposal.id = rooms[_roomId].noOfProposals;
         newProposal.proposer = _proposer;
         newProposal.name = _name;
         newProposal.description = _description;
         newProposal.dateSubmitted = block.timestamp;
+        newProposal.endProposalVotingDate = block.timestamp + 1 days;
         newProposal.yesVoted = 0;
         newProposal.noVoted = 0;
-        newProposal.abstained = 0;
 
         rooms[_roomId].proposals.push(newProposal);
+        rooms[_roomId].noOfProposals++;
     }
 
     function getProjectRoomProposals(
@@ -191,18 +199,17 @@ contract ProjectRoomDAOContract {
         uint256 _proposalId,
         uint256 _vote
     ) public {
-        require(
-            _proposalId < rooms[_roomId].proposals.length,
-            "Proposal does not exist"
-        );
-        require(_vote >= 0 && _vote <= 2, "Vote must be between 0 and 2");
+        require(_vote >= 1 && _vote <= 2, "Vote must be between 1 and 2");
 
-        if (_vote == 0) {
-            rooms[_roomId].proposals[_proposalId].yesVoted++;
-        } else if (_vote == 1) {
-            rooms[_roomId].proposals[_proposalId].noVoted++;
-        } else {
-            rooms[_roomId].proposals[_proposalId].abstained++;
+        for (uint256 i = 0; i < rooms[_roomId].proposals.length; i++) {
+            if (rooms[_roomId].proposals[i].id == _proposalId) {
+                if (_vote == 1) {
+                    rooms[_roomId].proposals[i].yesVoted++;
+                } else if (_vote == 2) {
+                    rooms[_roomId].proposals[i].noVoted++;
+                }
+                break;
+            }
         }
     }
 
@@ -210,37 +217,40 @@ contract ProjectRoomDAOContract {
     function performActionOnProposalAfterVoting(
         uint256 _roomId,
         uint256 _proposalId
-    ) external {
-        require(
-            _proposalId < rooms[_roomId].proposals.length,
-            "Proposal does not exist"
-        );
+    ) public {
+        // find the proposal with the id
+        for (uint256 i = 0; i < rooms[_roomId].proposals.length; i++) {
+            if (rooms[_roomId].proposals[i].id == _proposalId) {
+                if (
+                    rooms[_roomId].proposals[i].yesVoted >
+                    rooms[_roomId].proposals[i].noVoted
+                ) {
+                    // create task and add to room
+                    Task memory newTask;
+                    newTask.id = rooms[_roomId].noOfTasks;
+                    newTask.name = rooms[_roomId].proposals[i].name;
+                    newTask.description = rooms[_roomId]
+                        .proposals[i]
+                        .description;
+                    newTask.dateCreated = block.timestamp;
+                    newTask.votingStartedAt = 0;
+                    newTask.status = "todo";
+                    newTask.isCompletedRequested = false;
+                    newTask.isAbandonedRequested = false;
+                    newTask.yesVoted = 0;
+                    newTask.noVoted = 0;
+                    newTask.autoTrigger = false;
 
-        if (
-            rooms[_roomId].proposals[_proposalId].yesVoted >
-            rooms[_roomId].proposals[_proposalId].noVoted
-        ) {
-            // create task and add to room
-            Task memory newTask;
-            newTask.name = rooms[_roomId].proposals[_proposalId].name;
-            newTask.description = rooms[_roomId]
-                .proposals[_proposalId]
-                .description;
-            newTask.dateCreated = block.timestamp;
-            newTask.status = "todo";
-            newTask.isCompletedRequested = false;
-            newTask.isAbandonedRequested = false;
-            newTask.yesVoted = 0;
-            newTask.noVoted = 0;
-            newTask.autoTrigger = false;
-            newTask.autoTriggerTimestamp = 0;
+                    rooms[_roomId].tasks.push(newTask);
+                    rooms[_roomId].noOfTasks++;
 
-            rooms[_roomId].tasks.push(newTask);
-
-            delete rooms[_roomId].proposals[_proposalId];
-        } else {
-            // delete proposal
-            delete rooms[_roomId].proposals[_proposalId];
+                    delete rooms[_roomId].proposals[i];
+                } else {
+                    // delete proposal
+                    delete rooms[_roomId].proposals[i];
+                }
+                break;
+            }
         }
     }
 
@@ -251,10 +261,14 @@ contract ProjectRoomDAOContract {
     }
 
     function assignTaskToParticipant(uint256 _roomId, uint256 _taskId) public {
-        require(_taskId < rooms[_roomId].tasks.length, "Task does not exist");
-
-        rooms[_roomId].tasks[_taskId].assignedTo = msg.sender;
-        rooms[_roomId].tasks[_taskId].status = "in_progress";
+        // find the task by id
+        for (uint256 i = 0; i < rooms[_roomId].tasks.length; i++) {
+            if (rooms[_roomId].tasks[i].id == _taskId) {
+                rooms[_roomId].tasks[i].assignedTo = msg.sender;
+                rooms[_roomId].tasks[i].status = "in_progress";
+                break;
+            }
+        }
     }
 
     function changeTaskStatus(
@@ -262,24 +276,25 @@ contract ProjectRoomDAOContract {
         uint256 _taskId,
         uint256 _status
     ) public {
-        require(_taskId < rooms[_roomId].tasks.length, "Task does not exist");
         require(
             _status >= 0 && _status <= 1,
             "Status must be between 0 (Completed) and 1 (Abandoned)"
         );
 
-        if (_status == 0) {
-            rooms[_roomId].tasks[_taskId].isCompletedRequested = true;
-            rooms[_roomId].tasks[_taskId].autoTrigger = true;
-            rooms[_roomId].tasks[_taskId].autoTriggerTimestamp =
-                block.timestamp +
-                1 days;
-        } else {
-            rooms[_roomId].tasks[_taskId].isAbandonedRequested = true;
-            rooms[_roomId].tasks[_taskId].autoTrigger = true;
-            rooms[_roomId].tasks[_taskId].autoTriggerTimestamp =
-                block.timestamp +
-                1 days;
+        // Find Task by ID
+        for (uint256 i = 0; i < rooms[_roomId].tasks.length; i++) {
+            if (rooms[_roomId].tasks[i].id == _taskId) {
+                if (_status == 0) {
+                    rooms[_roomId].tasks[i].votingStartedAt = block.timestamp;
+                    rooms[_roomId].tasks[i].isCompletedRequested = true;
+                    rooms[_roomId].tasks[i].autoTrigger = true;
+                } else {
+                    rooms[_roomId].tasks[i].votingStartedAt = block.timestamp;
+                    rooms[_roomId].tasks[i].isCompletedRequested = true;
+                    rooms[_roomId].tasks[i].autoTrigger = true;
+                }
+                break;
+            }
         }
     }
 
@@ -288,13 +303,17 @@ contract ProjectRoomDAOContract {
         uint256 _taskId,
         uint256 _vote
     ) public {
-        require(_taskId < rooms[_roomId].tasks.length, "Task does not exist");
         require(_vote >= 0 && _vote <= 1, "Vote must be between 0 and 1");
 
-        if (_vote == 0) {
-            rooms[_roomId].tasks[_taskId].yesVoted++;
-        } else {
-            rooms[_roomId].tasks[_taskId].noVoted++;
+        for (uint256 i = 0; i < rooms[_roomId].tasks.length; i++) {
+            if (rooms[_roomId].tasks[i].id == _taskId) {
+                if (_vote == 0) {
+                    rooms[_roomId].tasks[i].yesVoted++;
+                } else {
+                    rooms[_roomId].tasks[i].noVoted++;
+                }
+                break;
+            }
         }
     }
 
@@ -302,39 +321,34 @@ contract ProjectRoomDAOContract {
     function performActionOnTaskAfterVoting(
         uint256 _roomId,
         uint256 _taskId
-    ) external {
-        require(_taskId < rooms[_roomId].tasks.length, "Task does not exist");
-
-        if (
-            rooms[_roomId].tasks[_taskId].autoTriggerTimestamp <=
-            block.timestamp &&
-            rooms[_roomId].tasks[_taskId].autoTrigger &&
-            keccak256(abi.encodePacked(rooms[_roomId].tasks[_taskId].status)) ==
-            "in_progress"
-        ) {
-            if (
-                rooms[_roomId].tasks[_taskId].yesVoted >
-                rooms[_roomId].tasks[_taskId].noVoted
-            ) {
-                if (rooms[_roomId].tasks[_taskId].isCompletedRequested) {
-                    rooms[_roomId].tasks[_taskId].status = "completed";
+    ) public {
+        // find the task by id and then perform action
+        for (uint256 i = 0; i < rooms[_roomId].tasks.length; i++) {
+            if (rooms[_roomId].tasks[i].id == _taskId) {
+                if (
+                    rooms[_roomId].tasks[i].yesVoted >
+                    rooms[_roomId].tasks[i].noVoted
+                ) {
+                    if (rooms[_roomId].tasks[i].isCompletedRequested) {
+                        rooms[_roomId].tasks[i].status = "completed";
+                    } else {
+                        rooms[_roomId].tasks[i].status = "abandoned";
+                    }
                 } else {
-                    rooms[_roomId].tasks[_taskId].status = "abandoned";
+                    if (rooms[_roomId].tasks[i].isCompletedRequested) {
+                        rooms[_roomId].tasks[i].isCompletedRequested = false;
+                    } else {
+                        rooms[_roomId].tasks[i].isAbandonedRequested = false;
+                    }
                 }
-            } else {
-                if (rooms[_roomId].tasks[_taskId].isCompletedRequested) {
-                    rooms[_roomId].tasks[_taskId].isCompletedRequested = false;
-                } else {
-                    rooms[_roomId].tasks[_taskId].isAbandonedRequested = false;
-                }
+                break;
             }
+            rooms[_roomId].tasks[i].isCompletedRequested = false;
+            rooms[_roomId].tasks[i].isAbandonedRequested = false;
+            rooms[_roomId].tasks[i].yesVoted = 0;
+            rooms[_roomId].tasks[i].noVoted = 0;
+            rooms[_roomId].tasks[i].autoTrigger = false;
+            rooms[_roomId].tasks[i].votingStartedAt = 0;
         }
-
-        rooms[_roomId].tasks[_taskId].isCompletedRequested = false;
-        rooms[_roomId].tasks[_taskId].isAbandonedRequested = false;
-        rooms[_roomId].tasks[_taskId].yesVoted = 0;
-        rooms[_roomId].tasks[_taskId].noVoted = 0;
-        rooms[_roomId].tasks[_taskId].autoTrigger = false;
-        rooms[_roomId].tasks[_taskId].autoTriggerTimestamp = 0;
     }
 }
