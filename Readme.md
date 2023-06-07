@@ -30,10 +30,3 @@
   - Time Based Automation - Daily Featuring of random Project Idea.
   - Custom logic Automation - Automatically perform action after voting (24 hours) - For Proposal Voting, Task Status Update etc.
 
-#### Contract Addresses
-
-- UserProfileContract ->
-- ProjectIdeaContract ->
-- ProjectRoomDAOContract ->
-- CX Coins ->
-- CollabX Entry Pass NFT ->
