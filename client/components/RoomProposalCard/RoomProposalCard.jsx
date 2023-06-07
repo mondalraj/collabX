@@ -37,7 +37,7 @@ const RoomProposalCard = ({ ele }) => {
     setYes(Number(ele?.yesVoted));
     setNo(Number(ele?.noVoted));
 
-    if (Number(ele?.endProposalVotingDate) > Math.floor(Date.now() / 1000)) {
+    if (Number(ele?.endProposalVotingDate) < Math.floor(Date.now() / 1000)) {
       setTakeAction(true);
       console.log("takeAction", takeAction);
     }
