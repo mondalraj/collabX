@@ -274,9 +274,11 @@ const daoRoom = () => {
                 All Proposals
               </div>
               <div>
-                {roomData?.proposals.map((ele, idx) => (
-                  <RoomProposalCard key={idx} ele={ele} />
-                ))}
+                {roomData?.proposals.map((ele, idx) => {
+                  if (ele.description) {
+                    return <RoomProposalCard key={idx} ele={ele} />;
+                  }
+                })}
               </div>
 
               <div className="z-10 flex justify-end mt-2 contibutorBoxPlusIcon">
@@ -406,9 +408,11 @@ const daoRoom = () => {
             ) : (
               <>
                 <div className="w-full m-auto proposalList">
-                  {roomData?.proposals.map((ele, idx) => (
-                    <RoomProposalCard key={idx} ele={ele} />
-                  ))}
+                  {roomData?.proposals.map((ele, idx) => {
+                    if (ele.description) {
+                      return <RoomProposalCard key={idx} ele={ele} />;
+                    }
+                  })}
                   <div className="z-10 flex justify-end mr-2 contibutorBoxPlusIcon">
                     <BsPlusCircleFill
                       onClick={openModal}
