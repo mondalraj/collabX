@@ -1,6 +1,7 @@
 import AuthenticatedUser from "@/components/Auth/AuthenticatedUser";
 import RoomModal from "@/components/RoomModal";
 import RoomProposalCard from "@/components/RoomProposalCard/RoomProposalCard";
+import RoomTaskCard from "@/components/RoomTaskCard/RoomTaskCard";
 import {
   DAOROOM_CONTRACT_ADDRESS,
   USERPROFILE_CONTRACT_ADDRESS,
@@ -243,33 +244,60 @@ const daoRoom = () => {
         <div className="relative z-0 min-h-full">
           {/* desktop view  */}
           <div className=" roomDesktopView hidden md:flex flex-row w-[95%] m-auto justify-around">
-            <div className="flex taskPortion w-[70%] text-white pr-10">
+            <div className="flex taskPortion w-[75%] text-white pr-10">
               <div className="heading1 w-[25%] flex-col">
                 <div className="p-1 pb-2 border-b-[1px] border-white ">
                   Todo
                 </div>
-                <div className=""></div>
+                {roomData?.[9].map(
+                  (ele, idx) =>
+                    ele?.[6] === "todo" && <RoomTaskCard ele={ele} key={idx} />
+                )}
               </div>
               <div className="heading1 w-[25%] flex-col">
                 <div className="p-1 pb-2 border-b-[1px] border-white ">
                   In Progress
                 </div>
-                <div className=""></div>
+                <div className="">
+                  {" "}
+                  {roomData?.[9].map(
+                    (ele, idx) =>
+                      ele?.[6] === "in_progress" && (
+                        <RoomTaskCard ele={ele} key={idx} />
+                      )
+                  )}
+                </div>
               </div>
               <div className="heading1 w-[30%] flex-col">
                 <div className="p-1 pb-2 border-b-[1px] border-white ">
                   Completed
                 </div>
-                <div className=""></div>
+                <div className="">
+                  {" "}
+                  {roomData?.[9].map(
+                    (ele, idx) =>
+                      ele?.[6] === "completed" && (
+                        <RoomTaskCard ele={ele} key={idx} />
+                      )
+                  )}
+                </div>
               </div>
               <div className="heading1 w-[25%] flex-col">
                 <div className="p-1 pb-2 border-b-[1px] border-white ">
                   Abondoned
                 </div>
-                <div className=""></div>
+                <div className="">
+                  {" "}
+                  {roomData?.[9].map(
+                    (ele, idx) =>
+                      ele?.[6] === "abondened" && (
+                        <RoomTaskCard ele={ele} key={idx} />
+                      )
+                  )}
+                </div>
               </div>
             </div>
-            <div className="proposalPortion flex flex-col w-[35%] bg-[#01002A] p-4">
+            <div className="proposalPortion flex flex-col w-[30%] bg-[#01002A] p-4">
               <div className="heading4 text-[#06dbee] text-lg font-semibold">
                 All Proposals
               </div>
@@ -315,97 +343,158 @@ const daoRoom = () => {
           <div className="mobileViewRoom md:hidden">
             {option === "tasks" ? (
               <>
-                <div className="optionName text-[#fff]  text-center">
-                  {taskOption}
-                </div>
-                <div className="flex flex-col mt-5 tasksOptions">
-                  <div className="flex flex-row justify-between taskOption">
-                    <div
-                      className="colorBox bg-[#fff] text-[#fff] w-[5%] rounded-r-lg"
-                      onClick={() => {
-                        setTaskOption("To Do");
-                      }}
-                    >
-                      jl
+                <div className="flex  md:hidden flex-row w-[95%] m-2">
+                  <div className="flex w-[100%] carousel text-white taskPortion">
+                    <div className="flex-col carousel-item w-[100%] heading1">
+                      <div className="p-1 pb-2 text-center border-b-[1px] border-white ">
+                        Todo
+                      </div>
+                      <div className="p-2">
+                        {roomData?.[9].map(
+                          (ele, idx) =>
+                            ele?.[6] === "todo" && (
+                              <RoomTaskCard ele={ele} key={idx} />
+                            )
+                        )}
+                      </div>
                     </div>
-                    <div
-                      className="textArea text-[#fff] w-[90%] p-2 text-sm 
-                    bg-[rgba(217, 217, 217, 0.13)"
-                    >
-                      <p>
-                        Amet minim mollit non deserunt ullamco est sit aliqua
-                        dolor do amet sint. Velit officia consequat duis enim
-                        velit mollit. Exercitation veniam consequat sunt nostrud
-                        amet.
-                      </p>
+                    <div className="flex-col carousel-item w-[100%] heading1">
+                      <div className="p-1 pb-2 text-center border-b-[1px] border-white ">
+                        In Progress
+                      </div>
+                      <div className="p-2">
+                        {" "}
+                        {roomData?.[9].map(
+                          (ele, idx) =>
+                            ele?.[6] === "in_progress" && (
+                              <RoomTaskCard ele={ele} key={idx} />
+                            )
+                        )}
+                      </div>
                     </div>
-                  </div>
-                  <div
-                    className="flex flex-row justify-between mt-3 taskOption"
-                    onClick={() => {
-                      setTaskOption("In Progress");
-                    }}
-                  >
-                    <div className="colorBox bg-[#6ab6fc] text-[#6ab6fc] w-[5%] rounded-r-lg">
-                      jl
+                    <div className="flex-col carousel-item w-[100%] heading1">
+                      <div className="p-1 pb-2 text-center border-b-[1px] border-white ">
+                        Completed
+                      </div>
+                      <div className="p-2 ">
+                        {" "}
+                        {roomData?.[9].map(
+                          (ele, idx) =>
+                            ele?.[6] === "completed" && (
+                              <RoomTaskCard ele={ele} key={idx} />
+                            )
+                        )}
+                      </div>
                     </div>
-                    <div
-                      className="textArea text-[#fff] w-[90%] p-2 text-sm 
-                    bg-[rgba(217, 217, 217, 0.13)"
-                    >
-                      <p>
-                        Amet minim mollit non deserunt ullamco est sit aliqua
-                        dolor do amet sint. Velit officia consequat duis enim
-                        velit mollit. Exercitation veniam consequat sunt nostrud
-                        amet.
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    className="flex flex-row justify-between mt-3 taskOption"
-                    onClick={() => {
-                      setTaskOption("Completed");
-                    }}
-                  >
-                    <div className="colorBox bg-[#94ffac] text-[#94ffac] w-[5%] rounded-r-lg">
-                      jl
-                    </div>
-                    <div
-                      className="textArea text-[#fff] w-[90%] p-2 text-sm 
-                    bg-[rgba(217, 217, 217, 0.13)"
-                    >
-                      <p>
-                        Amet minim mollit non deserunt ullamco est sit aliqua
-                        dolor do amet sint. Velit officia consequat duis enim
-                        velit mollit. Exercitation veniam consequat sunt nostrud
-                        amet.
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    className="flex flex-row justify-between mt-3 taskOption"
-                    onClick={() => {
-                      setTaskOption("Abondoned");
-                    }}
-                  >
-                    <div className="colorBox bg-[#fe7575] text-[#fe7575] w-[5%] rounded-r-lg">
-                      jl
-                    </div>
-                    <div
-                      className="textArea text-[#fff] w-[90%] p-2 text-sm 
-                    bg-[rgba(217, 217, 217, 0.13)"
-                    >
-                      <p>
-                        Amet minim mollit non deserunt ullamco est sit aliqua
-                        dolor do amet sint. Velit officia consequat duis enim
-                        velit mollit. Exercitation veniam consequat sunt nostrud
-                        amet.
-                      </p>
+                    <div className="flex-col carousel-item w-[100%] heading1">
+                      <div className="p-1 text-center pb-2 border-b-[1px] border-white ">
+                        Abondoned
+                      </div>
+                      <div className="p-2">
+                        {" "}
+                        {roomData?.[9].map(
+                          (ele, idx) =>
+                            ele?.[6] === "abondened" && (
+                              <RoomTaskCard ele={ele} key={idx} />
+                            )
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
               </>
             ) : (
+              // <>
+              //   <div className="optionName text-[#fff]  text-center">
+              //     {taskOption}
+              //   </div>
+              //   <div className="flex flex-col mt-5 tasksOptions">
+              //     <div className="flex flex-row justify-between taskOption">
+              //       <div
+              //         className="colorBox bg-[#fff] text-[#fff] w-[5%] rounded-r-lg"
+              //         onClick={() => {
+              //           setTaskOption("To Do");
+              //         }}
+              //       >
+              //         jl
+              //       </div>
+              //       <div
+              //         className="textArea text-[#fff] w-[90%] p-2 text-sm
+              //       bg-[rgba(217, 217, 217, 0.13)"
+              //       >
+              //         <p>
+              //           Amet minim mollit non deserunt ullamco est sit aliqua
+              //           dolor do amet sint. Velit officia consequat duis enim
+              //           velit mollit. Exercitation veniam consequat sunt nostrud
+              //           amet.
+              //         </p>
+              //       </div>
+              //     </div>
+              //     <div
+              //       className="flex flex-row justify-between mt-3 taskOption"
+              //       onClick={() => {
+              //         setTaskOption("In Progress");
+              //       }}
+              //     >
+              //       <div className="colorBox bg-[#6ab6fc] text-[#6ab6fc] w-[5%] rounded-r-lg">
+              //         jl
+              //       </div>
+              //       <div
+              //         className="textArea text-[#fff] w-[90%] p-2 text-sm
+              //       bg-[rgba(217, 217, 217, 0.13)"
+              //       >
+              //         <p>
+              //           Amet minim mollit non deserunt ullamco est sit aliqua
+              //           dolor do amet sint. Velit officia consequat duis enim
+              //           velit mollit. Exercitation veniam consequat sunt nostrud
+              //           amet.
+              //         </p>
+              //       </div>
+              //     </div>
+              //     <div
+              //       className="flex flex-row justify-between mt-3 taskOption"
+              //       onClick={() => {
+              //         setTaskOption("Completed");
+              //       }}
+              //     >
+              //       <div className="colorBox bg-[#94ffac] text-[#94ffac] w-[5%] rounded-r-lg">
+              //         jl
+              //       </div>
+              //       <div
+              //         className="textArea text-[#fff] w-[90%] p-2 text-sm
+              //       bg-[rgba(217, 217, 217, 0.13)"
+              //       >
+              //         <p>
+              //           Amet minim mollit non deserunt ullamco est sit aliqua
+              //           dolor do amet sint. Velit officia consequat duis enim
+              //           velit mollit. Exercitation veniam consequat sunt nostrud
+              //           amet.
+              //         </p>
+              //       </div>
+              //     </div>
+              //     <div
+              //       className="flex flex-row justify-between mt-3 taskOption"
+              //       onClick={() => {
+              //         setTaskOption("Abondoned");
+              //       }}
+              //     >
+              //       <div className="colorBox bg-[#fe7575] text-[#fe7575] w-[5%] rounded-r-lg">
+              //         jl
+              //       </div>
+              //       <div
+              //         className="textArea text-[#fff] w-[90%] p-2 text-sm
+              //       bg-[rgba(217, 217, 217, 0.13)"
+              //       >
+              //         <p>
+              //           Amet minim mollit non deserunt ullamco est sit aliqua
+              //           dolor do amet sint. Velit officia consequat duis enim
+              //           velit mollit. Exercitation veniam consequat sunt nostrud
+              //           amet.
+              //         </p>
+              //       </div>
+              //     </div>
+              //   </div>
+              // </>
               <>
                 <div className="w-full m-auto proposalList">
                   {roomData?.proposals.map((ele, idx) => {
