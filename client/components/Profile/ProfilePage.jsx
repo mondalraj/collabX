@@ -174,10 +174,7 @@ const ProfilePage = () => {
 
   if (isLoading) {
     return (
-      <div
-        className="h-screen w-screen flex flex-col
-      justify-center items-center gap-5"
-      >
+      <div className="flex flex-col items-center justify-center w-screen h-screen gap-5">
         <div>Loading Data... Please wait.</div>
       </div>
     );
@@ -185,10 +182,7 @@ const ProfilePage = () => {
 
   if (userProfileExist) {
     return (
-      <div
-        className="h-screen w-screen flex flex-col
-      justify-center items-center gap-5"
-      >
+      <div className="flex flex-col items-center justify-center w-screen h-screen gap-5">
         <div>User Profile Already Exists</div>
 
         <button className="btn btn-active btn-secondary btn-sm">
@@ -353,7 +347,7 @@ const ProfilePage = () => {
                 </div>
                 <input
                   value={formData.twitterHandle}
-                  placeholder="Enter your twitter handle"
+                  placeholder="Enter your twitter profile link"
                   onChange={(e) =>
                     setFormData({
                       ...formData,

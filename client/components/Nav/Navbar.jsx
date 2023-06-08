@@ -39,7 +39,7 @@ const Navbar = ({ phonenav, openNav }) => {
     <div className="container1  bg-gradient-to-r from-[#2A064B] from-50% to-[#030C30] t0-50%">
       <AuthenticatedUser />
       {/* nav */}
-      <div className="mt-10 mb-8 hidden sm:flex flex-row justify-between items-center w-[90%] m-auto  bg-gradient-to-r from-[#030C30] from-50% to-[#43087A] t0-50% rounded-full p-2 pl-3">
+      <div className="text-md mt-10 mb-8 hidden sm:flex flex-row justify-between items-center w-[90%] m-auto  bg-gradient-to-r from-[#030C30] from-50% to-[#43087A] t0-50% rounded-full p-2 pl-3">
         <div className="ml-3 -mt-2 img">
           <Link href="/">
             <Image
@@ -130,7 +130,7 @@ const Navbar = ({ phonenav, openNav }) => {
           </div>
           <div className="flex flex-col">
             <div className="flex items-center">
-              <div className="text-[#E40E82] bg-[#1C0041] flex items-center p-2 rounded-xl mr-2">
+              {/* <div className="text-[#E40E82] bg-[#1C0041] flex items-center p-2 rounded-xl mr-2">
                 <Image
                   height={26}
                   width={26}
@@ -139,7 +139,14 @@ const Navbar = ({ phonenav, openNav }) => {
                   className="mr-2 "
                 />
                 <p>120.00 CX</p>
-              </div>
+              </div> */}
+              <ConnectWallet
+                style={{
+                  transform: "scale(0.8)",
+                }}
+                theme="light"
+                btnTitle="Connect Wallet"
+              />
 
               <button onClick={openNav}>
                 {" "}
@@ -153,19 +160,25 @@ const Navbar = ({ phonenav, openNav }) => {
                   <Link href="/allProfiles">
                     {" "}
                     <li className="p-3 text-lg font-normal text-white border-b-2 border-white rounded-lg hover:bg-white hover:text-black">
-                      Profiles
+                      All Users
                     </li>
                   </Link>
                   <Link href="/projectIdeas">
                     {" "}
                     <li className="p-3 text-lg font-normal text-white border-b-2 border-white rounded-lg hover:bg-white hover:text-black">
-                      Ideas
+                      All Ideas
                     </li>
                   </Link>
                   <Link href="/yourIdeas">
                     {" "}
                     <li className="p-3 text-lg font-normal text-white border-b-2 border-white rounded-lg hover:bg-white hover:text-black">
-                      Showcases
+                      Your Projects
+                    </li>
+                  </Link>
+                  <Link href="/myProfile">
+                    {" "}
+                    <li className="p-3 text-lg font-normal text-white border-b-2 border-white rounded-lg hover:bg-white hover:text-black">
+                      Your Profile
                     </li>
                   </Link>
                 </ul>

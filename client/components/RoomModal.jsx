@@ -49,7 +49,7 @@ const RoomModal = ({
 
               <div className="flex justify-end w-full m-2 mb-4 ">
                 <button
-                  className="bg-[#E40E82] py-1 px-4 rounded-xl font-semibold"
+                  className="bg-[#E40E82] py-2 px-4 rounded-xl font-semibold"
                   onClick={submitNewProposal}
                 >
                   CREATE

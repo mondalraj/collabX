@@ -166,10 +166,10 @@ const RoomTaskCard = ({ ele }) => {
               />
             </div>
             <div className="pl-3 proposalRight">
-              <div className="text-sm font-medium proposalRightTop">
+              <div className="text-lg font-medium sm:text-sm proposalRightTop">
                 {ele?.[2]}
               </div>
-              <div className="text-xs proposalRightBottom">
+              <div className="text-md sm:text-xs proposalRightBottom">
                 {/* <p>{ele?.[3].substring(0, 15)}...</p> */}
                 <p>{ele?.[3]}</p>
               </div>
@@ -177,7 +177,7 @@ const RoomTaskCard = ({ ele }) => {
           </div>
           <div className="flex justify-end">
             <button
-              className=" text-sm font-semibold hover:text-green-500 w-full text-center rounded-xl border-none text-[#E40E82]"
+              className=" text-lg sm:text-sm font-semibold hover:text-green-500 w-full text-center rounded-xl border-none text-[#E40E82]"
               onClick={assignTaskToYourself}
             >
               Assign it to yourself
@@ -199,10 +199,10 @@ const RoomTaskCard = ({ ele }) => {
               />
             </div>
             <div className="pl-3 proposalRight">
-              <div className="text-sm font-medium proposalRightTop">
+              <div className="text-lg font-medium sm:text-sm proposalRightTop">
                 {ele?.[2]}
               </div>
-              <div className="text-xs proposalRightBottom">
+              <div className="text-md sm:text-xs proposalRightBottom">
                 <p>{ele?.[3]}</p>
               </div>
             </div>
@@ -211,7 +211,7 @@ const RoomTaskCard = ({ ele }) => {
           {!markedCompleted && ele?.assignedTo === address && (
             <div className="flex justify-end ">
               <button
-                className=" text-sm font-semibold hover:text-green-500 w-full text-center rounded-xl border-none text-[#E40E82]"
+                className=" text-lg sm:text-sm font-semibold hover:text-green-500 w-full text-center rounded-xl border-none text-[#E40E82]"
                 onClick={markTaskAsCompleted}
               >
                 Mark as completed
@@ -223,7 +223,7 @@ const RoomTaskCard = ({ ele }) => {
             ele?.autoTrigger &&
             !takeAction &&
             voted !== "voted" && (
-              <div className="w-full text-sm flex font-semibold text-[#E40E82]">
+              <div className="w-full text-lg sm:text-sm flex font-semibold text-[#E40E82]">
                 <div
                   onClick={yesVote}
                   className="w-[50%] text-center  hover:text-green-500 cursor-pointer"
@@ -243,7 +243,7 @@ const RoomTaskCard = ({ ele }) => {
             !takeAction &&
             ele?.autoTrigger &&
             voted === "voted" && (
-              <div className="w-full text-sm flex font-semibold text-[#E40E82]">
+              <div className="w-full text-lg sm:text-sm flex font-semibold text-[#E40E82]">
                 <div className="w-[50%] text-center  hover:text-green-500 cursor-not-allowed">
                   Yes ({yes})
                 </div>
@@ -256,7 +256,7 @@ const RoomTaskCard = ({ ele }) => {
           {markedCompleted && takeAction && ele?.autoTrigger && (
             <div className="flex justify-end ">
               <button
-                className=" text-sm font-semibold hover:text-green-500 w-full text-center rounded-xl border-none text-[#E40E82]"
+                className=" text-lg sm:text-sm font-semibold hover:text-green-500 w-full text-center rounded-xl border-none text-[#E40E82]"
                 onClick={triggerActionForTask}
               >
                 Trigger Action for Task
@@ -279,10 +279,10 @@ const RoomTaskCard = ({ ele }) => {
               />
             </div>
             <div className="pl-3 proposalRight">
-              <div className="text-sm font-medium proposalRightTop">
+              <div className="text-lg font-medium sm:text-sm proposalRightTop">
                 {ele?.[2]}
               </div>
-              <div className="text-xs proposalRightBottom">
+              <div className="text-md sm:text-xs proposalRightBottom">
                 {/* <p>{ele?.[3].substring(0, 15)}...</p> */}
                 <p>{ele?.[3]}</p>
               </div>
@@ -309,16 +309,16 @@ const RoomTaskCard = ({ ele }) => {
               />
             </div>
             <div className="pl-3 proposalRight">
-              <div className="text-sm font-medium proposalRightTop">
+              <div className="text-lg font-medium sm:text-sm proposalRightTop">
                 {ele?.[2]}
               </div>
-              <div className="text-xs proposalRightBottom">
+              <div className="text-md sm:text-xs proposalRightBottom">
                 <p>{ele?.[3]}</p>
               </div>
             </div>
           </div>
           <div className="flex justify-end">
-            <button className=" text-sm font-semibold hover:text-green-500 w-full text-center rounded-xl border-none text-[#E40E82]">
+            <button className=" text-lg sm:text-sm font-semibold hover:text-green-500 w-full text-center rounded-xl border-none text-[#E40E82]">
               Assign it to yourself
             </button>
           </div>

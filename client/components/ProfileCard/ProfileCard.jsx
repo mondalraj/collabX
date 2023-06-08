@@ -75,9 +75,9 @@ const ProfileCard = ({
       </div>
       <div className="m-auto mt-3 profileCardLowerSection">
         <div className="personDetails flex-col sm:flex sm:flex-row pl-[1rem] pr-[1rem] sm:justify-around">
-          <div className="about bg-[#01002A] p-5 mt-2 rounded-[1rem] sm:w-[45%] sm:min-h-[33vh] sm:max-h-[33vh] min-h-[15vh] max-h-[15vh]">
+          <div className="about bg-[#01002A] p-5 mt-2 rounded-[1rem] sm:w-[45%] sm:min-h-[33vh] sm:max-h-[33vh] min-h-[15vh] max-h-[15vh] overflow-y-scroll">
             <h3 className="text-lg text-[#05eafa]">About</h3>
-            <p className="text-[#fff]">{bio}</p>
+            <p className="text-[#fff] text-lg font-light">{bio}</p>
           </div>
           <div className="skills  bg-[#01002A] p-5 mt-2 rounded-[1rem] sm:w-[45%] min-h-[20vh] max-h-[20vh] sm:min-h-[33vh] sm:max-h-[33vh] overflow-y-scroll">
             <h3 className="text-lg text-[#05eafa]">Skills</h3>

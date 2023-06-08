@@ -21,7 +21,7 @@ const ProjectCard = ({ name, about, skills, id, index }) => {
           <div className="personDetails flex flex-col pl-[1rem] pr-[1rem] sm:justify-around">
             <div className="about bg-[#01002A] p-5 mt-2 rounded-[1rem] sm:w-[100%]">
               <h3 className="text-lg text-[#05eafa]">About</h3>
-              <p className="text-[#fff]">{about.substring(0, 24)}...</p>
+              <p className="text-[#fff] text-lg">{about.substring(0, 24)}...</p>
             </div>
             <div className="skills  bg-[#01002A] p-5 mt-2 rounded-[1rem] overflow-y-scroll sm:w-[100%]">
               <h3 className="text-lg text-[#05eafa]">Skills</h3>

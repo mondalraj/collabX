@@ -115,10 +115,10 @@ const RoomProposalCard = ({ ele }) => {
           />
         </div>
         <div className="pl-3 proposalRight">
-          <div className="text-sm font-semibold proposalRightTop">
+          <div className="text-lg font-semibold proposalRightTop">
             {ele?.name}
           </div>
-          <div className="text-xs text-gray-300 proposalRightBottom">
+          <div className="text-gray-300 text-md proposalRightBottom">
             <p>{ele?.description}</p>
           </div>
         </div>
@@ -127,18 +127,18 @@ const RoomProposalCard = ({ ele }) => {
         <div className="proposalAction flex flex-row border-solid border-2 border-white text-[#fff] ">
           <div
             onClick={actionOnProposal}
-            className="option1 border-solid border-[1px]  w-full border-white text-center text-sm cursor-pointer py-1"
+            className="option1 border-solid border-[1px]  w-full border-white text-center text-md cursor-pointer py-1"
           >
             Trigger Action for proposal
           </div>
         </div>
       ) : voted === "voted" ? (
         <div className="proposalOptions flex w-full flex-row border-solid border-2 border-white text-[#fff] ">
-          <div className="option1 border-solid border-[1px] w-[50%] border-white text-center text-sm cursor-not-allowed">
+          <div className="option1 border-solid border-[1px] w-[50%] border-white text-center text-md cursor-not-allowed">
             Yes ({yes})
           </div>
           <div
-            className="option2 text-sm border-solid border-[1px] w-[50%] border-white cursor-not-allowed
+            className="option2 text-md border-solid border-[1px] w-[50%] border-white cursor-not-allowed
                         text-center"
           >
             No ({no})
@@ -148,13 +148,13 @@ const RoomProposalCard = ({ ele }) => {
         <div className="proposalOptions flex w-full flex-row border-solid border-2 border-white text-[#fff] ">
           <div
             onClick={yesVote}
-            className="option1 border-solid border-[1px] w-[50%] border-white text-center text-sm cursor-pointer"
+            className="option1 border-solid border-[1px] w-[50%] border-white text-center text-md cursor-pointer"
           >
             Yes ({yes})
           </div>
           <div
             onClick={noVote}
-            className="option2 text-sm border-solid border-[1px] w-[50%] border-white cursor-pointer
+            className="option2 text-md border-solid border-[1px] w-[50%] border-white cursor-pointer
                         text-center"
           >
             No ({no})

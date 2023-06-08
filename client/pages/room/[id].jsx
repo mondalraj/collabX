@@ -263,8 +263,9 @@ const daoRoom = () => {
               className=""
             />
           </div>
-          <div className="flex items-center">
-            {/* <div className="text-[#E40E82] bg-[#1C0041] flex items-center p-2 rounded-xl mr-2">
+          <div className="flex flex-col">
+            <div className="flex items-center">
+              {/* <div className="text-[#E40E82] bg-[#1C0041] flex items-center p-2 rounded-xl mr-2">
               <Image
                 height={26}
                 width={26}
@@ -274,46 +275,55 @@ const daoRoom = () => {
               />
               <p>120.00 CX</p>
             </div> */}
-            <ConnectWallet
-              style={{
-                transform: "scale(0.8)",
-              }}
-              theme="light"
-              btnTitle="Connect Wallet"
-            />
+              <ConnectWallet
+                style={{
+                  transform: "scale(0.8)",
+                }}
+                theme="light"
+                btnTitle="Connect Wallet"
+              />
 
-            <button onClick={openNav}>
-              {" "}
-              <BsThreeDotsVertical color="white" size={30} />
-            </button>
+              <button onClick={openNav}>
+                {" "}
+                <BsThreeDotsVertical color="white" size={30} />
+              </button>
+            </div>
+            {/* opennedNav in phn */}
+            {phonenav && (
+              <div className="z-50 flex justify-end w-full pr-2 sm:hidden">
+                <ul className="absolute flex-col items-center justify-between w-[40%]  font-medium text-center text-white bg-[#E40E82] bg-opacity-50 backdrop-blur-md rounded-lg">
+                  <Link href="/allProfiles">
+                    {" "}
+                    <li className="p-3 text-lg font-normal text-white border-b-2 border-white rounded-lg hover:bg-white hover:text-black">
+                      All Users
+                    </li>
+                  </Link>
+                  <Link href="/projectIdeas">
+                    {" "}
+                    <li className="p-3 text-lg font-normal text-white border-b-2 border-white rounded-lg hover:bg-white hover:text-black">
+                      All Ideas
+                    </li>
+                  </Link>
+                  <Link href="/yourIdeas">
+                    {" "}
+                    <li className="p-3 text-lg font-normal text-white border-b-2 border-white rounded-lg hover:bg-white hover:text-black">
+                      Your Projects
+                    </li>
+                  </Link>
+                  <Link href="/myProfile">
+                    {" "}
+                    <li className="p-3 text-lg font-normal text-white border-b-2 border-white rounded-lg hover:bg-white hover:text-black">
+                      Your Profile
+                    </li>
+                  </Link>
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </div>
-      {/* opennedNav in phn */}
-      {phonenav && (
-        <div className="relative z-10 w-full ">
-          <ul className="absolute flex-col items-center justify-between w-full bg-opacity-90  font-medium text-center text-white bg-[#E40E82]">
-            <Link href="/allProfiles">
-              {" "}
-              <li className="p-3 text-white border-b-2 border-black ">
-                Profiles
-              </li>
-            </Link>
-            <Link href="/projectIdeas">
-              {" "}
-              <li className="p-3 text-white border-b-2 border-black ">Ideas</li>
-            </Link>
-            <Link href="/yourIdeas">
-              {" "}
-              <li className="p-3 text-white border-b-2 border-black">
-                Showcases
-              </li>
-            </Link>
-          </ul>
-        </div>
-      )}
 
-      <div className=" h-fit">
+      <div className="z-0 h-fit">
         <div className="relative z-0 min-h-full">
           {/* desktop view  */}
           <div className=" roomDesktopView hidden md:flex flex-row w-[95%] m-auto justify-around">
@@ -396,7 +406,7 @@ const daoRoom = () => {
           {/* phone view  */}
           <div className="roomOptions flex m-auto w-[90%] text-[#fff] justify-around md:hidden">
             <div
-              className="option1 pt-3 pb-3 pl-7 pr-7 hover:bg-[#0c0634] cursor-pointer"
+              className="option1 text-xl pt-3 pb-3 pl-7 pr-7 hover:bg-[#0c0634] cursor-pointer"
               onClick={() => {
                 setOption("tasks");
               }}
@@ -404,7 +414,7 @@ const daoRoom = () => {
               Tasks
             </div>
             <div
-              className="option2 pt-3 pb-3 pl-7 pr-7 hover:bg-[#0c0634] cursor-pointer"
+              className="option2 pt-3 text-xl pb-3 pl-7 pr-7 hover:bg-[#0c0634] cursor-pointer"
               onClick={() => {
                 setOption("proposal");
               }}
@@ -419,7 +429,7 @@ const daoRoom = () => {
                 <div className="flex  md:hidden flex-row w-[95%] m-2">
                   <div className="flex w-[100%] carousel text-white taskPortion">
                     <div className="flex-col carousel-item w-[100%] heading1">
-                      <div className="p-1 pb-2 text-center border-b-[1px] border-white ">
+                      <div className="p-1 pb-2 text-center border-b-[1px] border-white text-xl">
                         Todo
                       </div>
                       <div className="p-2">
@@ -432,7 +442,7 @@ const daoRoom = () => {
                       </div>
                     </div>
                     <div className="flex-col carousel-item w-[100%] heading1">
-                      <div className="p-1 pb-2 text-center border-b-[1px] border-white ">
+                      <div className="p-1 pb-2 text-center border-b-[1px] border-white text-xl">
                         In Progress
                       </div>
                       <div className="p-2">
@@ -446,7 +456,7 @@ const daoRoom = () => {
                       </div>
                     </div>
                     <div className="flex-col carousel-item w-[100%] heading1">
-                      <div className="p-1 pb-2 text-center border-b-[1px] border-white ">
+                      <div className="p-1 pb-2 text-center border-b-[1px] border-white text-xl">
                         Completed
                       </div>
                       <div className="p-2 ">
@@ -460,7 +470,7 @@ const daoRoom = () => {
                       </div>
                     </div>
                     <div className="flex-col carousel-item w-[100%] heading1">
-                      <div className="p-1 text-center pb-2 border-b-[1px] border-white ">
+                      <div className="p-1 text-center pb-2 border-b-[1px] border-white text-xl">
                         Abondoned
                       </div>
                       <div className="p-2">
@@ -629,10 +639,10 @@ const daoRoom = () => {
               </div>
             </div>
             <div className="projectIdeaDetails md:w-[20%]">
-              <div className="heading4 text-[#06dbee] text-xl font-semibold">
+              <div className="heading4 text-[#06dbee] text-2xl font-semibold">
                 {roomData?.[1]}
               </div>
-              <div className="projectIdeaText text-[#fff] text-sm">
+              <div className="projectIdeaText text-[#fff] text-md">
                 <p className="mt-4">{roomData?.[2]}</p>
               </div>
               <div className="contributorsBox border-solid border-[1px] border-white p-4 mt-3">

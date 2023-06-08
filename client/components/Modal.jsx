@@ -41,7 +41,7 @@ const Modal = ({
               <div className="w-full m-2 text-lg">
                 <p>Project Name</p>
                 <input
-                  className="w-full py-2 bg-black border-[0.05rem] rounded-md font-normal text-gray-300"
+                  className="w-full p-2 bg-black border-[0.05rem] rounded-md font-normal text-gray-300"
                   type="text"
                   onChange={(e) => {
                     setProjectIdea({ ...projectIdea, name: e.target.value });
@@ -59,7 +59,7 @@ const Modal = ({
                     });
                   }}
                   value={projectIdea?.description}
-                  className="w-full  rounded-md bg-black border-[0.05rem] font-normal text-gray-300"
+                  className="w-full p-2 rounded-md bg-black border-[0.05rem] font-normal text-gray-300"
                   name=""
                   id=""
                   cols="30"
@@ -98,7 +98,7 @@ const Modal = ({
                   <p className="font-normal text-gray-300"> (optional)</p>
                 </div>
                 <input
-                  className="w-full py-2 rounded-md bg-black border-[0.05rem] font-normal text-gray-300"
+                  className="w-full p-2 rounded-md bg-black border-[0.05rem] font-normal text-gray-300"
                   type="text"
                 />
               </div>
