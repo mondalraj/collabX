@@ -42,7 +42,7 @@ const ListView = () => {
         <Navbar phonenav={phonenav} openNav={openNav} />
       </div>
 
-      <div className="cardsBackground max-w-[80%] min-w-[80%] m-auto bg-[#01002a] pt-[10px] pb-[10px] pl-[10px] pr-[10px] sm:p-5 ">
+      <div className="cardsBackground max-w-[90%] min-w-[0%] sm:max-w-[80%] sm:min-w-[80%] m-auto bg-[#01002a] pt-[10px] pb-[10px] pl-[10px] pr-[10px] sm:p-5 ">
         {/* search  */}
         <div className="flex items-center w-full mb-4 justify-evenly">
           <Input
@@ -51,7 +51,7 @@ const ListView = () => {
             className="sm:w-[40%] w-[70%] m-4 ml-6"
           />
         </div>
-        <div className="grid grid-cols-1 cardsCollection sm:grid-cols-2 lg:grid-cols-3">
+        <div className="flex flex-col items-center sm:grid cardsCollection sm:grid-cols-2 lg:grid-cols-3">
           {allProfiles?.map((profile) => (
             <ProfileCard
               address={profile?.[0]}

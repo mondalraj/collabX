@@ -70,10 +70,19 @@ const ProjectIdeas = () => {
   };
 
   return (
-    <div className="container1 min-h-[100vh] bg-gradient-to-b sm:bg-gradient-to-r from-[#2A064B] from-50% to-[#030C30] t0-50%">
+    <div className="container1 relative min-h-[100vh] bg-gradient-to-b sm:bg-gradient-to-r from-[#2A064B] from-50% to-[#030C30] t0-50%">
+      {/* Modal */}
+      <Modal
+        openModal={openModal}
+        modalClick={modalClick}
+        projectIdea={projectIdea}
+        setProjectIdea={setProjectIdea}
+        create={create}
+        loadingCreation={loadingCreation}
+      />
       <div
         className="listViewUpperSection pb-8 
-        sm:pb-[4rem] rounded-b-[1rem] sm:rounded-b-[4rem]"
+        sm:pb-[0rem] rounded-b-[1rem] sm:rounded-b-[4rem]"
       >
         <Navbar phonenav={phonenav} openNav={openNav} />
       </div>
@@ -92,18 +101,8 @@ const ProjectIdeas = () => {
         />
       </div>
 
-      {/* Modal */}
-      <Modal
-        openModal={openModal}
-        modalClick={modalClick}
-        projectIdea={projectIdea}
-        setProjectIdea={setProjectIdea}
-        create={create}
-        loadingCreation={loadingCreation}
-      />
-
-      <div className="relative cardsBackground max-w-[80%] min-w-[80%] m-auto bg-[#01002a] pt-[10px] pb-[10px] pl-[10px] pr-[10px] sm:p-5 ">
-        <div className="z-0 grid grid-cols-1 lg:pl-6 cardsCollection sm:grid-cols-2 lg:grid-cols-3">
+      <div className="relative cardsBackground max-w-[90%] sm:min-w-[80%] sm:max-w-[80%] min-w-[90%] m-auto bg-[#01002a] pt-[10px] pb-[10px] pl-[10px] pr-[10px] sm:p-5 ">
+        <div className="z-0 flex flex-col px-6 sm:px-0 sm:items-center sm:grid lg:pl-6 cardsCollection sm:grid-cols-2 lg:grid-cols-3">
           {allIdeas?.map((ele, idx) => (
             <ProjectCard
               key={idx}

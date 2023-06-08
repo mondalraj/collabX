@@ -70,8 +70,8 @@ const Profile = () => {
   return (
     <>
       <AuthenticatedUser />
-      <Navbar phonenav={phonenav} openNav={openNav} />
       <div className="max-w-screen-xl m-auto text-sm">
+        <Navbar phonenav={phonenav} openNav={openNav} />
         <GetProfile profile={myProfileData} />
       </div>
     </>

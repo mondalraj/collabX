@@ -25,8 +25,9 @@ const GetProfile = ({ profile }) => {
   };
 
   return (
-    <div className="container1 bg-gradient-to-r from-[#2A064B] from-50% to-[#030C30] t0-50%">
+    <div className="container1 min-h-[100vh] bg-gradient-to-r from-[#2A064B] from-50% to-[#030C30] t0-50%">
       {/* upper section */}
+
       <div
         className="profileUpperSection pb-8 
         sm:pb-[4rem] rounded-b-[1rem] sm:rounded-b-[4rem]"
@@ -43,13 +44,15 @@ const GetProfile = ({ profile }) => {
           className="invisible pt-5 m-auto sm:visible "
         />
         <div className="profileUpperMobile flex sm:hidden justify-between mt-[-3.5rem] pl-[1rem] pr-[1rem] pb-[1rem]">
-          <Image
-            src="/images/CollabX.png"
-            width="30"
-            height="30"
-            alt="CollabXLogo"
-            className="block md:hidden"
-          />
+          <Link href="/">
+            <Image
+              src="/images/CollabX.png"
+              width="30"
+              height="30"
+              alt="CollabXLogo"
+              className="block md:hidden"
+            />
+          </Link>
           <AiOutlineWallet className="text-[#fff] mt-1 mr-3" />
         </div>
       </div>
@@ -74,7 +77,7 @@ const GetProfile = ({ profile }) => {
               className="m-auto w-[50%] sm:w-[10%]"
             />
           </div>
-          <h3 className="text-[#fff] m-auto">{profile?.[1]}</h3>
+          <h3 className="text-[#fff] m-auto ml-2 sm:ml-0">{profile?.[1]}</h3>
         </div>
 
         <div className="h-12 p-2 socialIcons sm:pl-[8px]">
@@ -88,7 +91,7 @@ const GetProfile = ({ profile }) => {
               {" "}
               <AiFillPhone className="text-[#fff]  text-lg sm:text-2xl mt-1 mr-3 cursor-pointer" />
             </Link>
-            <Link href={`${profile?.[5]}`}>
+            <Link target="_blank" href={`${profile?.[5]}`}>
               {" "}
               <AiFillTwitterSquare className="text-[#fff] text-lg sm:text-2xl mt-1 mr-3 cursor-pointer" />
             </Link>

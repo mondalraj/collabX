@@ -40,7 +40,7 @@ const ProfileCard = ({
   };
   return (
     <div
-      className="profileCard rounded-lg w-[100%] md:w-[90%]  mt-[1rem] mb-[2rem] pb-[1rem] pt-[1rem] text-sm
+      className="profileCard rounded-lg w-[90%]  mt-[1rem] mb-[2rem] pb-[1rem] pt-[1rem] text-sm
                 bg-[#ffffff21] opacity-[0.87]
                 hover:bg-gradient-to-b from-[#870049] to-[#340362]"
     >
@@ -59,7 +59,7 @@ const ProfileCard = ({
               {" "}
               <AiFillPhone className="text-[#fff]  text-lg sm:text-2xl mt-1 mr-3 cursor-pointer" />
             </Link>
-            <Link href={`${twit}`}>
+            <Link target="_blank" href={`${twit}`}>
               {" "}
               <AiFillTwitterSquare className="text-[#fff] text-lg sm:text-2xl mt-1 mr-3 cursor-pointer" />
             </Link>
@@ -75,11 +75,11 @@ const ProfileCard = ({
       </div>
       <div className="m-auto mt-3 profileCardLowerSection">
         <div className="personDetails flex-col sm:flex sm:flex-row pl-[1rem] pr-[1rem] sm:justify-around">
-          <div className="about bg-[#01002A] p-5 mt-2 rounded-[1rem] sm:w-[45%] min-h-[33vh] max-h-[33vh]">
+          <div className="about bg-[#01002A] p-5 mt-2 rounded-[1rem] sm:w-[45%] sm:min-h-[33vh] sm:max-h-[33vh] min-h-[15vh] max-h-[15vh]">
             <h3 className="text-lg text-[#05eafa]">About</h3>
             <p className="text-[#fff]">{bio}</p>
           </div>
-          <div className="skills  bg-[#01002A] p-5 mt-2 rounded-[1rem] sm:w-[45%] min-h-[33vh] max-h-[33vh] overflow-y-scroll">
+          <div className="skills  bg-[#01002A] p-5 mt-2 rounded-[1rem] sm:w-[45%] min-h-[20vh] max-h-[20vh] sm:min-h-[33vh] sm:max-h-[33vh] overflow-y-scroll">
             <h3 className="text-lg text-[#05eafa]">Skills</h3>
             <div className="mt-[1rem] grid grid-cols-2 sm:grid-cols-1 gap-4 text-[#fff]">
               {skills?.map((ele) => (
@@ -90,7 +90,7 @@ const ProfileCard = ({
             </div>
           </div>
         </div>
-        <div className="viewProfile bg-[#01002A] ml-[1.25rem] mr-[1.25rem] mt-2 p-5 rounded-[1rem] flex justify-between">
+        <div className="viewProfile bg-[#01002A] ml-[1rem] mr-[1rem] sm:ml-[1.25rem] sm:mr-[1.25rem] mt-2 p-5 rounded-[1rem] flex justify-between">
           <Link href={`profile/${id}`} className="flex justify-between w-full">
             <h3 className="text-lg text-[#05eafa]">View Profile</h3>
             <AiOutlineRight className="text-[#05eafa] mt-2" />

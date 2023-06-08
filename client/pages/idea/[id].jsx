@@ -136,7 +136,7 @@ const IndividualIdea = () => {
     setModalClick(!modalClick);
   };
   return (
-    <div className=" min-h-[100vh] sm:p-10  w-full bg-gradient-to-b sm:bg-gradient-to-r from-[#23094E] from-0% to-black to-100%">
+    <div className=" min-h-[100vh] sm:p-10  w-full bg-gradient-to-b sm:bg-gradient-to-r from-[#2A064B] from-50% to-[#030C30] t0-50%">
       {/* Nav  */}
       <Navbar phonenav={phonenav} openNav={openNav} />
       {/* search  */}

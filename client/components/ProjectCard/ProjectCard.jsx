@@ -5,7 +5,7 @@ const ProjectCard = ({ name, about, skills, id, index }) => {
   return (
     <div>
       <div
-        className="profileCard min-h-[70vh] max-h-[70vh] rounded-lg w-[100%] md:w-[90%] mt-[1rem] mb-4rem pb-[1rem] pt-[1rem] text-sm
+        className="profileCard sm:min-h-[70vh] min-h[60vh] max-h-[60vh] sm:max-h-[70vh] rounded-lg w-[100%] md:w-[90%] mt-[1rem] mb-[2rem] pb-[1rem] pt-[1rem] text-sm
                 bg-[#ffffff21] opacity-[0.87]
                 hover:bg-gradient-to-b from-[#870049] to-[#340362]"
       >
@@ -37,7 +37,7 @@ const ProjectCard = ({ name, about, skills, id, index }) => {
               </div>
             </div>
           </div>
-          <div className="viewProfile bg-[#01002A] ml-[1.25rem] mr-[1.25rem] mt-2 p-5 rounded-[1rem] flex justify-between">
+          <div className="viewProfile bg-[#01002A]  ml-[1rem] mr-[1rem] mt-2 p-5 rounded-[1rem] flex justify-between">
             <Link
               href={`/idea/${index}`}
               className="flex justify-between w-full"

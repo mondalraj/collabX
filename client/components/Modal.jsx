@@ -25,9 +25,9 @@ const Modal = ({
   return (
     <>
       {modalClick && (
-        <div className="absolute z-10 w-[97%]">
+        <div className="absolute z-50 w-[100%]  flex justify-center backdrop-blur-md h-full">
           {" "}
-          <div className=" text-white bg-black bg-opacity-60 w-[100%] h-[80vh] flex flex-col items-center">
+          <div className=" text-white bg-[rgba(0,0,0,0.67)] sm:mt-2 mt-20  sm:w-[60%] w-[90%] h-fit flex flex-col items-center rounded-md">
             <div
               onClick={openModal}
               className="flex justify-end w-full px-6 pt-4 text-xl font-semibold cursor-pointer"
@@ -35,13 +35,13 @@ const Modal = ({
               ✕
             </div>
             <div className=" flex flex-col items-center justify-center w-[70%] text-sm font-semibold">
-              <h1 className="mb-2 text-xl font-semibold">
+              <h1 className="mb-2 text-2xl font-semibold">
                 Create Project Idea
               </h1>
-              <div className="w-full m-2">
+              <div className="w-full m-2 text-lg">
                 <p>Project Name</p>
                 <input
-                  className="w-full py-1 my-1 bg-black border-[0.05rem] rounded-md font-normal text-gray-300"
+                  className="w-full py-2 bg-black border-[0.05rem] rounded-md font-normal text-gray-300"
                   type="text"
                   onChange={(e) => {
                     setProjectIdea({ ...projectIdea, name: e.target.value });
@@ -49,7 +49,7 @@ const Modal = ({
                   value={projectIdea?.name}
                 />
               </div>
-              <div className="w-full m-2">
+              <div className="w-full m-2 text-lg">
                 <p>Description</p>
                 <textarea
                   onChange={(e) => {
@@ -59,21 +59,21 @@ const Modal = ({
                     });
                   }}
                   value={projectIdea?.description}
-                  className="w-full my-1 rounded-md bg-black border-[0.05rem] font-normal text-gray-300"
+                  className="w-full  rounded-md bg-black border-[0.05rem] font-normal text-gray-300"
                   name=""
                   id=""
                   cols="30"
                   rows="6"
                 ></textarea>
               </div>
-              <div className="w-full m-2">
+              <div className="w-full m-2 text-lg">
                 <p>Skillset Required</p>
                 {/* <input
                   className="w-full py-1 my-1 rounded-md bg-black border-[0.05rem] font-normal text-gray-300"
                   type="text"
                 /> */}
                 <MultiSelect
-                  className="w-full bg-black"
+                  className="w-full text-lg bg-black placeholder:text-lg"
                   data={options}
                   required
                   // variant="filled"
@@ -92,20 +92,20 @@ const Modal = ({
                   }}
                 />
               </div>
-              <div className="w-full m-2">
+              <div className="w-full m-2 text-lg">
                 <div className="flex">
                   <p className="pr-1">Url </p>
                   <p className="font-normal text-gray-300"> (optional)</p>
                 </div>
                 <input
-                  className="w-full py-1 my-1 rounded-md bg-black border-[0.05rem] font-normal text-gray-300"
+                  className="w-full py-2 rounded-md bg-black border-[0.05rem] font-normal text-gray-300"
                   type="text"
                 />
               </div>
               <div className="flex justify-end w-full m-2 mb-4 ">
                 <button
                   onClick={create}
-                  className="bg-[#E40E82] py-1 px-4 rounded-xl font-semibold"
+                  className="bg-[#E40E82] py-2 px-4 rounded-xl font-semibold text-lg"
                   disabled={loadingCreation}
                 >
                   {loadingCreation ? "CREATING..." : "CREATE"}
