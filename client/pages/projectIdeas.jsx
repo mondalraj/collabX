@@ -102,8 +102,8 @@ const ProjectIdeas = () => {
         loadingCreation={loadingCreation}
       />
 
-      <div className="relative cardsBackground w-[90%] m-auto bg-[#01002a] pt-[10px] pb-[10px] pl-[10px] pr-[10px] sm:p-5 ">
-        <div className="z-0 grid grid-cols-1 gap-8 cardsCollection sm:grid-cols-2 lg:grid-cols-3">
+      <div className="relative cardsBackground max-w-[80%] min-w-[80%] m-auto bg-[#01002a] pt-[10px] pb-[10px] pl-[10px] pr-[10px] sm:p-5 ">
+        <div className="z-0 grid grid-cols-1 lg:pl-6 cardsCollection sm:grid-cols-2 lg:grid-cols-3">
           {allIdeas?.map((ele, idx) => (
             <ProjectCard
               key={idx}

@@ -151,10 +151,10 @@ const RoomTaskCard = ({ ele }) => {
     }
   };
   return (
-    <>
+    <div className="">
       {/* todo  */}
       {ele?.[6] === "todo" && (
-        <div className="p-2 mx-1 mt-2 bg-white rounded-lg">
+        <div className="p-2 mx-1 mt-2 min-h-[16vh]  max-h[16vh] bg-white rounded-lg">
           <div className="proposalTop flex flex-row text-[#000] p-3 bg-white rounded-lg ">
             <div className="proposalLeft w-[20%] ">
               <Image
@@ -187,7 +187,7 @@ const RoomTaskCard = ({ ele }) => {
       )}
       {/* progress  */}
       {ele?.status === "in_progress" && (
-        <div className="p-2 mt-2 mx-1 bg-[#A9D6FF] rounded-lg">
+        <div className="p-2 mt-2 mx-1 min-h-[16vh] max-h-[16vh] bg-[#A9D6FF] rounded-lg">
           <div className="proposalTop flex flex-row text-[#000] p-3 rounded-lg ">
             <div className="proposalLeft w-[20%] ">
               <Image
@@ -267,7 +267,7 @@ const RoomTaskCard = ({ ele }) => {
       )}
       {/* completed  */}
       {ele?.[6] === "completed" && (
-        <div className="p-2 mt-2 mx-1 bg-[#C9FFD5] rounded-lg">
+        <div className="p-2 mt-2 mx-1 min-h-[16vh]  max-h[16vh] bg-[#C9FFD5] rounded-lg">
           <div className="proposalTop flex flex-row text-[#000] p-3 rounded-lg ">
             <div className="proposalLeft w-[20%] ">
               <Image
@@ -297,7 +297,7 @@ const RoomTaskCard = ({ ele }) => {
       )}
       {/* abandoned  */}
       {ele?.[6] === "abandoned" && no > yes && (
-        <div className="p-2 mt-2 mx-1 bg-[#F9D7D7] rounded-lg">
+        <div className="p-2 mt-2 mx-1 min-h-[16vh]  max-h[16vh] bg-[#F9D7D7] rounded-lg">
           <div className="proposalTop flex flex-row text-[#000] p-3 rounded-lg ">
             <div className="proposalLeft w-[20%] ">
               <Image
@@ -324,7 +324,7 @@ const RoomTaskCard = ({ ele }) => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

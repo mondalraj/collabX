@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Notify } from "notiflix";
 import { useState } from "react";
 import {
-  AiFillLinkedin,
+  AiFillPhone,
   AiFillTwitterSquare,
   AiOutlineMail,
   AiOutlineWallet,
@@ -16,6 +17,12 @@ const GetProfile = ({ profile }) => {
   const [skills, setSkills] = useState(false);
   const [project, setProject] = useState(false);
   const [experience, setExperience] = useState(false);
+  const [copySuccess, setCopySuccess] = useState("");
+  const copyToClip = async () => {
+    await navigator.clipboard.writeText(location.href);
+    setCopySuccess("Copied");
+    Notify.success("Copied");
+  };
 
   return (
     <div className="container1 bg-gradient-to-r from-[#2A064B] from-50% to-[#030C30] t0-50%">
@@ -73,21 +80,24 @@ const GetProfile = ({ profile }) => {
         <div className="h-12 p-2 socialIcons sm:pl-[8px]">
           <h3 className="text-[#fff] pl-[5px] sm:pl-[1px]">Social Media</h3>
           <div className="flex  socialIcons2  pl-[3px] sm:pl-[1px]">
-            <Link href="">
+            <Link href={`mailto:${profile?.[3]}`}>
               {" "}
-              <AiOutlineMail className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-3 cursor-pointer" />
+              <AiOutlineMail className="text-[#fff] text-lg sm:text-2xl mt-1 mr-3 cursor-pointer" />
+            </Link>
+            <Link href={`tel:+91${profile?.[4]}`}>
+              {" "}
+              <AiFillPhone className="text-[#fff]  text-lg sm:text-2xl mt-1 mr-3 cursor-pointer" />
+            </Link>
+            <Link href={`${profile?.[5]}`}>
+              {" "}
+              <AiFillTwitterSquare className="text-[#fff] text-lg sm:text-2xl mt-1 mr-3 cursor-pointer" />
             </Link>
             <Link href="">
               {" "}
-              <AiFillLinkedin className="text-[#fff]  text-lg sm:text-2xl mt-1 mr-3 cursor-pointer" />
-            </Link>
-            <Link href={`${profile?.[4]}`}>
-              {" "}
-              <AiFillTwitterSquare className="text-[#fff] opacity-[52%] text-lg sm:text-2xl mt-1 mr-3 cursor-pointer" />
-            </Link>
-            <Link href="">
-              {" "}
-              <button className="inline-flex items-center rounded-3xl bg-[#E40E82] px-2 py-1  text-xs text-white hover:bg-indigo-500">
+              <button
+                onClick={copyToClip}
+                className="inline-flex items-center rounded-3xl bg-[#E40E82] px-2 py-1  text-xs text-white hover:bg-indigo-500"
+              >
                 Share Profile
                 <IoIosShareAlt size={17} className="ml-1" />
               </button>

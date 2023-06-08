@@ -197,7 +197,7 @@ const daoRoom = () => {
           Please wait for your proposal to get accepted by Idea owner.
         </div>
         <button
-          className="bg-pink-600 px-5 py-2 rounded-md text-white text-sm"
+          className="px-5 py-2 text-sm text-white bg-pink-600 rounded-md"
           onClick={() => router.push(`/idea/${router.query.id}`)}
         >
           Go Back
@@ -215,7 +215,7 @@ const daoRoom = () => {
         submitNewProposal={submitNewProposal}
       />
       <div className="navbar">
-        <div className="mt-2 mb-5 hidden sm:flex flex-row justify-between items-center w-[90%] m-auto rounded-full p-2 pl-3">
+        <div className="mt-2 mb-5 hidden sm:flex flex-row justify-between items-center w-[100%] mr-5  rounded-full p-2 pl-3">
           <div className="ml-3 -mt-2 img sm:flex justify-start items-center sm:w-[35%]">
             <AiOutlineLeft
               className="text-[#fff] mt-2 mb-1 text-2xl cursor-pointer"
@@ -318,7 +318,7 @@ const daoRoom = () => {
           {/* desktop view  */}
           <div className=" roomDesktopView hidden md:flex flex-row w-[95%] m-auto justify-around">
             <div className="flex taskPortion w-[75%] text-white pr-10">
-              <div className="heading1 w-[25%] flex-col">
+              <div className="heading1 max-w-[25%] min-w-[25%] flex-col">
                 <div className="p-1 pb-2 border-b-[1px] border-white ">
                   Todo
                 </div>
@@ -327,7 +327,7 @@ const daoRoom = () => {
                     ele?.[6] === "todo" && <RoomTaskCard ele={ele} key={idx} />
                 )}
               </div>
-              <div className="heading1 w-[25%] flex-col">
+              <div className="heading1 max-w-[25%] min-w-[25%] flex-col">
                 <div className="p-1 pb-2 border-b-[1px] border-white ">
                   In Progress
                 </div>
@@ -341,7 +341,7 @@ const daoRoom = () => {
                   )}
                 </div>
               </div>
-              <div className="heading1 w-[30%] flex-col">
+              <div className="heading1 max-w-[25%] min-w-[25%] flex-col">
                 <div className="p-1 pb-2 border-b-[1px] border-white ">
                   Completed
                 </div>
@@ -355,7 +355,7 @@ const daoRoom = () => {
                   )}
                 </div>
               </div>
-              <div className="heading1 w-[25%] flex-col">
+              <div className="heading1 max-w-[25%] min-w-[25%] flex-col">
                 <div className="p-1 pb-2 border-b-[1px] border-white ">
                   Abondoned
                 </div>
@@ -569,7 +569,7 @@ const daoRoom = () => {
               //   </div>
               // </>
               <>
-                <div className="w-full m-auto proposalList">
+                <div className="w-full p-4 m-auto proposalList">
                   {roomData?.proposals.map((ele, idx) => {
                     if (ele.description) {
                       return <RoomProposalCard key={idx} ele={ele} />;
@@ -689,7 +689,7 @@ const daoRoom = () => {
                     onClick={leaveRoom}
                   >
                     <div className="leaveRoomButton flex justify-center bg-[#fff] p-2 w-[95%] cursor-pointer m-auto">
-                      <div className="font-bold leaveText text-black">
+                      <div className="font-bold text-black leaveText">
                         Leave Room
                       </div>
                       <div className="leaveIcon">

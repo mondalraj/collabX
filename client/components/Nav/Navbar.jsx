@@ -30,8 +30,7 @@ const Navbar = ({ phonenav, openNav }) => {
   if (isLoading || currentUserLoading) {
     return (
       <div
-        className="h-screen w-screen flex flex-col
-      justify-center items-center gap-5 text-white text-xl"
+        className="flex flex-col items-center justify-center w-screen h-screen gap-5 text-xl text-white"
       >
         <AuthenticatedUser />
         <div>Loading Data... Please wait.</div>
@@ -44,13 +43,15 @@ const Navbar = ({ phonenav, openNav }) => {
       {/* nav */}
       <div className="mt-10 mb-8 hidden sm:flex flex-row justify-between items-center w-[90%] m-auto  bg-gradient-to-r from-[#030C30] from-50% to-[#43087A] t0-50% rounded-full p-2 pl-3">
         <div className="ml-3 -mt-2 img">
-          <Image
-            src="/images/CollabXLogo.png"
-            width="140"
-            height="140"
-            alt="CollabXLogo"
-            className="hidden sm:block "
-          />
+          <Link href="/">
+            <Image
+              src="/images/CollabXLogo.png"
+              width="140"
+              height="140"
+              alt="CollabXLogo"
+              className="hidden sm:block "
+            />
+          </Link>
         </div>
         <div className="w-[30%]">
           <ul className="flex justify-between font-medium text-white ">
