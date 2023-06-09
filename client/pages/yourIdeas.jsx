@@ -58,11 +58,7 @@ const YourIdeas = () => {
       console.info("contract call successs", data);
       setLoadingCreation(false);
       setModalClick(!modalClick);
-      setProjectIdea({
-        name: "",
-        description: "",
-        tags: [],
-      });
+      window.location.reload();
     } catch (err) {
       setLoadingCreation(false);
       console.error("contract call failure", err);

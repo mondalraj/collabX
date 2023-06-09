@@ -8,7 +8,7 @@ import {
   useNFTBalance,
 } from "@thirdweb-dev/react";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/router";
 // import Carousel from 'react-elastic-carousel';
 const tokenId = 0;
 
@@ -21,6 +21,7 @@ const LandingPage = () => {
     slidesToScroll: 1,
   };
   const address = useAddress();
+  const router = useRouter();
 
   const { contract: editionDrop } = useContract(NFT_CONTRACT_ADDRESS);
 
@@ -88,7 +89,7 @@ const LandingPage = () => {
           </div>
         </div> */}
           <div className="connectWallet z-10">
-            <ConnectWallet theme="dark" btnTitle="Connect Wallet" />
+            <ConnectWallet theme="light" btnTitle="Connect Wallet" />
           </div>
         </div>
         <div className="headingCollabx mt-7 z-50">
@@ -113,8 +114,13 @@ const LandingPage = () => {
           <div className="NFTButton absolute w-full flex justify-center">
             {Number(NFTBalance) > 0 ? (
               <div className="w-[50%] lg:w-[30%] xl:w-[20%] m-auto text-center mt-5">
-                <button className="bg-[#fff] text-black text-md sm:text-lg py-2 sm:py-3 px-4 sm:px-20 rounded-[2rem] font-semibold">
-                  <Link href={"/myProfile"}>Enter CollabX</Link>
+                <button
+                  className="bg-[#fff] text-black text-md sm:text-lg py-2 sm:py-3 px-4 sm:px-20 rounded-[2rem] font-semibold"
+                  onClick={() => {
+                    window.location.href = "/myProfile";
+                  }}
+                >
+                  Enter CollabX
                 </button>
               </div>
             ) : (

@@ -111,6 +111,7 @@ const ProjectIdeas = () => {
               about={ele[2]}
               skills={ele[4]}
               id={ele[0]}
+              isFeatured={ele.isFeatured}
             />
           ))}
         </div>

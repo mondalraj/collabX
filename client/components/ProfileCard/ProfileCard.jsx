@@ -40,7 +40,7 @@ const ProfileCard = ({
   };
   return (
     <div
-      className="profileCard rounded-lg w-[90%]  mt-[1rem] mb-[2rem] pb-[1rem] pt-[1rem] text-sm
+      className="profileCard rounded-lg w-[95%]  mt-[1rem] mb-[2rem] pb-[1rem] pt-[1rem] text-sm
                 bg-[#ffffff21] opacity-[0.87]
                 hover:bg-gradient-to-b from-[#870049] to-[#340362]"
     >
