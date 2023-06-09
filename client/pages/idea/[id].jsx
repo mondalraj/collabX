@@ -15,11 +15,9 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { Notify } from "notiflix";
 import { useEffect, useState } from "react";
-import { AiFillPlusCircle } from "react-icons/ai";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { MdCelebration } from "react-icons/md";
 import "semantic-ui-css/semantic.min.css";
-import { Input } from "semantic-ui-react";
 
 const IndividualIdea = () => {
   const [owner, setOwner] = useState(false);
@@ -136,23 +134,9 @@ const IndividualIdea = () => {
     setModalClick(!modalClick);
   };
   return (
-    <div className=" min-h-[100vh] sm:p-10  w-full bg-gradient-to-b sm:bg-gradient-to-r from-[#23094E] from-0% to-black to-100%">
+    <div className=" min-h-[100vh] sm:p-10  w-full bg-gradient-to-b sm:bg-gradient-to-r from-[#2A064B] from-50% to-[#030C30] t0-50%">
       {/* Nav  */}
       <Navbar phonenav={phonenav} openNav={openNav} />
-      {/* search  */}
-      <div className="flex items-center w-full mb-4 justify-evenly sm:hidden">
-        <Input
-          icon="search"
-          placeholder="Search by project Ideas or by tags"
-          className="w-[70%] m-4 ml-6"
-        />
-        <AiFillPlusCircle
-          size={45}
-          color="#E40E82"
-          onClick={openModal}
-          className="mr-4 border-4 border-[#ffffff] border-opacity-[0.16] rounded-full "
-        />
-      </div>
 
       <div className="flex justify-end mt-4 mb-6 mr-4">
         {/* owner  */}
@@ -233,7 +217,7 @@ const IndividualIdea = () => {
           </div>
           <div className="flex flex-col mt-6 sm:w-[40%] sm:m-6 sm:mt-14">
             <p className="text-[#05EAFA]">Skills Required</p>
-            <div className="grid grid-cols-4 text-xs sm:grid-cols-3 md:grid-cols-4 gap-y-2">
+            <div className="grid grid-cols-4 text-sm sm:grid-cols-3 md:grid-cols-4 gap-y-2">
               {data?.[4]?.map((ele) => (
                 <div className="border-[#E40E82] border rounded-lg lg:min-w-[70%] lg:max-w-fit h-fit py-1 px-2 lg:my-1 mx-2 lg:tracking-wide">
                   {ele}

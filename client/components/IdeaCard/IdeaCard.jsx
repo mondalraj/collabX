@@ -6,17 +6,17 @@ const IdeaCard = ({ owner, member, idea }) => {
   return (
     <div className=" bg-gradient-to-b from-[#23094E] to-[#000000] p-2 pb-4 rounded-xl mb-8">
       <div className="flex justify-between p-2 mx-1">
-        <p className="text-lg tracking-wider sm:text-2xl">{idea?.[1]}</p>
+        <p className="text-lg tracking-wider sm:text-xl">{idea?.[1]}</p>
         <Image
           height={10}
-          width={14}
+          width={12}
           src="/images/blockChainSymbol.png"
           alt="blockchain"
           className="mb-1 rotate-12"
         />
       </div>
       <div className="flex justify-between mx-1">
-        <div className="w-[48%] bg-[#01002a] text-xs font-normal p-2 text-start rounded-xl tracking-wider">
+        <div className="w-[48%] bg-[#01002a] text-sm font-normal p-2 text-start rounded-xl tracking-wider">
           {idea?.[2]}
         </div>
         <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 bg-[#01002a] w-[48%] p-2 rounded-xl text-xs">
@@ -31,7 +31,7 @@ const IdeaCard = ({ owner, member, idea }) => {
         </div>
       </div>
       {owner && !member && (
-        <Link href={`/idea/${idea.id}`}>
+        <Link href={`/idea/${idea?.id}`}>
           <div className="flex items-center justify-center bg-[#01002a] text-[#05EAFA] mt-2 mx-1 rounded-xl text-sm p-2">
             {" "}
             Open Idea <BiChevronRight color="#05EAFA" />
@@ -39,7 +39,7 @@ const IdeaCard = ({ owner, member, idea }) => {
         </Link>
       )}
       {!owner && member && (
-        <Link href={`/idea/${idea.id}`}>
+        <Link href={`/idea/${idea?.id}`}>
           {" "}
           <div className="flex items-center justify-center bg-[#01002a] text-[#05EAFA] mt-2 mx-1 rounded-xl text-sm p-2">
             {" "}

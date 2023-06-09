@@ -81,9 +81,19 @@ const YourIdeas = () => {
     setModalClick(!modalClick);
   };
   return (
-    <div className=" min-h-[100vh] sm:p-10  w-full bg-gradient-to-b sm:bg-gradient-to-r from-[#23094E] from-0% to-black to-100%">
+    <div className=" min-h-[100vh] sm:p-10  w-full bg-gradient-to-b sm:bg-gradient-to-r from-[#2A064B] from-50% to-[#030C30] t0-50%">
+      {/* Modal */}
+      <Modal
+        openModal={openModal}
+        modalClick={modalClick}
+        projectIdea={projectIdea}
+        setProjectIdea={setProjectIdea}
+        create={create}
+        loadingCreation={loadingCreation}
+      />
       {/* Nav  */}
       <Navbar phonenav={phonenav} openNav={openNav} />
+
       <div className="max-w-screen-xl m-auto text-lg">
         {/* search  */}
         <div className="flex items-center w-full mb-4 justify-evenly sm:hidden">
@@ -100,16 +110,6 @@ const YourIdeas = () => {
           />
         </div>
 
-        {/* Modal */}
-        <Modal
-          openModal={openModal}
-          modalClick={modalClick}
-          projectIdea={projectIdea}
-          setProjectIdea={setProjectIdea}
-          create={create}
-          loadingCreation={loadingCreation}
-        />
-
         {/* second-section */}
         <div className="block h-full text-white sm:hidden ">
           {/* small  */}
@@ -117,15 +117,19 @@ const YourIdeas = () => {
           {/* created by you  */}
           <button onClick={changeYours} className="w-full">
             <div
-              className="flex items-center justify-between px-5 py-2 rounded-2xl m-4   
-          bg-[#01002A] text-lg font-medium"
+              className="flex items-center justify-between px-5 py-3 rounded-2xl m-4   
+          bg-[#01002A] text-xl font-medium"
             >
-              <p>Created by you</p>
-              {showYours ? <IoMdArrowDropdown /> : <IoMdArrowDropright />}
+              <div>Created by you</div>
+              {showYours ? (
+                <IoMdArrowDropdown size={26} />
+              ) : (
+                <IoMdArrowDropright size={26} />
+              )}
             </div>
           </button>
 
-          <div className="sm:w-[90%] min-h-[80%] max-h-fit flex sm:hidden sm:flex-row flex-col sm:justify-between sm:m-auto mt-10 text-white text-center font-medium text-lg">
+          <div className="sm:w-[90%] min-h-[80%] max-h-fit flex sm:hidden sm:flex-row flex-col sm:justify-between sm:m-auto mt-10 text-white text-center font-medium text-xl">
             {showYours && (
               <div className="sm:w-[49%] sm:bg-[#01002a] rounded-2xl p-6">
                 <div className="flex justify-center">
@@ -160,28 +164,41 @@ const YourIdeas = () => {
           <button onClick={changeOthers} className="w-full">
             {" "}
             <div
-              className="flex items-center justify-between px-5 py-2 rounded-2xl m-4  bg-[#01002A]
-           text-lg font-medium"
+              className="flex items-center justify-between px-5 py-3 rounded-2xl m-4  bg-[#01002A]
+           text-xl font-medium"
             >
-              <p>You are a part of it</p>
-              {showOthers ? <IoMdArrowDropdown /> : <IoMdArrowDropright />}
+              <div>You are a part of it</div>
+              {showOthers ? (
+                <IoMdArrowDropdown size={26} />
+              ) : (
+                <IoMdArrowDropright size={26} />
+              )}
             </div>
           </button>
 
-          <div className="sm:w-[90%] min-h-[80%] max-h-fit flex sm:hidden sm:flex-row flex-col sm:justify-between sm:m-auto mt-10 text-white text-center font-medium text-lg">
+          <div className="sm:w-[90%] min-h-[80%] max-h-fit flex sm:hidden sm:flex-row flex-col sm:justify-between sm:m-auto mt-10 text-white text-center font-medium text-xl">
             {showOthers && (
               <div className="sm:w-[49%] sm:bg-[#01002a] rounded-2xl p-6">
                 <p className="hidden mb-6 sm:block"> You are a part of it</p>
-                {/* card  */}
-                <IdeaCard owner={false} member={true} />
-                {/* card  */}
-                <IdeaCard owner={false} member={true} />
+                {allIdeas?.map((ele, idx) => {
+                  if (ele[0] !== address) {
+                    return (
+                      <IdeaCard
+                        key={idx}
+                        owner={false}
+                        member={true}
+                        idea={ele}
+                        index={idx}
+                      />
+                    );
+                  }
+                })}
               </div>
             )}
           </div>
         </div>
         {/* large  */}
-        <div className="sm:w-[90%] min-h-[80%] max-h-full sm:flex hidden sm:flex-row flex-col sm:justify-between sm:m-auto mt-10 text-white text-center font-medium text-lg">
+        <div className="sm:w-[90%] min-h-[80%] max-h-full sm:flex hidden sm:flex-row flex-col sm:justify-between sm:m-auto mt-10 text-white text-center font-medium text-xl">
           <div className="sm:w-[49%] sm:bg-[#01002a] rounded-2xl p-6">
             <div className="flex justify-center">
               <p className=" sm:block hidden mb-6 w-[90%]">Created by you</p>
@@ -192,24 +209,25 @@ const YourIdeas = () => {
                 className="sm:block hidden border-4 border-[#ffffff] border-opacity-[0.16]  rounded-full cursor-pointer"
               />
             </div>
-            {allIdeas?.map((ele) => {
-              if (ele[0] === address) {
-                return <IdeaCard owner={true} member={false} idea={ele} />;
+            {allIdeas?.map((ele, idx) => {
+              if (ele?.[0] === address) {
+                return (
+                  <IdeaCard key={idx} owner={true} member={false} idea={ele} />
+                );
               }
             })}
           </div>
           <div className="sm:w-[49%] sm:bg-[#01002a] rounded-2xl p-6">
             <p className="hidden mb-6 sm:block"> You are a part of it</p>
 
-            {allIdeas?.map((ele) => {
-              if (ele[0] !== address) {
+            {allIdeas?.map((ele, idx) => {
+              if (ele?.[0] !== address) {
                 // here we are checking if the address is not the owner of the idea then he is part of the project, call the component for you are part of it.
+                return (
+                  <IdeaCard key={idx} owner={false} member={true} idea={ele} />
+                );
               }
             })}
-            {/* card  */}
-            {/* <IdeaCard owner={false} member={true} /> */}
-            {/* card  */}
-            {/* <IdeaCard owner={false} member={true} /> */}
           </div>
         </div>
       </div>

@@ -8,9 +8,9 @@ const RoomModal = ({
   return (
     <>
       {modalClick && (
-        <div className="absolute z-50 w-[100%] top-20 flex justify-center backdrop-blur-md ">
+        <div className="absolute z-50 w-[100%]  flex justify-center backdrop-blur-md h-screen">
           {" "}
-          <div className=" text-white bg-[rgba(0,0,0,0.67)]  w-[60%] h-[70vh] flex flex-col items-center rounded-md">
+          <div className=" text-white bg-[rgba(0,0,0,0.67)] mt-20  sm:w-[60%] w-[90%] sm:h-[70vh] h-[60vh] flex flex-col items-center rounded-md">
             <div
               onClick={openModal}
               className="flex justify-end w-full px-6 pt-4 text-xl font-semibold cursor-pointer"
@@ -49,7 +49,7 @@ const RoomModal = ({
 
               <div className="flex justify-end w-full m-2 mb-4 ">
                 <button
-                  className="bg-[#E40E82] py-1 px-4 rounded-xl font-semibold"
+                  className="bg-[#E40E82] py-2 px-4 rounded-xl font-semibold"
                   onClick={submitNewProposal}
                 >
                   CREATE
