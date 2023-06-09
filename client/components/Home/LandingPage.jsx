@@ -430,7 +430,7 @@ const LandingPage = () => {
               <div className="memberCollabX m-auto mt-8 sm:mt-0">
                 <div className="memberImage m-auto">
                   <img
-                    src="./images/Vanshika_image.png"
+                    src="./images/vanshika_image.png"
                     className="w-[100%] sm:w-[76%] m-auto"
                     alt=""
                   />
