@@ -93,17 +93,16 @@ const LandingPage = () => {
           </div>
         </div>
         <div className="headingCollabx mt-7 z-50">
-          <div className="mainHeading text-[#fff] sm:w-[45%] m-auto text-center">
-            <h2 className="text-[2.5rem] font-bold sm:text-[3rem]">
+          <div className="mainHeading text-[#fff] sm:w-[60%] m-auto text-center">
+            <h2 className="text-[2.5rem] font-bold sm:text-[3.4rem]">
               Building Bridges, Igniting Ideas: Collaborate for Success!
             </h2>
           </div>
-          <div className="subHeading text-[#fff] sm:w-[44%] m-auto text-center">
-            <p className=" text-md sm:text-lg">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut laboreUt enim ad minim veniam, quis
-              nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              con
+          <div className="subHeading text-[#fff] sm:w-[65%] m-auto text-center py-8 max-w-4xl">
+            <p className=" text-md sm:text-xl">
+              CollabX is a platform for creators to collaborate and create
+              together. It is a place where you can find like-minded people to
+              work with and build your ideas into reality.
             </p>
           </div>
           {/* <div className="enterCollabXButton m-auto w-[50%] sm:w-[20%] mt-6 pl-[1rem] sm:pl-[4rem]">
@@ -328,7 +327,7 @@ const LandingPage = () => {
                     Connect Wallet
                   </h2>
                   <p className="text-[#cbc9c9] text-sm sm:mt-3 sm:text-lg">
-                    Coenim ad minim veniam, quis nostrud exercitation ul
+                    One Tap to connect your wallet and mint your Free NFT
                   </p>
                 </div>
               </div>
@@ -346,7 +345,8 @@ const LandingPage = () => {
                     Create Profile
                   </h2>
                   <p className="text-[#cbc9c9] text-sm sm:mt-3 sm:text-lg">
-                    Coenim ad minim veniam, quis nostrud exercitation ul
+                    Create your profile by filling out some basic details and
+                    start exploring the community
                   </p>
                 </div>
               </div>
@@ -364,7 +364,7 @@ const LandingPage = () => {
                     Start Hustling
                   </h2>
                   <p className="text-[#cbc9c9] text-sm sm:mt-3 sm:text-lg">
-                    Coenim ad minim veniam, quis nostrud exercitation ul
+                    Interact with the community, contribute to the projects.
                   </p>
                 </div>
               </div>
